@@ -1,0 +1,46 @@
+itemGroup.endermystic=Ender Mystic
+
+item.endermystic.BasicEnderOrb.name=Basic Ender Orb
+item.endermystic.EmeraldOrb.name=Emerald Orb
+item.endermystic.WaterOrb.name=Water Orb
+item.endermystic.FireOrb.name=Fire Orb
+item.endermystic.EarthOrb.name=Earth Orb
+item.endermystic.AirOrb.name=Air Orb
+item.endermystic.TestOrb.name=Test Orb
+item.endermystic.EnderZarOrb.name=Ender Zar Orb
+
+item.endermystic.EnderSacrifice.name=Ender Sacrifice
+item.endermystic.EnderSoulSword.name=Ender Soul Sword
+item.endermystic.EnderSoulPickaxe.name=Ender Soul Pickaxe
+item.endermystic.EnderSoulShovel.name=Ender Soul Shovel
+item.endermystic.EnderSoulHammer.name=Ender Soul Hammer
+item.endermystic.EnderSoulExcavator.name=Ender Soul Excavator
+
+item.endermystic.EnderShard.name=Ender Shard
+item.endermystic.EnderSoulFillEmpty.name=Ender Soul Fill (Empty)
+item.endermystic.EnderSoulFillFilled.name=Ender Soul Fill (Filled)
+
+#Crystals
+item.endermystic.Crystal.Water.name=Water Crystal
+item.endermystic.Crystal.Fire.name=Fire Crystal
+item.endermystic.Crystal.Air.name=Air Crystal
+item.endermystic.Crystal.Earth.name=Earth Crystal
+item.endermystic.Crystal.Life.name=Life Crystal
+item.endermystic.Crystal.Human.name=Human Crystal
+item.endermystic.Crystal.Grain.name=Grain Crystal
+item.endermystic.Crystal.Energy.name=Energy Crystal
+
+item.endermystic.AirRing.name=Air Ring
+
+tile.endermystic.CrystalOre.Earth.name=Earth Crystal Ore
+tile.endermystic.CrystalOre.Air.name=Air Crystal Ore
+tile.endermystic.CrystalOre.Water.name=Water Crystal Ore
+tile.endermystic.CrystalOre.Fire.name=Fire Crystal Ore
+
+tile.endermystic.EnergyRelay.name=Energy Relay
+tile.endermystic.EnergyDrain.name=Energy Drain
+tile.endermystic.CrystalCombiner.name=Crystal Combiner
+tile.endermystic.EnderZar.name=Ender Zar
+
+potion.Breathing=Breathing
+potion.enderHearBleed=Ender Heart Bleed
