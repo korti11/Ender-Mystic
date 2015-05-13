@@ -6,10 +6,7 @@ import at.korti.endermystic.client.render.blocks.*;
 import at.korti.endermystic.client.render.items.CrystalCombinerItemRenderer;
 import at.korti.endermystic.client.render.items.EnergyDrainItemRenderer;
 import at.korti.endermystic.client.render.items.EnergyRelayItemRenderer;
-import at.korti.endermystic.tileEntity.TileEntityCrystalCombiner;
-import at.korti.endermystic.tileEntity.TileEntityEnderZar;
-import at.korti.endermystic.tileEntity.TileEntityEnergyDrain;
-import at.korti.endermystic.tileEntity.TileEntityEnergyRelay;
+import at.korti.endermystic.tileEntity.*;
 import cpw.mods.fml.client.registry.ClientRegistry;
 import cpw.mods.fml.client.registry.ISimpleBlockRenderingHandler;
 import cpw.mods.fml.client.registry.RenderingRegistry;
@@ -27,6 +24,7 @@ public class ClientProxy extends CommonProxy {
         ClientRegistry.bindTileEntitySpecialRenderer(TileEntityEnergyDrain.class, new EnergyDrainRenderer());
         ClientRegistry.bindTileEntitySpecialRenderer(TileEntityEnergyRelay.class, new EnergyRelayRenderer());
         ClientRegistry.bindTileEntitySpecialRenderer(TileEntityEnderZar.class, new EnderZarRenderer());
+        ClientRegistry.bindTileEntitySpecialRenderer(TileEntityOrbInfuser.class, new OrbInfuserRenderer());
 
         MinecraftForgeClient.registerItemRenderer(Item.getItemFromBlock(ModBlocks.energyDrain), new EnergyDrainItemRenderer(new EnergyDrainRenderer(), new TileEntityEnergyDrain()));
         MinecraftForgeClient.registerItemRenderer(Item.getItemFromBlock(ModBlocks.energyRelay), new EnergyRelayItemRenderer(new EnergyRelayRenderer(), new TileEntityEnergyRelay()));

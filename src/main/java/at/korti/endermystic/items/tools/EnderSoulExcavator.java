@@ -2,11 +2,10 @@ package at.korti.endermystic.items.tools;
 
 import at.korti.endermystic.EnderMystic;
 import at.korti.endermystic.ModInfo;
-import at.korti.endermystic.api.tools.AbilityHelper;
+import at.korti.endermystic.api.util.AbilityHelper;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 import net.minecraft.block.Block;
-import net.minecraft.block.material.Material;
 import net.minecraft.client.renderer.texture.IIconRegister;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;

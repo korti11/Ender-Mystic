@@ -1,10 +1,10 @@
 package at.korti.endermystic.tileEntity;
 
-import at.korti.endermystic.api.crafting.CrystalCombinerRecipe;
 import at.korti.endermystic.api.crafting.CraftingRegistry;
+import at.korti.endermystic.api.crafting.OrbInfuserRecipe;
 import at.korti.endermystic.api.mysticEnergyNetwork.EnergyNetworkHandler;
 import at.korti.endermystic.api.mysticEnergyNetwork.IEnergyProvider;
-import at.korti.endermystic.items.CrystalItem;
+import at.korti.endermystic.items.OrbCoreItem;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.inventory.IInventory;
 import net.minecraft.item.ItemStack;
@@ -15,17 +15,21 @@ import net.minecraft.network.Packet;
 import net.minecraft.network.play.server.S35PacketUpdateTileEntity;
 import net.minecraft.tileentity.TileEntity;
 
-/**
- * Created by Korti on 11.04.2015.
- */
-public class TileEntityCrystalCombiner extends TileEntity implements IInventory{
+import java.util.ArrayList;
+import java.util.List;
 
-    private ItemStack[] inventory = new ItemStack[5];
-    private int timeToCraft = 0;
+/**
+ * Created by Korti on 13.05.2015.
+ */
+public class TileEntityOrbInfuser extends TileEntity implements IInventory{
+
+    private ItemStack[] inventory = new ItemStack[9];
     private int timeStartToCraft = 0;
-    private CrystalCombinerRecipe recipe = null;
-    private int checkRequirementCount = 0;
+    private int timeToCraft = 0;
+    private OrbInfuserRecipe recipe = null;
     private final int range = 10;
+    private int checkRequirementCount = 0;
+    private List<Integer> usedSlots = new ArrayList<Integer>();
 
     @Override
     public int getSizeInventory() {
@@ -39,38 +43,38 @@ public class TileEntityCrystalCombiner extends TileEntity implements IInventory{
 
     @Override
     public ItemStack decrStackSize(int slot, int amount) {
-        ItemStack itemStack = getStackInSlot(slot);
+        ItemStack stack = getStackInSlot(slot);
 
-        if(itemStack != null){
-            if(itemStack.stackSize <= amount){
+        if(stack != null) {
+            if (stack.stackSize <= amount) {
                 setInventorySlotContents(slot, null);
             }
             else {
-                itemStack = itemStack.splitStack(amount);
+                stack = stack.splitStack(amount);
             }
         }
-        return itemStack;
+        markDirty();
+        return stack;
     }
 
     @Override
     public ItemStack getStackInSlotOnClosing(int slot) {
-        ItemStack stack = getStackInSlot(slot);
-        setInventorySlotContents(slot, null);
-        return stack;
+        return null;
     }
 
     @Override
     public void setInventorySlotContents(int slot, ItemStack stack) {
         inventory[slot] = stack;
-        if(stack != null && stack.stackSize > getInventoryStackLimit()){
+        if (stack != null && stack.stackSize > getInventoryStackLimit()) {
             stack.stackSize = getInventoryStackLimit();
         }
+        markDirty();
         timeStartToCraft = 80;
     }
 
     @Override
     public String getInventoryName() {
-        return "CrystelCombiner";
+        return "OrbInfuser";
     }
 
     @Override
@@ -100,7 +104,7 @@ public class TileEntityCrystalCombiner extends TileEntity implements IInventory{
 
     @Override
     public boolean isItemValidForSlot(int slot, ItemStack stack) {
-        return stack.getItem() instanceof CrystalItem;
+        return false;
     }
 
     @Override
@@ -114,17 +118,19 @@ public class TileEntityCrystalCombiner extends TileEntity implements IInventory{
         if(provider != null && provider.canProvideEnergy()) {
             if (timeToCraft == 0 && recipe == null && timeStartToCraft == 0) {
                 for (int i = 0; i < CraftingRegistry.getInstance().recipeCrystalCombinerCount(); i++) {
-                    recipe = CraftingRegistry.getInstance().getCrystalCombinerRecipe(i);
+                    recipe = CraftingRegistry.getInstance().getOrbInfuserRecipe(i);
+                    usedSlots.clear();
                     checkRequirementCount = 0;
 
                     for (int j = 0; j < recipe.requirementsCount(); j++) {
-                        for (int l = 0; l < getSizeInventory() - 1; l++) {
+                        for (int l = 0; l < getSizeInventory(); l++) {
                             if (getStackInSlot(l) == null) {
                                 continue;
                             }
 
-                            if (getStackInSlot(l).getItem() == recipe.getRequirements(j).getItem() && getStackInSlot(l).getItemDamage() == recipe.getRequirements(j).getItemDamage()) {
+                            if (getStackInSlot(l).getItem() == recipe.getRequirements(j).getItem() && getStackInSlot(l).getItemDamage() == recipe.getRequirements(j).getItemDamage() && !usedSlots.contains(l)) {
                                 checkRequirementCount++;
+                                usedSlots.add(l);
                                 break;
                             }
                         }
@@ -135,7 +141,7 @@ public class TileEntityCrystalCombiner extends TileEntity implements IInventory{
                     }
                 }
 
-                if (recipe != null && recipe.requirementsCount() == checkRequirementCount && getStackInSlot(4) == null) {
+                if (recipe != null && recipe.requirementsCount() == checkRequirementCount && !(getStackInSlot(8).getItem() instanceof OrbCoreItem)) {
                     timeToCraft = recipe.getTimeToCraft();
                     for (int l = 0; l < 128; ++l) {
                         float f = (worldObj.rand.nextFloat() - 0.5F) * 0.2F;
@@ -150,8 +156,9 @@ public class TileEntityCrystalCombiner extends TileEntity implements IInventory{
 
             if (timeToCraft == 0 && recipe != null && checkRequirementCount == recipe.requirementsCount() && timeStartToCraft == 0) {
                 clearRequirementsSlots();
-                setInventorySlotContents(4, new ItemStack(recipe.getResult().getItem(), 1, recipe.getResult().getItemDamage()));
+                setInventorySlotContents(8, new ItemStack(recipe.getResult().getItem(), 1, recipe.getResult().getItemDamage()));
                 recipe = null;
+                usedSlots.clear();
                 markDirty();
             } else if (timeToCraft > 0 && timeStartToCraft == 0 && recipe != null && provider.hasEnoughEnergy(recipe.getEnergyUsePerTick())) {
                 timeToCraft--;
@@ -168,6 +175,7 @@ public class TileEntityCrystalCombiner extends TileEntity implements IInventory{
                 timeStartToCraft--;
                 timeToCraft = 0;
                 recipe = null;
+                usedSlots.clear();
             }
         }
 

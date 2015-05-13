@@ -1,20 +1,18 @@
-package at.korti.endermystic.api.tools;
+package at.korti.endermystic.api.util;
 
-import at.korti.endermystic.api.mysticEnergyNetwork.EnergyNetwork;
 import at.korti.endermystic.api.mysticEnergyNetwork.EnergyNetworkHandler;
 import at.korti.endermystic.items.orbs.EarthOrb;
 import at.korti.endermystic.items.orbs.OrbStats;
 import at.korti.endermystic.items.tools.ToolStats;
 import net.minecraft.block.Block;
-import net.minecraft.block.material.Material;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.init.Blocks;
+import net.minecraft.inventory.IInventory;
 import net.minecraft.item.ItemPickaxe;
 import net.minecraft.item.ItemStack;
-import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.MathHelper;
 import net.minecraft.util.MovingObjectPosition;
@@ -229,6 +227,21 @@ public class AbilityHelper {
                 return world.getTileEntity(x + 1, y, z);
             default:
                 return null;
+        }
+    }
+
+    public static boolean isBetween(float min, float max, float current){
+        return (((float)(int)(current * 100)) / 100) >= min && (((float)(int)(current * 100)) / 100) <= max;
+    }
+
+    public static void setStackInSlot(int slot, EntityPlayer player, IInventory inventory){
+        if(inventory.getStackInSlot(slot) == null && player.inventory.getCurrentItem() != null) {
+            inventory.setInventorySlotContents(slot, new ItemStack(player.inventory.getCurrentItem().getItem(), 1, player.inventory.getCurrentItem().getItemDamage()));
+            player.inventory.setInventorySlotContents(player.inventory.currentItem, player.inventory.decrStackSize(player.inventory.currentItem, player.inventory.getStackInSlot(player.inventory.currentItem).stackSize - 1));
+        }
+        else if(player.inventory.getCurrentItem() == null) {
+            player.inventory.addItemStackToInventory(inventory.getStackInSlot(slot));
+            inventory.setInventorySlotContents(slot, null);
         }
     }
 

@@ -29,7 +29,7 @@ public class Orb extends EnergyItem {
     @Override
     public void registerIcons(IIconRegister register) {
         outerIcon = register.registerIcon(ModInfo.MODID + ":OrbOuter");
-        innerIcon = register.registerIcon(ModInfo.MODID + ":OrbInner");
+        innerIcon = register.registerIcon(ModInfo.MODID + ":OrbCore");
     }
 
     @Override

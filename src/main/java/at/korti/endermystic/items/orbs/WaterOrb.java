@@ -1,8 +1,7 @@
 package at.korti.endermystic.items.orbs;
 
 import at.korti.endermystic.api.mysticEnergyNetwork.EnergyNetworkHandler;
-import at.korti.endermystic.api.tools.AbilityHelper;
-import at.korti.endermystic.items.EnergyItem;
+import at.korti.endermystic.api.util.AbilityHelper;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Blocks;
 import net.minecraft.item.ItemStack;

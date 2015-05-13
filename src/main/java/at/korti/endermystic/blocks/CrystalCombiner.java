@@ -2,11 +2,13 @@ package at.korti.endermystic.blocks;
 
 import at.korti.endermystic.EnderMystic;
 import at.korti.endermystic.ModInfo;
+import at.korti.endermystic.api.util.AbilityHelper;
 import at.korti.endermystic.tileEntity.TileEntityCrystalCombiner;
 import net.minecraft.block.BlockContainer;
 import net.minecraft.block.material.Material;
 import net.minecraft.client.renderer.texture.IIconRegister;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.inventory.IInventory;
 import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.world.World;
@@ -81,43 +83,28 @@ public class CrystalCombiner extends BlockContainer{
 
         TileEntityCrystalCombiner combiner = (TileEntityCrystalCombiner)world.getTileEntity(x,y,z);
 
-        if(isBetween(0.27F,0.75F,hitZ) && side != 1){
+        if(AbilityHelper.isBetween(0.27F, 0.75F, hitZ) && side != 1){
             if(side == 4) {
-                setStackInSlot(0, player, combiner);
+                AbilityHelper.setStackInSlot(0, player, combiner);
             }
             else {
-                setStackInSlot(2, player, combiner);
+                AbilityHelper.setStackInSlot(2, player, combiner);
             }
         }
-        else if (isBetween(0.27F, 0.75F, hitX) && side != 1) {
+        else if (AbilityHelper.isBetween(0.27F, 0.75F, hitX) && side != 1) {
             if(side == 2) {
-                setStackInSlot(1, player, combiner);
+                AbilityHelper.setStackInSlot(1, player, combiner);
             }
             else {
-                setStackInSlot(3, player, combiner);
+                AbilityHelper.setStackInSlot(3, player, combiner);
             }
         }
-        else if(isBetween(0.3F, 0.7F, hitX) && isBetween(0.3F, 0.7F, hitZ)){
+        else if(AbilityHelper.isBetween(0.3F, 0.7F, hitX) && AbilityHelper.isBetween(0.3F, 0.7F, hitZ)){
             if(player.inventory.getCurrentItem() == null && combiner.getStackInSlot(4) != null){
                 player.inventory.addItemStackToInventory(combiner.getStackInSlot(4));
                 combiner.setInventorySlotContents(4, null);
             }
         }
         return true;
-    }
-
-    private boolean isBetween(float min, float max, float current){
-        return (((float)(int)(current * 100)) / 100) >= min && (((float)(int)(current * 100)) / 100) <= max;
-    }
-
-    private void setStackInSlot(int slot, EntityPlayer player, TileEntityCrystalCombiner combiner){
-        if(combiner.getStackInSlot(slot) == null && player.inventory.getCurrentItem() != null) {
-            combiner.setInventorySlotContents(slot, new ItemStack(player.inventory.getCurrentItem().getItem(), 1, player.inventory.getCurrentItem().getItemDamage()));
-            player.inventory.setInventorySlotContents(player.inventory.currentItem, player.inventory.decrStackSize(player.inventory.currentItem, player.inventory.getStackInSlot(player.inventory.currentItem).stackSize - 1));
-        }
-        else if(player.inventory.getCurrentItem() == null) {
-            player.inventory.addItemStackToInventory(combiner.getStackInSlot(slot));
-            combiner.setInventorySlotContents(slot, null);
-        }
     }
 }

@@ -3,7 +3,6 @@ package at.korti.endermystic.items.tools;
 import at.korti.endermystic.EnderMystic;
 import at.korti.endermystic.ModInfo;
 import at.korti.endermystic.api.mysticEnergyNetwork.EnergyNetworkHandler;
-import at.korti.endermystic.api.tools.AbilityHelper;
 import at.korti.endermystic.potion.PotionHelper;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;

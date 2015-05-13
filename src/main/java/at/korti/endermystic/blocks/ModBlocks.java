@@ -13,6 +13,7 @@ public class ModBlocks {
     public static EnergyDrain energyDrain;
     public static EnergyRelay energyRelay;
     public static EnderZar enderZar;
+    public static OrbInfuser orbInfuser;
 
     public static void init(){
         crystalOre = new CrystalOre();
@@ -20,6 +21,7 @@ public class ModBlocks {
         energyDrain = new EnergyDrain();
         energyRelay = new EnergyRelay();
         enderZar = new EnderZar();
+        orbInfuser = new OrbInfuser();
     }
 
     public static void load(){
@@ -28,6 +30,7 @@ public class ModBlocks {
         GameRegistry.registerBlock(energyDrain, "EnergyDrain");
         GameRegistry.registerBlock(energyRelay, "EnergyRelay");
         GameRegistry.registerBlock(enderZar, "EnderZar");
+        GameRegistry.registerBlock(orbInfuser, "OrbInfuser");
     }
 
 }

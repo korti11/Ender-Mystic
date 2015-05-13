@@ -30,6 +30,14 @@ item.endermystic.Crystal.Human.name=Human Crystal
 item.endermystic.Crystal.Grain.name=Grain Crystal
 item.endermystic.Crystal.Energy.name=Energy Crystal
 
+#Orb Cores
+item.endermystic.OrbCore.Air.name=Air Core
+item.endermystic.OrbCore.Earth.name=Earth Core
+item.endermystic.OrbCore.Emerald.name=Emerald Core
+item.endermystic.OrbCore.EnderZar.name=Ender Zar Core
+item.endermystic.OrbCore.Fire.name=Fire Core
+item.endermystic.OrbCore.Water.name=Water Core
+
 item.endermystic.AirRing.name=Air Ring
 
 tile.endermystic.CrystalOre.Earth.name=Earth Crystal Ore
@@ -41,6 +49,7 @@ tile.endermystic.EnergyRelay.name=Energy Relay
 tile.endermystic.EnergyDrain.name=Energy Drain
 tile.endermystic.CrystalCombiner.name=Crystal Combiner
 tile.endermystic.EnderZar.name=Ender Zar
+tile.endermystic.OrbInfuser.name=Orb Infuser
 
 potion.Breathing=Breathing
 potion.enderHearBleed=Ender Heart Bleed

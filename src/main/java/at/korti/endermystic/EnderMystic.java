@@ -2,14 +2,13 @@ package at.korti.endermystic;
 
 import at.korti.endermystic.blocks.ModBlocks;
 import at.korti.endermystic.client.guis.GuiHandler;
-import at.korti.endermystic.crafting.CrystalCombinerRecipes;
+import at.korti.endermystic.crafting.CraftingRecipes;
 import at.korti.endermystic.events.MobDropsEvents;
 import at.korti.endermystic.network.PacketPipeline;
 import at.korti.endermystic.potion.PotionHelper;
 import at.korti.endermystic.proxy.CommonProxy;
 import at.korti.endermystic.items.ModItems;
 import at.korti.endermystic.tileEntity.TileEntities;
-import cpw.mods.fml.common.Loader;
 import cpw.mods.fml.common.Mod;
 import cpw.mods.fml.common.SidedProxy;
 import cpw.mods.fml.common.event.FMLInitializationEvent;
@@ -55,7 +54,8 @@ public class EnderMystic {
         proxy.initKeys();
         MinecraftForge.EVENT_BUS.register(new MobDropsEvents());
 
-        CrystalCombinerRecipes.registerRecipes();
+        CraftingRecipes.registerCrystalCombinerRecipes();
+        CraftingRecipes.registerOrbInfuserRecipes();
     }
 
     @Mod.EventHandler
