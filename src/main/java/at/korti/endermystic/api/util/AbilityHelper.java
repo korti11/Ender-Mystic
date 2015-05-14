@@ -235,7 +235,7 @@ public class AbilityHelper {
     }
 
     public static void setStackInSlot(int slot, EntityPlayer player, IInventory inventory){
-        if(inventory.getStackInSlot(slot) == null && player.inventory.getCurrentItem() != null) {
+        if(inventory.getStackInSlot(slot) == null && player.inventory.getCurrentItem() != null && inventory.isItemValidForSlot(slot, player.inventory.getCurrentItem())) {
             inventory.setInventorySlotContents(slot, new ItemStack(player.inventory.getCurrentItem().getItem(), 1, player.inventory.getCurrentItem().getItemDamage()));
             player.inventory.setInventorySlotContents(player.inventory.currentItem, player.inventory.decrStackSize(player.inventory.currentItem, player.inventory.getStackInSlot(player.inventory.currentItem).stackSize - 1));
         }

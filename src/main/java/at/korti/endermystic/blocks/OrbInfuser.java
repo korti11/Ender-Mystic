@@ -50,30 +50,28 @@ public class OrbInfuser extends BlockContainer {
 
         TileEntityOrbInfuser infuser = (TileEntityOrbInfuser) world.getTileEntity(x, y, z);
 
-        //TODO: Optimize hit box
-
-        if(AbilityHelper.isBetween(0.47F, 0.51F,hitX) && AbilityHelper.isBetween(0.85F, 0.91F, hitZ)){      //Slot 1
+        if(AbilityHelper.isBetween(0.40F, 0.60F,hitX) && AbilityHelper.isBetween(0.74F, 0.94F, hitZ)){      //Slot 1
             AbilityHelper.setStackInSlot(0, player, infuser);
         }
-        else if(AbilityHelper.isBetween(0.15F, 0.22F,hitX) && AbilityHelper.isBetween(0.76F, 0.85F, hitZ)){      //Slot 2
+        else if(AbilityHelper.isBetween(0.09F, 0.29F,hitX) && AbilityHelper.isBetween(0.71F, 0.91F, hitZ)){      //Slot 2
             AbilityHelper.setStackInSlot(1, player, infuser);
         }
-        else if(AbilityHelper.isBetween(0.11F, 0.16F,hitX) && AbilityHelper.isBetween(0.47F, 0.52F, hitZ)){      //Slot 3
+        else if(AbilityHelper.isBetween(0.06F, 0.26F,hitX) && AbilityHelper.isBetween(0.40F, 0.60F, hitZ)){      //Slot 3
             AbilityHelper.setStackInSlot(2, player, infuser);
         }
-        else if(AbilityHelper.isBetween(0.15F, 0.22F,hitX) && AbilityHelper.isBetween(0.15F, 0.22F, hitZ)){      //Slot 4
+        else if(AbilityHelper.isBetween(0.09F, 0.29F,hitX) && AbilityHelper.isBetween(0.09F, 0.29F, hitZ)){      //Slot 4
             AbilityHelper.setStackInSlot(3, player, infuser);
         }
-        else if(AbilityHelper.isBetween(0.47F, 0.51F,hitX) && AbilityHelper.isBetween(0.11F, 0.16F, hitZ)){      //Slot 5
+        else if(AbilityHelper.isBetween(0.40F, 0.60F,hitX) && AbilityHelper.isBetween(0.06F, 0.26F, hitZ)){      //Slot 5
             AbilityHelper.setStackInSlot(4, player, infuser);
         }
-        else if(AbilityHelper.isBetween(0.77F, 0.86F,hitX) && AbilityHelper.isBetween(0.15F, 0.22F, hitZ)){      //Slot 6
+        else if(AbilityHelper.isBetween(0.71F, 0.91F,hitX) && AbilityHelper.isBetween(0.09F, 0.29F, hitZ)){      //Slot 6
             AbilityHelper.setStackInSlot(5, player, infuser);
         }
-        else if(AbilityHelper.isBetween(0.82F, 0.88F,hitX) && AbilityHelper.isBetween(0.47F, 0.52F, hitZ)){      //Slot 7
+        else if(AbilityHelper.isBetween(0.74F, 0.94F,hitX) && AbilityHelper.isBetween(0.40F, 0.60F, hitZ)){      //Slot 7
             AbilityHelper.setStackInSlot(6, player, infuser);
         }
-        else if(AbilityHelper.isBetween(0.77F, 0.86F,hitX) && AbilityHelper.isBetween(0.76F, 0.85F, hitZ)){      //Slot 8
+        else if(AbilityHelper.isBetween(0.71F, 0.91F,hitX) && AbilityHelper.isBetween(0.71F, 0.91F, hitZ)){      //Slot 8
             AbilityHelper.setStackInSlot(7, player, infuser);
         }
         else if(AbilityHelper.isBetween(0.37F, 0.62F,hitX) && AbilityHelper.isBetween(0.37F, 0.62F, hitZ)){      //Slot 9

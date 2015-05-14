@@ -4,9 +4,11 @@ import at.korti.endermystic.api.crafting.CraftingRegistry;
 import at.korti.endermystic.api.crafting.OrbInfuserRecipe;
 import at.korti.endermystic.api.mysticEnergyNetwork.EnergyNetworkHandler;
 import at.korti.endermystic.api.mysticEnergyNetwork.IEnergyProvider;
+import at.korti.endermystic.items.CrystalItem;
 import at.korti.endermystic.items.OrbCoreItem;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.inventory.IInventory;
+import net.minecraft.item.ItemEnderPearl;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.nbt.NBTTagList;
@@ -104,7 +106,10 @@ public class TileEntityOrbInfuser extends TileEntity implements IInventory{
 
     @Override
     public boolean isItemValidForSlot(int slot, ItemStack stack) {
-        return false;
+        if (slot == 8) {
+            return stack.getItem() instanceof ItemEnderPearl;
+        }
+        return stack.getItem() instanceof CrystalItem;
     }
 
     @Override
