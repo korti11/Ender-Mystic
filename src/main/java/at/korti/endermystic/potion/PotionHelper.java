@@ -46,9 +46,9 @@ public class PotionHelper {
     }
 
     public static void init(){
-        enderHeartBleed = (new EnderHeartBleed(EnderMystic.config.get("Ender Heart Bleed ID", "Potion", 60).getInt(), false, 0)).setIconIndex(0,0).setPotionName("potion.enderHeartBleed");
-        waterBreathing = (new WaterBreathing(EnderMystic.config.get("Water Breathing ID", "Potion", 61).getInt(), false, 0)).setIconIndex(0,0).setPotionName("potion.Breathing");
-        enderScream = (new EnderScream(EnderMystic.config.get("Ender Scream ID", "Potion", 62).getInt(), false, 0)).setIconIndex(0, 0).setPotionName("potion.enderScream");
+        enderHeartBleed = (new EnderHeartBleed(EnderMystic.config.get("Potion", "Ender Heart Bleed ID", 60).getInt(), false, 0)).setIconIndex(0,0).setPotionName("potion.enderHeartBleed");
+        waterBreathing = (new WaterBreathing(EnderMystic.config.get("Potion", "Water Breathing ID", 61).getInt(), false, 0)).setIconIndex(0,0).setPotionName("potion.Breathing");
+        enderScream = (new EnderScream(EnderMystic.config.get("Potion", "Ender Scream ID", 62).getInt(), false, 0)).setIconIndex(0, 0).setPotionName("potion.enderScream");
     }
 
 }

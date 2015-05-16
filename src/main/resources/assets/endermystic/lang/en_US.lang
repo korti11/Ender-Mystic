@@ -37,6 +37,7 @@ item.endermystic.OrbCore.Emerald.name=Emerald Core
 item.endermystic.OrbCore.EnderZar.name=Ender Zar Core
 item.endermystic.OrbCore.Fire.name=Fire Core
 item.endermystic.OrbCore.Water.name=Water Core
+item.endermystic.OrbCore.BasicEnder.Name=Basic Ender Core
 
 item.endermystic.AirRing.name=Air Ring
 
@@ -53,3 +54,11 @@ tile.endermystic.OrbInfuser.name=Orb Infuser
 
 potion.Breathing=Breathing
 potion.enderHearBleed=Ender Heart Bleed
+
+#Upgrade Names
+upgrade.endermystic.luck=Luck
+upgrade.endermystic.silktouch=Silky
+upgrade.endermystic.haste=Haste
+upgrade.endermystic.sharpness=Sharpness
+upgrade.endermystic.autosmelt=Auto Smelt
+upgrade.endermystic.firey=Firey

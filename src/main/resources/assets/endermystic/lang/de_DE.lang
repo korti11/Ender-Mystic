@@ -1,0 +1,62 @@
+itemGroup.endermystic=Ender Mystic
+
+item.endermystic.BasicEnderOrb.name=Basic Ender Orb
+item.endermystic.EmeraldOrb.name=Smaragd Orb
+item.endermystic.WaterOrb.name=Wasser Orb
+item.endermystic.FireOrb.name=Feuer Orb
+item.endermystic.EarthOrb.name=Erde Orb
+item.endermystic.AirOrb.name=Luft Orb
+item.endermystic.TestOrb.name=Test Orb
+item.endermystic.EnderZarOrb.name=Ender Zar Orb
+
+item.endermystic.EnderSacrifice.name=Ender Opferung
+item.endermystic.EnderSoulSword.name=Ender Seelen Schwert
+item.endermystic.EnderSoulPickaxe.name=Ender Seelen Spitzhacke
+item.endermystic.EnderSoulShovel.name=Ender Seelen Schaufel
+item.endermystic.EnderSoulHammer.name=Ender Seelen Hammer
+item.endermystic.EnderSoulExcavator.name=Ender Seelen Ausgräber
+
+item.endermystic.EnderShard.name=Ender Scherbe
+item.endermystic.EnderSoulFillEmpty.name=Ender Seelen Gefäss (Leer)
+item.endermystic.EnderSoulFillFilled.name=Ender Seelen Gefäss (Gefühlt)
+
+#Crystals
+item.endermystic.Crystal.Water.name=Wasser Kristall
+item.endermystic.Crystal.Fire.name=Feuer Kristall
+item.endermystic.Crystal.Air.name=Luft Krystall
+item.endermystic.Crystal.Earth.name=Erde Krystall
+item.endermystic.Crystal.Life.name=Lebens Kristall
+item.endermystic.Crystal.Human.name=Menschen Kristall
+item.endermystic.Crystal.Grain.name=Getreide Kristall
+item.endermystic.Crystal.Energy.name=Energie Kristall
+
+#Orb Cores
+item.endermystic.OrbCore.Air.name=Luft Kern
+item.endermystic.OrbCore.Earth.name=Erde Kern
+item.endermystic.OrbCore.Emerald.name=Smaragd Kern
+item.endermystic.OrbCore.EnderZar.name=Ender Zar Kern
+item.endermystic.OrbCore.Fire.name=Feuer Kern
+item.endermystic.OrbCore.Water.name=Wasser Kern
+item.endermystic.OrbCore.BasicEnder.Name=Basic Ender Kern
+
+item.endermystic.AirRing.name=Luft Ring
+
+tile.endermystic.CrystalOre.Earth.name=Erde Kristall Erz
+tile.endermystic.CrystalOre.Air.name=Luft Kristall Erz
+tile.endermystic.CrystalOre.Water.name=Wasser Kristall Erz
+tile.endermystic.CrystalOre.Fire.name=Feuer Kristall Erz
+
+tile.endermystic.EnergyRelay.name=Energie Relais
+tile.endermystic.EnergyDrain.name=Energie Abfluss
+tile.endermystic.CrystalCombiner.name=Kristall Combiner
+tile.endermystic.EnderZar.name=Ender Zar
+tile.endermystic.OrbInfuser.name=Orb Brüheinheit
+
+potion.Breathing=Atmung
+potion.enderHearBleed=Ender Herz Bluten
+
+#Upgrade Names
+upgrade.endermystic.luck=Glück
+upgrade.endermystic.silktouch=Samtig
+upgrade.endermystic.haste=Eile
+upgrade.endermystic.sharpness=Schärfe

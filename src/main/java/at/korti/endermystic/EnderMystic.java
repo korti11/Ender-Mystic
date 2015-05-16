@@ -1,9 +1,11 @@
 package at.korti.endermystic;
 
+import at.korti.endermystic.api.tools.ToolLevelHandler;
 import at.korti.endermystic.blocks.ModBlocks;
 import at.korti.endermystic.client.guis.GuiHandler;
+import at.korti.endermystic.command.AddUpgradeCommand;
 import at.korti.endermystic.crafting.CraftingRecipes;
-import at.korti.endermystic.events.MobDropsEvents;
+import at.korti.endermystic.event.EventManager;
 import at.korti.endermystic.network.PacketPipeline;
 import at.korti.endermystic.potion.PotionHelper;
 import at.korti.endermystic.proxy.CommonProxy;
@@ -14,6 +16,7 @@ import cpw.mods.fml.common.SidedProxy;
 import cpw.mods.fml.common.event.FMLInitializationEvent;
 import cpw.mods.fml.common.event.FMLPostInitializationEvent;
 import cpw.mods.fml.common.event.FMLPreInitializationEvent;
+import cpw.mods.fml.common.event.FMLServerStartingEvent;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.init.Items;
 import net.minecraft.item.Item;
@@ -52,10 +55,13 @@ public class EnderMystic {
         ModItems.load();
         PotionHelper.preInit();
         proxy.initKeys();
-        MinecraftForge.EVENT_BUS.register(new MobDropsEvents());
+        MinecraftForge.EVENT_BUS.register(new EventManager());
 
         CraftingRecipes.registerCrystalCombinerRecipes();
         CraftingRecipes.registerOrbInfuserRecipes();
+        CraftingRecipes.registerVanillaRecipes();
+
+        ToolLevelHandler.getInstance().initToolLevelSystem();
     }
 
     @Mod.EventHandler
@@ -72,6 +78,11 @@ public class EnderMystic {
     public static void postInit(FMLPostInitializationEvent event){
         pipeline.postInitialise();
         config.save();
+    }
+
+    @Mod.EventHandler
+    public static void serverload(FMLServerStartingEvent event) {
+        event.registerServerCommand(new AddUpgradeCommand());
     }
 
 }

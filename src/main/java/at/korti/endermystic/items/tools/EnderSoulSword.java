@@ -3,6 +3,8 @@ package at.korti.endermystic.items.tools;
 import at.korti.endermystic.EnderMystic;
 import at.korti.endermystic.ModInfo;
 import at.korti.endermystic.api.mysticEnergyNetwork.EnergyNetworkHandler;
+import at.korti.endermystic.api.tools.IEnderSoulTool;
+import at.korti.endermystic.api.tools.ToolLevelHandler;
 import at.korti.endermystic.potion.PotionHelper;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
@@ -22,7 +24,7 @@ import java.util.List;
 /**
  * Created by Korti on 27.10.2014.
  */
-public class EnderSoulSword extends ItemSword {
+public class EnderSoulSword extends ItemSword implements IEnderSoulTool{
 
     public EnderSoulSword() {
         super(ToolMaterials.enderSoul);
@@ -49,6 +51,10 @@ public class EnderSoulSword extends ItemSword {
             stack.stackTagCompound = new NBTTagCompound();
         }
 
+        if (!ToolLevelHandler.getInstance().isItemInited(stack)) {
+            ToolLevelHandler.getInstance().initItem(stack);
+        }
+
         if(stack.stackTagCompound.hasKey("em_owner")){
             info.add("Owner: " + stack.stackTagCompound.getString("em_owner"));
         }
@@ -59,6 +65,13 @@ public class EnderSoulSword extends ItemSword {
         else{
             info.add("Deactivated");
         }
+
+        info.add("");
+        ToolLevelHandler.getInstance().writeAttackDamage(stack, info);
+        info.add("");
+        info.add("Level: " + ToolLevelHandler.getInstance().getLevelName(stack));
+        info.add("Xp: " + ToolLevelHandler.getInstance().getXp(stack) + "/" + ToolLevelHandler.getInstance().getMaxXp(stack));
+        ToolLevelHandler.getInstance().writeInfo(stack, info);
 
     }
 
@@ -75,24 +88,7 @@ public class EnderSoulSword extends ItemSword {
 
         return true;
     }
-
-    @Override
-    public boolean hitEntity(ItemStack stack, EntityLivingBase entity, EntityLivingBase player) {
-
-        if(stack.stackTagCompound == null){
-            stack.stackTagCompound = new NBTTagCompound();
-        }
-
-        if(EnergyNetworkHandler.DecEnergy(ToolStats.enderSoulSwordUsage, stack.stackTagCompound.getString("em_owner"))){
-            if(stack.stackTagCompound.hasKey("em_owner") && stack.stackTagCompound.getBoolean("em_active")) {
-                entity.addPotionEffect(new PotionEffect(PotionHelper.enderHeartBleed.getId(), 200));
-            }
-            return true;
-        }
-
-        return false;
-    }
-
+    
     @Override
     public ItemStack onItemRightClick(ItemStack stack, World world, EntityPlayer player) {
 
@@ -119,9 +115,7 @@ public class EnderSoulSword extends ItemSword {
     @Override
     public void onUpdate(ItemStack stack, World p_77663_2_, Entity p_77663_3_, int p_77663_4_, boolean p_77663_5_) {
         if(stack.isItemDamaged()){
-            if(EnergyNetworkHandler.DecEnergy(ToolStats.enderSoulSwordUsage, stack.stackTagCompound.getString("em_owner"))){
-                stack.setItemDamage(0);
-            }
+            stack.setItemDamage(0);
         }
     }
 

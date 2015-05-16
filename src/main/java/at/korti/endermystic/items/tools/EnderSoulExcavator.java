@@ -2,6 +2,8 @@ package at.korti.endermystic.items.tools;
 
 import at.korti.endermystic.EnderMystic;
 import at.korti.endermystic.ModInfo;
+import at.korti.endermystic.api.tools.IEnderSoulTool;
+import at.korti.endermystic.api.tools.ToolLevelHandler;
 import at.korti.endermystic.api.util.AbilityHelper;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
@@ -22,7 +24,7 @@ import java.util.List;
 /**
  * Created by Korti on 04.12.2014.
  */
-public class EnderSoulExcavator extends ItemSpade {
+public class EnderSoulExcavator extends ItemSpade implements IEnderSoulTool{
 
     public EnderSoulExcavator() {
         super(ToolMaterials.enderSoul);
@@ -50,6 +52,10 @@ public class EnderSoulExcavator extends ItemSpade {
             stack.stackTagCompound = new NBTTagCompound();
         }
 
+        if (!ToolLevelHandler.getInstance().isItemInited(stack)) {
+            ToolLevelHandler.getInstance().initItem(stack);
+        }
+
         if(stack.stackTagCompound.hasKey("em_owner")){
             info.add("Owner: " + stack.stackTagCompound.getString("em_owner"));
         }
@@ -60,6 +66,10 @@ public class EnderSoulExcavator extends ItemSpade {
         else{
             info.add("Deactivated");
         }
+        info.add("");
+        info.add("Level: " + ToolLevelHandler.getInstance().getLevelName(stack));
+        info.add("Xp: " + ToolLevelHandler.getInstance().getXp(stack) + "/" + ToolLevelHandler.getInstance().getMaxXp(stack));
+        ToolLevelHandler.getInstance().writeInfo(stack, info);
 
     }
 
@@ -116,7 +126,7 @@ public class EnderSoulExcavator extends ItemSpade {
             return 0.0F;
         }
 
-        return super.getDigSpeed(stack, block, meta);
+        return super.getDigSpeed(stack, block, meta) + ToolLevelHandler.getInstance().handleHasteUpgrade(stack);
     }
 
     @Override

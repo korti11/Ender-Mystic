@@ -3,11 +3,14 @@ package at.korti.endermystic.items.tools;
 import at.korti.endermystic.EnderMystic;
 import at.korti.endermystic.ModInfo;
 import at.korti.endermystic.api.mysticEnergyNetwork.EnergyNetworkHandler;
+import at.korti.endermystic.api.tools.IEnderSoulTool;
+import at.korti.endermystic.api.tools.ToolLevelHandler;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 import net.minecraft.block.Block;
 import net.minecraft.client.renderer.texture.IIconRegister;
 import net.minecraft.entity.Entity;
+import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemSpade;
 import net.minecraft.item.ItemStack;
@@ -20,7 +23,7 @@ import java.util.List;
 /**
  * Created by Korti on 27.10.2014.
  */
-public class EnderSoulShovel extends ItemSpade{
+public class EnderSoulShovel extends ItemSpade implements IEnderSoulTool{
 
     public EnderSoulShovel() {
         super(ToolMaterials.enderSoul);
@@ -47,6 +50,10 @@ public class EnderSoulShovel extends ItemSpade{
             stack.stackTagCompound = new NBTTagCompound();
         }
 
+        if (!ToolLevelHandler.getInstance().isItemInited(stack)) {
+            ToolLevelHandler.getInstance().initItem(stack);
+        }
+
         if(stack.stackTagCompound.hasKey("em_owner")){
             info.add("Owner: " + stack.stackTagCompound.getString("em_owner"));
         }
@@ -58,6 +65,10 @@ public class EnderSoulShovel extends ItemSpade{
             info.add("Deactivated");
         }
 
+        info.add("");
+        info.add("Level: " + ToolLevelHandler.getInstance().getLevelName(stack));
+        info.add("Xp: " + ToolLevelHandler.getInstance().getXp(stack) + "/" + ToolLevelHandler.getInstance().getMaxXp(stack));
+        ToolLevelHandler.getInstance().writeInfo(stack, info);
     }
 
     @Override
@@ -98,7 +109,7 @@ public class EnderSoulShovel extends ItemSpade{
             return 0.0F;
         }
 
-        return super.getDigSpeed(stack, block, meta);
+        return super.getDigSpeed(stack, block, meta) + ToolLevelHandler.getInstance().handleHasteUpgrade(stack);
     }
 
     @Override

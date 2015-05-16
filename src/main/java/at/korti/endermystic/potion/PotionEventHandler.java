@@ -18,7 +18,7 @@ public class PotionEventHandler {
 
         if(entity.isPotionActive(PotionHelper.enderHeartBleed)){
             if(entity.worldObj.rand.nextInt(20) == 0){
-                entity.attackEntityFrom(DamageSource.generic, 2);
+                entity.attackEntityFrom(DamageSource.generic, 1);
             }
         }
         else if(entity.isPotionActive(PotionHelper.waterBreathing)){

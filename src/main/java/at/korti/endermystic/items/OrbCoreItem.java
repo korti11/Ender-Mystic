@@ -11,7 +11,7 @@ import java.util.List;
  */
 public class OrbCoreItem extends ModItem {
 
-    private final int count = 6;
+    private final int count = 7;
 
     public OrbCoreItem() {
         super("OrbCore");
@@ -34,6 +34,8 @@ public class OrbCoreItem extends ModItem {
                 return 0xd43535;
             case 5:
                 return 0x29a4a4;
+            case 6:
+                return 0x258474;
             default:
                 return 0;
         }
@@ -60,6 +62,9 @@ public class OrbCoreItem extends ModItem {
                 break;
             case 5:
                 subName = "Water";
+                break;
+            case 6:
+                subName = "BasicEnder";
                 break;
             default:
                 subName = "OrbCore";

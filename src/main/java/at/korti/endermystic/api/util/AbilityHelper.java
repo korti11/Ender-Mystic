@@ -1,9 +1,12 @@
 package at.korti.endermystic.api.util;
 
 import at.korti.endermystic.api.mysticEnergyNetwork.EnergyNetworkHandler;
+import at.korti.endermystic.api.tools.ToolLevelHandler;
 import at.korti.endermystic.items.orbs.EarthOrb;
 import at.korti.endermystic.items.orbs.OrbStats;
+import at.korti.endermystic.items.tools.EnderSoulSword;
 import at.korti.endermystic.items.tools.ToolStats;
+import at.korti.endermystic.potion.PotionHelper;
 import net.minecraft.block.Block;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
@@ -13,6 +16,8 @@ import net.minecraft.init.Blocks;
 import net.minecraft.inventory.IInventory;
 import net.minecraft.item.ItemPickaxe;
 import net.minecraft.item.ItemStack;
+import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.potion.PotionEffect;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.MathHelper;
 import net.minecraft.util.MovingObjectPosition;
@@ -25,6 +30,7 @@ import net.minecraft.world.World;
 public class AbilityHelper {
 
     public static void BreakMultiBlocks(EntityLivingBase player, ItemStack stack, World world, int x, int y, int z, int side, int radius){
+        //TODO: Implement Tool Level System
         String itemName = stack.stackTagCompound.getString("em_owner");
         boolean isOrb = stack.getItem() instanceof EarthOrb;
         String toolClass = !isOrb ? stack.getItem() instanceof ItemPickaxe ? "pickaxe" : "shovel" : "";
@@ -34,7 +40,7 @@ public class AbilityHelper {
 
                 for (int j = x - radius / 2; j <= x + radius / 2; j++) {
 
-                    if (setEnergy(world, j, y, i, itemName, toolClass, isOrb)) {
+                    if (setEnergy(stack, world, j, y, i, itemName, toolClass, isOrb)) {
                         world.getBlock(j, y, i).harvestBlock(world, (EntityPlayer) player, j, y, i, world.getBlock(j, y, i).getDamageValue(world, j, y, i));
                         world.setBlock(j, y, i, Blocks.air);
                     }
@@ -57,12 +63,12 @@ public class AbilityHelper {
                 for (int j = help - radius / 2; j <= help + radius / 2; j++) {
 
                     if (side == 3 || side == 2) {
-                        if (setEnergy(world, j, i, z, itemName, toolClass, isOrb)) {
+                        if (setEnergy(stack, world, j, i, z, itemName, toolClass, isOrb)) {
                             world.getBlock(j, i, z).harvestBlock(world, (EntityPlayer) player, j, i, z, world.getBlock(j, i, z).getDamageValue(world, j, i, z));
                             world.setBlock(j, i, z, Blocks.air);
                         }
                     } else {
-                        if (setEnergy(world, x, i, j, itemName, toolClass, isOrb)) {
+                        if (setEnergy(stack, world, x, i, j, itemName, toolClass, isOrb)) {
                             world.getBlock(x, i, j).harvestBlock(world, (EntityPlayer) player, x, i, j, world.getBlock(x, i, j).getDamageValue(world, x, i, j));
                             world.setBlock(x, i, j, Blocks.air);
                         }
@@ -75,7 +81,7 @@ public class AbilityHelper {
         }
     }
 
-    private static boolean setEnergy(World world, int x, int y, int z, String itemName, String toolClass, boolean isOrb){
+    private static boolean setEnergy(ItemStack stack, World world, int x, int y, int z, String itemName, String toolClass, boolean isOrb){
 
         boolean material = false;
 
@@ -93,6 +99,7 @@ public class AbilityHelper {
                 else {
                     material = EnergyNetworkHandler.DecEnergy(ToolStats.enderSoulShovelUsage, itemName);
                 }
+                ToolLevelHandler.getInstance().addXP(stack, 1);
             }
         }
 
@@ -242,6 +249,20 @@ public class AbilityHelper {
         else if(player.inventory.getCurrentItem() == null) {
             player.inventory.addItemStackToInventory(inventory.getStackInSlot(slot));
             inventory.setInventorySlotContents(slot, null);
+        }
+    }
+
+    public static void addEnderHeartBleedPotion(ItemStack stack, EntityLivingBase entity) {
+        if(stack.getItem() instanceof EnderSoulSword) {
+            if (stack.stackTagCompound == null) {
+                stack.stackTagCompound = new NBTTagCompound();
+            }
+
+            if (EnergyNetworkHandler.DecEnergy(ToolStats.enderSoulSwordUsage, stack.stackTagCompound.getString("em_owner"))) {
+                if (stack.stackTagCompound.hasKey("em_owner") && stack.stackTagCompound.getBoolean("em_active")) {
+                    entity.addPotionEffect(new PotionEffect(PotionHelper.enderHeartBleed.getId(), 200));
+                }
+            }
         }
     }
 
