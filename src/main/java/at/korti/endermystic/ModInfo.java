@@ -7,6 +7,6 @@ public class ModInfo {
 
     public static final String MODID = "endermystic";
     public static final String NAME = "Ender Mystic";
-    public static final String VERSION = "0.6.1-Alpha";
+    public static final String VERSION = "0.6.2-Alpha";
 
 }

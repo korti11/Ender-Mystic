@@ -4,12 +4,17 @@ import at.korti.endermystic.api.tools.ToolLevelHandler;
 import at.korti.endermystic.api.tools.ToolUpgrade;
 import at.korti.endermystic.api.util.AbilityHelper;
 import at.korti.endermystic.items.ModItems;
+import at.korti.endermystic.items.tools.EnderSoulExcavator;
+import at.korti.endermystic.items.tools.EnderSoulHammer;
 import at.korti.endermystic.potion.PotionHelper;
 import cpw.mods.fml.common.eventhandler.SubscribeEvent;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.monster.EntityMob;
 import net.minecraft.entity.monster.IMob;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.item.ItemStack;
+import net.minecraft.util.MovingObjectPosition;
+import net.minecraft.world.World;
 import net.minecraftforge.event.entity.living.LivingAttackEvent;
 import net.minecraftforge.event.entity.living.LivingDeathEvent;
 import net.minecraftforge.event.world.BlockEvent;
@@ -50,10 +55,26 @@ public class EventManager {
 
     @SubscribeEvent
     public void onBlockBreak(BlockEvent.BreakEvent event) {
-        ToolLevelHandler.getInstance().addXP(event.getPlayer().inventory.getCurrentItem(), 1);
-        boolean check = ToolLevelHandler.getInstance().handleLuckUpgrade(event) || ToolLevelHandler.getInstance().handleSilkTouchUpgrade(event) || ToolLevelHandler.getInstance().handleAutoSmeltUpgrade(event);
-        if(check) {
+        boolean check = handleBreak(event);
+        handleMultiBreak(event.getPlayer().inventory.getCurrentItem(), event.world, event.getPlayer(), event.x, event.y, event.z);
+        if (check) {
             ToolLevelHandler.getInstance().cancleEventIf(event, event.getPlayer().inventory.getCurrentItem());
         }
+    }
+
+    private void handleMultiBreak(ItemStack stack, World world, EntityPlayer player, int x, int y, int z) {
+        if (stack.getItem() instanceof EnderSoulHammer || stack.getItem() instanceof EnderSoulExcavator) {
+            MovingObjectPosition mop = AbilityHelper.raytraceFromEntity(world, player, false, 4.5D);
+            if (mop != null) {
+                AbilityHelper.BreakMultiBlocks(player, stack, world, x, y, z, mop.sideHit, 3);
+            } else {
+                return;
+            }
+        }
+    }
+
+    private boolean handleBreak(BlockEvent.BreakEvent event) {
+        ToolLevelHandler.getInstance().addXP(event.getPlayer().inventory.getCurrentItem(), 1);
+        return ToolLevelHandler.getInstance().handleLuckUpgrade(event) || ToolLevelHandler.getInstance().handleSilkTouchUpgrade(event) || ToolLevelHandler.getInstance().handleAutoSmeltUpgrade(event);
     }
 }

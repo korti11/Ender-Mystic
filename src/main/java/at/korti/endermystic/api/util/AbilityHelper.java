@@ -8,6 +8,7 @@ import at.korti.endermystic.items.tools.EnderSoulSword;
 import at.korti.endermystic.items.tools.ToolStats;
 import at.korti.endermystic.potion.PotionHelper;
 import net.minecraft.block.Block;
+import net.minecraft.client.Minecraft;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
@@ -40,7 +41,7 @@ public class AbilityHelper {
 
                 for (int j = x - radius / 2; j <= x + radius / 2; j++) {
 
-                    if (setEnergy(stack, world, j, y, i, itemName, toolClass, isOrb)) {
+                    if (setEnergy(stack, world, j, y, i, itemName, toolClass, isOrb) && !handleUpgrades(stack, world, world.getBlock(j, y, i), j, y, i)) {
                         world.getBlock(j, y, i).harvestBlock(world, (EntityPlayer) player, j, y, i, world.getBlock(j, y, i).getDamageValue(world, j, y, i));
                         world.setBlock(j, y, i, Blocks.air);
                     }
@@ -63,12 +64,12 @@ public class AbilityHelper {
                 for (int j = help - radius / 2; j <= help + radius / 2; j++) {
 
                     if (side == 3 || side == 2) {
-                        if (setEnergy(stack, world, j, i, z, itemName, toolClass, isOrb)) {
+                        if (setEnergy(stack, world, j, i, z, itemName, toolClass, isOrb) && !handleUpgrades(stack, world, world.getBlock(j, i, z), j, i, z)) {
                             world.getBlock(j, i, z).harvestBlock(world, (EntityPlayer) player, j, i, z, world.getBlock(j, i, z).getDamageValue(world, j, i, z));
                             world.setBlock(j, i, z, Blocks.air);
                         }
                     } else {
-                        if (setEnergy(stack, world, x, i, j, itemName, toolClass, isOrb)) {
+                        if (setEnergy(stack, world, x, i, j, itemName, toolClass, isOrb) && !handleUpgrades(stack, world, world.getBlock(x, i, j), x, i, j)) {
                             world.getBlock(x, i, j).harvestBlock(world, (EntityPlayer) player, x, i, j, world.getBlock(x, i, j).getDamageValue(world, x, i, j));
                             world.setBlock(x, i, j, Blocks.air);
                         }
@@ -92,7 +93,8 @@ public class AbilityHelper {
             }
         }
         else {
-            if(world.getBlock(x,y,z).getHarvestTool(world.getBlock(x, y, z).getDamageValue(world, x, y, z)).equals(toolClass)){
+            String harvestTool = world.getBlock(x,y,z).getHarvestTool(world.getBlock(x, y, z).getDamageValue(world, x, y, z));
+            if(harvestTool != null && harvestTool.equals(toolClass)){
                 if(toolClass.equals("pickaxe")){
                     material = EnergyNetworkHandler.DecEnergy(ToolStats.enderSoulPickaxeUsage, itemName);
                 }
@@ -105,6 +107,10 @@ public class AbilityHelper {
 
         return material;
 
+    }
+
+    private static boolean handleUpgrades(ItemStack stack, World world, Block block, int x, int y, int z) {
+        return ToolLevelHandler.getInstance().handleLuckUpgrade(stack, world, block, x, y, z) || ToolLevelHandler.getInstance().handleSilkTouchUpgrade(stack, world, block, x, y, z, Minecraft.getMinecraft().thePlayer) || ToolLevelHandler.getInstance().handleAutoSmeltUpgrade(stack, world, block, x, y, z);
     }
 
     public static MovingObjectPosition raytraceFromEntity (World world, Entity player, boolean par3, double range)

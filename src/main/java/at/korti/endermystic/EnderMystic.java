@@ -4,6 +4,7 @@ import at.korti.endermystic.api.tools.ToolLevelHandler;
 import at.korti.endermystic.blocks.ModBlocks;
 import at.korti.endermystic.client.guis.GuiHandler;
 import at.korti.endermystic.command.AddUpgradeCommand;
+import at.korti.endermystic.command.AddXpCommand;
 import at.korti.endermystic.crafting.CraftingRecipes;
 import at.korti.endermystic.event.EventManager;
 import at.korti.endermystic.network.PacketPipeline;
@@ -83,6 +84,7 @@ public class EnderMystic {
     @Mod.EventHandler
     public static void serverload(FMLServerStartingEvent event) {
         event.registerServerCommand(new AddUpgradeCommand());
+        event.registerServerCommand(new AddXpCommand());
     }
 
 }

@@ -4,6 +4,7 @@ import at.korti.endermystic.EnderMystic;
 import at.korti.endermystic.items.tools.ToolMaterials;
 import cpw.mods.fml.common.eventhandler.Event;
 import cpw.mods.fml.common.registry.GameRegistry;
+import net.minecraft.block.Block;
 import net.minecraft.client.Minecraft;
 import net.minecraft.entity.item.EntityItem;
 import net.minecraft.entity.player.EntityPlayer;
@@ -14,6 +15,7 @@ import net.minecraft.nbt.NBTTagList;
 import net.minecraft.util.ChatComponentText;
 import net.minecraft.util.DamageSource;
 import net.minecraft.util.EnumChatFormatting;
+import net.minecraft.world.World;
 import net.minecraftforge.common.config.Property;
 import net.minecraftforge.event.entity.living.LivingAttackEvent;
 import net.minecraftforge.event.world.BlockEvent;
@@ -72,8 +74,9 @@ public class ToolLevelHandler {
         for (int i = 0; i < maxXpForLevels.length; i++) {
             newMaxXpForLavels[i] = maxXpForLevels[i];
         }
+        int pos = maxXpForLevels.length - 1;
         for (int i = maxXpForLevels.length; i < levelNames.length; i++) {
-            newMaxXpForLavels[i] = ((maxXpForLevels[maxXpForLevels.length - 1] / 100) * 100) + 100 + random.nextInt(100);
+            newMaxXpForLavels[i] = ((newMaxXpForLavels[pos++] / 100) * 100) + 100 + random.nextInt(100);
         }
         maxXpForLevels = newMaxXpForLavels;
         maxXpProperty.set(maxXpForLevels);
@@ -104,12 +107,19 @@ public class ToolLevelHandler {
     //region Xp Handeling
     public void addXP(ItemStack stack, int xp) {
         if(stack.getItem() instanceof IEnderSoulTool) {
-            if (stack.stackTagCompound.getInteger(XP_TAG) >= stack.stackTagCompound.getInteger(MAX_XP_TAG)) {
-                stack.stackTagCompound.setInteger(XP_TAG, 0);
-                stack.stackTagCompound.setInteger(LEVEL_TAG, stack.stackTagCompound.getInteger(LEVEL_TAG) + 1);
-                stack.stackTagCompound.setInteger(MAX_XP_TAG, maxXpForLevels[stack.stackTagCompound.getInteger(LEVEL_TAG)]);
-                stack.stackTagCompound.setString(LEVEL_NAME_TAG, levelNames[stack.stackTagCompound.getInteger(LEVEL_TAG)]);
-                addRandomUpgrade(stack);
+            if (stack.stackTagCompound.getInteger(XP_TAG) + xp >= stack.stackTagCompound.getInteger(MAX_XP_TAG)) {
+                if(stack.stackTagCompound.getInteger(LEVEL_TAG) < levelNames.length) {
+                    stack.stackTagCompound.setInteger(XP_TAG, 0);
+                    stack.stackTagCompound.setInteger(LEVEL_TAG, stack.stackTagCompound.getInteger(LEVEL_TAG) + 1);
+                    stack.stackTagCompound.setInteger(MAX_XP_TAG, maxXpForLevels[stack.stackTagCompound.getInteger(LEVEL_TAG)]);
+                    stack.stackTagCompound.setString(LEVEL_NAME_TAG, levelNames[stack.stackTagCompound.getInteger(LEVEL_TAG)]);
+                    addRandomUpgrade(stack);
+                }
+                else if (stack.stackTagCompound.getInteger(LEVEL_TAG) == levelNames.length) {
+                    stack.stackTagCompound.setInteger(XP_TAG, maxXpForLevels[levelNames.length - 1]);
+                    stack.stackTagCompound.setInteger(LEVEL_TAG, stack.stackTagCompound.getInteger(LEVEL_TAG) + 1);
+                    addRandomUpgrade(stack);
+                }
             } else {
                 stack.stackTagCompound.setInteger(XP_TAG, stack.stackTagCompound.getInteger(XP_TAG) + xp);
             }
@@ -161,10 +171,18 @@ public class ToolLevelHandler {
 
     public boolean addRandomUpgrade(ItemStack stack) {
         int id;
+        boolean check;
+        List<Integer> checkedUpgrades = new ArrayList<>();
         do {
             id = random.nextInt(upgrades.size());
-        }while (isUpgradeValid(getUpgradeById(id), stack) && canAddLevel(stack, getUpgradeById(id), 1));
-        return addUpgrad(stack, getUpgradeById(id).getName(), "1");
+            if (!checkedUpgrades.contains(id)) {
+                checkedUpgrades.add(id);
+            }
+        }while (check = (!isUpgradeValid(getUpgradeById(id), stack) || !canAddLevel(stack, getUpgradeById(id), 1)) && checkedUpgrades.size() != 6);
+        if(!check) {
+            return addUpgrad(stack, String.valueOf(id), "1");
+        }
+        return false;
     }
 
     private boolean isUpgradeValid(ToolUpgrade upgrade, ItemStack stack) {
@@ -179,7 +197,7 @@ public class ToolLevelHandler {
         else if (ToolUpgrade.haste == upgrade || ToolUpgrade.silkTouch == upgrade || ToolUpgrade.autoSmelt == upgrade) {
             check = item instanceof ItemPickaxe || item instanceof ItemSpade;
             if(ToolUpgrade.silkTouch == upgrade) {
-                if (!hasUpgrade(stack, ToolUpgrade.luck) || !hasUpgrade(stack, ToolUpgrade.autoSmelt)) {
+                if (hasUpgrade(stack, ToolUpgrade.luck) || hasUpgrade(stack, ToolUpgrade.autoSmelt)) {
                     check = false;
                 }
             }
@@ -280,6 +298,16 @@ public class ToolLevelHandler {
         return damage;
     }
 
+    private void spawnItem(World world, ItemStack stack, int x, int y, int z) {
+        float f = 0.7F;
+        double d0 = (double) (random.nextFloat() * f) + (double) (1.0F - f) * 0.5D;
+        double d1 = (double) (random.nextFloat() * f) + (double) (1.0F - f) * 0.5D;
+        double d2 = (double) (random.nextFloat() * f) + (double) (1.0F - f) * 0.5D;
+        EntityItem entityItem = new EntityItem(world, x + d0, y + d1, z + d2, stack);
+        entityItem.delayBeforeCanPickup = 10;
+        world.spawnEntityInWorld(entityItem);
+    }
+
     public void cancleEventIf(Event event, ItemStack stack) {
         if (stack.getItem() instanceof IEnderSoulTool) {
             event.setCanceled(true);
@@ -294,52 +322,48 @@ public class ToolLevelHandler {
     }
 
     public boolean handleLuckUpgrade(BlockEvent.BreakEvent event) {
-        ItemStack stack = event.getPlayer().inventory.getCurrentItem();
+        return handleLuckUpgrade(event.getPlayer().inventory.getCurrentItem(), event.world, event.block, event.x, event.y, event.z);
+    }
+
+    public boolean handleLuckUpgrade(ItemStack stack, World world, Block block, int x, int y, int z) {
         if (hasUpgrade(stack, ToolUpgrade.luck)) {
-            Item item = event.block.getDrops(event.world, event.x, event.y, event.z, event.blockMetadata, 0).get(0).getItem();
-            if(!(item instanceof ItemBlock)) {
-                event.block.dropBlockAsItemWithChance(event.world, event.x, event.y, event.z, event.blockMetadata, random.nextFloat(), getLevelOfUpgrade(stack, ToolUpgrade.luck) * (random.nextInt(1) + 1));
-                return true;
+            Item item = block.getDrops(world, x, y, z, block.getDamageValue(world, x, y, z), 0).get(0).getItem();
+            if (!(item instanceof ItemBlock)) {
+                block.dropBlockAsItemWithChance(world, x, y, z, block.getDamageValue(world, x, y, z), random.nextFloat(), getLevelOfUpgrade(stack, ToolUpgrade.luck) * (random.nextInt(1) + 1));
             }
         }
         return false;
     }
 
     public boolean handleSilkTouchUpgrade(BlockEvent.BreakEvent event) {
-        ItemStack stack = event.getPlayer().inventory.getCurrentItem();
-        if (hasUpgrade(stack, ToolUpgrade.silkTouch) && event.block.canSilkHarvest(event.world, event.getPlayer(), event.x, event.y, event.z, event.blockMetadata)) {
-            event.world.setBlockToAir(event.x, event.y, event.z);
-            float f = 0.7F;
-            double d0 = (double)(random.nextFloat() * f) + (double)(1.0F - f) * 0.5D;
-            double d1 = (double)(random.nextFloat() * f) + (double)(1.0F - f) * 0.5D;
-            double d2 = (double)(random.nextFloat() * f) + (double)(1.0F - f) * 0.5D;
-            EntityItem entityItem = new EntityItem(event.world, event.x + d0, event.y + d1, event.z + d2, new ItemStack(event.block, 1, event.blockMetadata));
-            entityItem.delayBeforeCanPickup = 10;
-            event.world.spawnEntityInWorld(entityItem);
+        return handleSilkTouchUpgrade(event.getPlayer().inventory.getCurrentItem(), event.world, event.block, event.x, event.y, event.z, event.getPlayer());
+    }
+
+    public boolean handleSilkTouchUpgrade(ItemStack stack, World world, Block block, int x, int y, int z, EntityPlayer player) {
+        if (hasUpgrade(stack, ToolUpgrade.silkTouch) && block.canSilkHarvest(world, player, x, y, z, block.getDamageValue(world, x, y, z))) {
+            world.setBlockToAir(x, y, z);
+            spawnItem(world, new ItemStack(block, 1, block.getDamageValue(world, x, y, z)), x, y, z);
             return true;
         }
         return false;
     }
 
     public boolean handleAutoSmeltUpgrade(BlockEvent.BreakEvent event) {
-        ItemStack stack = event.getPlayer().inventory.getCurrentItem();
+        return handleAutoSmeltUpgrade(event.getPlayer().inventory.getCurrentItem(), event.world, event.block, event.x, event.y, event.z);
+    }
+
+    public boolean handleAutoSmeltUpgrade(ItemStack stack, World world, Block block, int x, int y, int z) {
         if (hasUpgrade(stack, ToolUpgrade.autoSmelt)) {
-            List<ItemStack> drops = event.block.getDrops(event.world, event.x, event.y, event.z, event.blockMetadata, 0);
+            List<ItemStack> drops = block.getDrops(world, x, y, z, block.getDamageValue(world, x, y, z), 0);
             ItemStack result = FurnaceRecipes.smelting().getSmeltingResult(drops.get(0));
             int dropAmount = drops.size();
-            if(result != null) {
-                event.world.setBlockToAir(event.x, event.y, event.z);
+            if (result != null) {
+                world.setBlockToAir(x, y, z);
                 if (hasUpgrade(stack, ToolUpgrade.luck) && random.nextInt(5) == 2 && !(result.getItem() instanceof ItemBlock)) {
                     dropAmount += getLevelOfUpgrade(stack, ToolUpgrade.luck) * (random.nextInt(1) + 1);
                 }
                 for (int i = 0; i < dropAmount; i++) {
-                    float f = 0.7F;
-                    double d0 = (double)(random.nextFloat() * f) + (double)(1.0F - f) * 0.5D;
-                    double d1 = (double)(random.nextFloat() * f) + (double)(1.0F - f) * 0.5D;
-                    double d2 = (double)(random.nextFloat() * f) + (double)(1.0F - f) * 0.5D;
-                    EntityItem entityItem = new EntityItem(event.world, event.x + d0, event.y + d1, event.z + d2, result.copy());
-                    entityItem.delayBeforeCanPickup = 10;
-                    event.world.spawnEntityInWorld(entityItem);
+                    spawnItem(world, result.copy(), x, y, z);
                 }
                 return true;
             }
