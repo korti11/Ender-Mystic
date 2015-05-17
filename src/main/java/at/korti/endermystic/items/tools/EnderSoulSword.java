@@ -88,7 +88,7 @@ public class EnderSoulSword extends ItemSword implements IEnderSoulTool{
 
         return true;
     }
-    
+
     @Override
     public ItemStack onItemRightClick(ItemStack stack, World world, EntityPlayer player) {
 
