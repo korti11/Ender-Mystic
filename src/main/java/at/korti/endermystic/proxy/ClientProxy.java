@@ -3,9 +3,7 @@ package at.korti.endermystic.proxy;
 import at.korti.endermystic.blocks.ModBlocks;
 import at.korti.endermystic.client.keybinding.KeyHandler;
 import at.korti.endermystic.client.render.blocks.*;
-import at.korti.endermystic.client.render.items.CrystalCombinerItemRenderer;
-import at.korti.endermystic.client.render.items.EnergyDrainItemRenderer;
-import at.korti.endermystic.client.render.items.EnergyRelayItemRenderer;
+import at.korti.endermystic.client.render.items.TileEntityItemRenderer;
 import at.korti.endermystic.tileEntity.*;
 import cpw.mods.fml.client.registry.ClientRegistry;
 import cpw.mods.fml.client.registry.ISimpleBlockRenderingHandler;
@@ -26,9 +24,11 @@ public class ClientProxy extends CommonProxy {
         ClientRegistry.bindTileEntitySpecialRenderer(TileEntityEnderZar.class, new EnderZarRenderer());
         ClientRegistry.bindTileEntitySpecialRenderer(TileEntityOrbInfuser.class, new OrbInfuserRenderer());
 
-        MinecraftForgeClient.registerItemRenderer(Item.getItemFromBlock(ModBlocks.energyDrain), new EnergyDrainItemRenderer(new EnergyDrainRenderer(), new TileEntityEnergyDrain()));
-        MinecraftForgeClient.registerItemRenderer(Item.getItemFromBlock(ModBlocks.energyRelay), new EnergyRelayItemRenderer(new EnergyRelayRenderer(), new TileEntityEnergyRelay()));
-        MinecraftForgeClient.registerItemRenderer(Item.getItemFromBlock(ModBlocks.crystalCombiner), new CrystalCombinerItemRenderer(new CrystalCombinerRenderer(), new TileEntityCrystalCombiner()));
+        MinecraftForgeClient.registerItemRenderer(Item.getItemFromBlock(ModBlocks.energyDrain), new TileEntityItemRenderer(new EnergyDrainRenderer(), new TileEntityEnergyDrain()));
+        MinecraftForgeClient.registerItemRenderer(Item.getItemFromBlock(ModBlocks.energyRelay), new TileEntityItemRenderer(new EnergyRelayRenderer(), new TileEntityEnergyRelay()));
+        MinecraftForgeClient.registerItemRenderer(Item.getItemFromBlock(ModBlocks.crystalCombiner), new TileEntityItemRenderer(new CrystalCombinerRenderer(), new TileEntityCrystalCombiner()));
+        MinecraftForgeClient.registerItemRenderer(Item.getItemFromBlock(ModBlocks.enderZar), new TileEntityItemRenderer(new EnderZarRenderer(), new TileEntityEnderZar()));
+        MinecraftForgeClient.registerItemRenderer(Item.getItemFromBlock(ModBlocks.orbInfuser), new TileEntityItemRenderer(new OrbInfuserRenderer(), new TileEntityOrbInfuser()));
     }
 
     @Override

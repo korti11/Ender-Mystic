@@ -23,11 +23,6 @@ public class EnergyRelay extends BlockContainer {
     }
 
     @Override
-    public void registerBlockIcons(IIconRegister register) {
-        blockIcon = register.registerIcon(ModInfo.MODID + ":textures/model/EnergyRelay");
-    }
-
-    @Override
     public TileEntity createNewTileEntity(World p_149915_1_, int p_149915_2_) {
         return new TileEntityEnergyRelay();
     }

@@ -16,7 +16,11 @@ item.endermystic.EnderSoulShovel.name=Ender Soul Shovel
 item.endermystic.EnderSoulHammer.name=Ender Soul Hammer
 item.endermystic.EnderSoulExcavator.name=Ender Soul Excavator
 
-item.endermystic.EnderShard.name=Ender Shard
+#Ender Item
+item.endermystic.EnderItem.EnderShard.name=Ender Shard
+item.endermystic.EnderItem.EnderIngot.name=Ender Ingot
+item.endermystic.EnderItem.EnderRod.name=Ender Rod
+
 item.endermystic.EnderSoulFillEmpty.name=Ender Soul Fill (Empty)
 item.endermystic.EnderSoulFillFilled.name=Ender Soul Fill (Filled)
 
@@ -37,7 +41,7 @@ item.endermystic.OrbCore.Emerald.name=Emerald Core
 item.endermystic.OrbCore.EnderZar.name=Ender Zar Core
 item.endermystic.OrbCore.Fire.name=Fire Core
 item.endermystic.OrbCore.Water.name=Water Core
-item.endermystic.OrbCore.BasicEnder.Name=Basic Ender Core
+item.endermystic.OrbCore.BasicEnder.name=Basic Ender Core
 
 item.endermystic.AirRing.name=Air Ring
 

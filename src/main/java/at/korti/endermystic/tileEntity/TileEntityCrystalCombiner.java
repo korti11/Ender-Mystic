@@ -5,7 +5,10 @@ import at.korti.endermystic.api.crafting.CraftingRegistry;
 import at.korti.endermystic.api.mysticEnergyNetwork.EnergyNetworkHandler;
 import at.korti.endermystic.api.mysticEnergyNetwork.IEnergyProvider;
 import at.korti.endermystic.items.CrystalItem;
+import at.korti.endermystic.items.EnderItem;
+import at.korti.endermystic.items.EnderSoulFill;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.init.Items;
 import net.minecraft.inventory.IInventory;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
@@ -100,7 +103,7 @@ public class TileEntityCrystalCombiner extends TileEntity implements IInventory{
 
     @Override
     public boolean isItemValidForSlot(int slot, ItemStack stack) {
-        return stack.getItem() instanceof CrystalItem;
+        return stack.getItem() instanceof CrystalItem || stack.getItem() instanceof EnderItem || stack.getItem() == Items.iron_ingot;
     }
 
     @Override

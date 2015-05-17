@@ -51,12 +51,6 @@ public class CrystalCombiner extends BlockContainer{
 //        //this.setBlockBounds(0F, 0F, 0F, 1F, 1F, 1F);
 //    }
 
-
-    @Override
-    public void registerBlockIcons(IIconRegister register) {
-        blockIcon = register.registerIcon(ModInfo.MODID + ":textures/model/CrystalCombiner.png");
-    }
-
     @Override
     public boolean renderAsNormalBlock() {
         return false;

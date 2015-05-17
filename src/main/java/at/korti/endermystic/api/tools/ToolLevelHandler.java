@@ -3,7 +3,6 @@ package at.korti.endermystic.api.tools;
 import at.korti.endermystic.EnderMystic;
 import at.korti.endermystic.items.tools.ToolMaterials;
 import cpw.mods.fml.common.eventhandler.Event;
-import cpw.mods.fml.common.registry.GameRegistry;
 import net.minecraft.block.Block;
 import net.minecraft.client.Minecraft;
 import net.minecraft.entity.item.EntityItem;
@@ -321,8 +320,21 @@ public class ToolLevelHandler {
         return 0.0F;
     }
 
+    //TODO: Handle luck for sword
+
     public boolean handleLuckUpgrade(BlockEvent.BreakEvent event) {
         return handleLuckUpgrade(event.getPlayer().inventory.getCurrentItem(), event.world, event.block, event.x, event.y, event.z);
+    }
+
+    public boolean handleLuckUpgrade(LivingAttackEvent event) {
+        EntityPlayer player = (EntityPlayer) event.source.getSourceOfDamage();
+        if (player != null) {
+            ItemStack stack = player.inventory.getCurrentItem();
+            if (hasUpgrade(stack, ToolUpgrade.luck)) {
+
+            }
+        }
+        return false;
     }
 
     public boolean handleLuckUpgrade(ItemStack stack, World world, Block block, int x, int y, int z) {

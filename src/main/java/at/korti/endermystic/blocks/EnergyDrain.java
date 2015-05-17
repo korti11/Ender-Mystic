@@ -51,11 +51,6 @@ public class EnergyDrain extends BlockContainer {
     }
 
     @Override
-    public void registerBlockIcons(IIconRegister register) {
-        this.blockIcon = register.registerIcon(ModInfo.MODID + ":textures/model/EnergyDrain.png");
-    }
-
-    @Override
     public boolean renderAsNormalBlock() {
         return false;
     }

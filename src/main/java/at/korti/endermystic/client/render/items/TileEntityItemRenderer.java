@@ -9,12 +9,12 @@ import org.lwjgl.opengl.GL11;
 /**
  * Created by Korti on 15.04.2015.
  */
-public class EnergyRelayItemRenderer implements IItemRenderer {
+public class TileEntityItemRenderer implements IItemRenderer {
 
     private TileEntitySpecialRenderer renderer;
     private TileEntity tileEntity;
 
-    public EnergyRelayItemRenderer(TileEntitySpecialRenderer renderer, TileEntity tileEntity) {
+    public TileEntityItemRenderer(TileEntitySpecialRenderer renderer, TileEntity tileEntity) {
         this.renderer = renderer;
         this.tileEntity = tileEntity;
     }

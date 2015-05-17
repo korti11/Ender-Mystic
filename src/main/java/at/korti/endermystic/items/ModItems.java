@@ -1,7 +1,6 @@
 package at.korti.endermystic.items;
 
 import at.korti.endermystic.ModInfo;
-import at.korti.endermystic.blocks.EnderZar;
 import at.korti.endermystic.modintegration.baubles.BaublesBackPack;
 import at.korti.endermystic.modintegration.baubles.rings.AirRing;
 import at.korti.endermystic.items.orbs.*;
@@ -30,14 +29,14 @@ public class ModItems {
     public static EnderSoulHammer enderSoulHammer;
     public static EnderSoulExcavator enderSoulExcavator;
 
-    public static ModItem enderShard;
+    public static EnderItem enderItem;
     public static EnderSoulFill enderSoulFill;
     public static CrystalItem crystalItem;
     public static OrbCoreItem orbCoreItem;
 
     //Baubles integration
-    public static AirRing airRing;
-    public static BaublesBackPack baublesBackPack;
+//    public static AirRing airRing;
+//    public static BaublesBackPack baublesBackPack;
 
     public static void init(){
         enderOrb = new CapacityOrb("BasicEnderOrb", 0x258474, 10000);
@@ -57,13 +56,13 @@ public class ModItems {
         enderSoulHammer = new EnderSoulHammer();
         enderSoulExcavator = new EnderSoulExcavator();
 
-        enderShard = new ModItem("EnderShard");
+        enderItem = new EnderItem();
         enderSoulFill = new EnderSoulFill();
-        crystalItem = new CrystalItem("Crystal");
+        crystalItem = new CrystalItem();
         orbCoreItem = new OrbCoreItem();
 
-        airRing = new AirRing();
-        baublesBackPack = new BaublesBackPack("Baubles Back Pack");
+//        airRing = new AirRing();
+//        baublesBackPack = new BaublesBackPack("Baubles Back Pack");
 
     }
 
@@ -86,13 +85,13 @@ public class ModItems {
         GameRegistry.registerItem(enderSoulHammer, "EnderSoulHammer", ModInfo.MODID);
         GameRegistry.registerItem(enderSoulExcavator, "EnderSoulExcavator", ModInfo.MODID);
 
-        GameRegistry.registerItem(enderShard, enderShard.getName(), ModInfo.MODID);
+        GameRegistry.registerItem(enderItem, enderItem.getName(), ModInfo.MODID);
         GameRegistry.registerItem(enderSoulFill, enderSoulFill.getName(), ModInfo.MODID);
         GameRegistry.registerItem(crystalItem, crystalItem.getName(), ModInfo.MODID);
         GameRegistry.registerItem(orbCoreItem, orbCoreItem.getName(), ModInfo.MODID);
 
-        GameRegistry.registerItem(airRing, airRing.getName(), ModInfo.MODID);
-        GameRegistry.registerItem(baublesBackPack, baublesBackPack.getName(), ModInfo.MODID);
+//        GameRegistry.registerItem(airRing, airRing.getName(), ModInfo.MODID);
+//        GameRegistry.registerItem(baublesBackPack, baublesBackPack.getName(), ModInfo.MODID);
 
     }
 

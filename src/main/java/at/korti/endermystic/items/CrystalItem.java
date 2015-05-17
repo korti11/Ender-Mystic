@@ -6,6 +6,7 @@ import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.world.World;
+import net.minecraftforge.oredict.OreDictionary;
 
 import java.util.List;
 
@@ -16,8 +17,8 @@ public class CrystalItem extends ModItem {
 
     private int crystalCount = 8;
 
-    public CrystalItem(String name) {
-        super(name);
+    public CrystalItem() {
+        super("Crystal");
 
         setHasSubtypes(true);
     }

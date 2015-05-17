@@ -31,7 +31,6 @@ import net.minecraft.world.World;
 public class AbilityHelper {
 
     public static void BreakMultiBlocks(EntityLivingBase player, ItemStack stack, World world, int x, int y, int z, int side, int radius){
-        //TODO: Implement Tool Level System
         String itemName = stack.stackTagCompound.getString("em_owner");
         boolean isOrb = stack.getItem() instanceof EarthOrb;
         String toolClass = !isOrb ? stack.getItem() instanceof ItemPickaxe ? "pickaxe" : "shovel" : "";
@@ -249,7 +248,7 @@ public class AbilityHelper {
 
     public static void setStackInSlot(int slot, EntityPlayer player, IInventory inventory){
         if(inventory.getStackInSlot(slot) == null && player.inventory.getCurrentItem() != null && inventory.isItemValidForSlot(slot, player.inventory.getCurrentItem())) {
-            inventory.setInventorySlotContents(slot, new ItemStack(player.inventory.getCurrentItem().getItem(), 1, player.inventory.getCurrentItem().getItemDamage()));
+            inventory.setInventorySlotContents(slot, player.inventory.getCurrentItem().copy());
             player.inventory.setInventorySlotContents(player.inventory.currentItem, player.inventory.decrStackSize(player.inventory.currentItem, player.inventory.getStackInSlot(player.inventory.currentItem).stackSize - 1));
         }
         else if(player.inventory.getCurrentItem() == null) {

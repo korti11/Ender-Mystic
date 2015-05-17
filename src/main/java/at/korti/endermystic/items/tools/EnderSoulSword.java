@@ -105,7 +105,12 @@ public class EnderSoulSword extends ItemSword implements IEnderSoulTool{
             }
         }
 
-        return stack;
+        if(stack.stackTagCompound.getBoolean("em_active")) {
+            return super.onItemRightClick(stack, world, player);
+        }
+        else{
+            return stack;
+        }
     }
 
     @Override

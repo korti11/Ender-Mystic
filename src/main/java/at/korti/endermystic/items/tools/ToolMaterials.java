@@ -8,6 +8,6 @@ import net.minecraftforge.common.util.EnumHelper;
  */
 public class ToolMaterials {
 
-    public static final Item.ToolMaterial enderSoul = EnumHelper.addToolMaterial("enderSoul", 3, 10000, 2.5F, 3.0F, 5);
+    public static final Item.ToolMaterial enderSoul = EnumHelper.addToolMaterial("enderSoul", 3, 10000, 2.5F, 3.0F, 0);
 
 }
