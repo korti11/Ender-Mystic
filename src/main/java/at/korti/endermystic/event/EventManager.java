@@ -38,21 +38,22 @@ public class EventManager {
 
     @SubscribeEvent
     public void onEntityAttack(LivingAttackEvent event) {
-        ToolLevelHandler.getInstance().handleSharpnessUpgrade(event);
-        ToolLevelHandler.getInstance().handleFireyUpgrade(event);
+        boolean check = ToolLevelHandler.getInstance().handleSharpnessUpgrade(event) || ToolLevelHandler.getInstance().handleFireyUpgrade(event);
         EntityPlayer player = (EntityPlayer) event.source.getSourceOfDamage();
         if(player != null) {
             AbilityHelper.addEnderHeartBleedPotion(player.inventory.getCurrentItem(), event.entityLiving);
-            ToolLevelHandler.getInstance().cancleEventIf(event, player.inventory.getCurrentItem());
+            if(check) {
+                ToolLevelHandler.getInstance().cancleEventIf(event, player.inventory.getCurrentItem());
+            }
         }
     }
 
     @SubscribeEvent
     public void onBlockBreak(BlockEvent.BreakEvent event) {
         ToolLevelHandler.getInstance().addXP(event.getPlayer().inventory.getCurrentItem(), 1);
-        ToolLevelHandler.getInstance().handleLuckUpgrade(event);
-        ToolLevelHandler.getInstance().handleSilkTouchUpgrade(event);
-        ToolLevelHandler.getInstance().handleAutoSmeltUpgrade(event);
-        ToolLevelHandler.getInstance().cancleEventIf(event, event.getPlayer().inventory.getCurrentItem());
+        boolean check = ToolLevelHandler.getInstance().handleLuckUpgrade(event) || ToolLevelHandler.getInstance().handleSilkTouchUpgrade(event) || ToolLevelHandler.getInstance().handleAutoSmeltUpgrade(event);
+        if(check) {
+            ToolLevelHandler.getInstance().cancleEventIf(event, event.getPlayer().inventory.getCurrentItem());
+        }
     }
 }

@@ -2,20 +2,16 @@ package at.korti.endermystic.items.tools;
 
 import at.korti.endermystic.EnderMystic;
 import at.korti.endermystic.ModInfo;
-import at.korti.endermystic.api.mysticEnergyNetwork.EnergyNetworkHandler;
 import at.korti.endermystic.api.tools.IEnderSoulTool;
 import at.korti.endermystic.api.tools.ToolLevelHandler;
-import at.korti.endermystic.potion.PotionHelper;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 import net.minecraft.client.renderer.texture.IIconRegister;
 import net.minecraft.entity.Entity;
-import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.ItemSword;
 import net.minecraft.nbt.NBTTagCompound;
-import net.minecraft.potion.PotionEffect;
 import net.minecraft.util.IIcon;
 import net.minecraft.world.World;
 

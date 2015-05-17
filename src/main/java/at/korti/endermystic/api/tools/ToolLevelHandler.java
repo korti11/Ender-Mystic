@@ -293,17 +293,19 @@ public class ToolLevelHandler {
         return 0.0F;
     }
 
-    public void handleLuckUpgrade(BlockEvent.BreakEvent event) {
+    public boolean handleLuckUpgrade(BlockEvent.BreakEvent event) {
         ItemStack stack = event.getPlayer().inventory.getCurrentItem();
         if (hasUpgrade(stack, ToolUpgrade.luck)) {
             Item item = event.block.getDrops(event.world, event.x, event.y, event.z, event.blockMetadata, 0).get(0).getItem();
             if(!(item instanceof ItemBlock)) {
                 event.block.dropBlockAsItemWithChance(event.world, event.x, event.y, event.z, event.blockMetadata, random.nextFloat(), getLevelOfUpgrade(stack, ToolUpgrade.luck) * (random.nextInt(1) + 1));
+                return true;
             }
         }
+        return false;
     }
 
-    public void handleSilkTouchUpgrade(BlockEvent.BreakEvent event) {
+    public boolean handleSilkTouchUpgrade(BlockEvent.BreakEvent event) {
         ItemStack stack = event.getPlayer().inventory.getCurrentItem();
         if (hasUpgrade(stack, ToolUpgrade.silkTouch) && event.block.canSilkHarvest(event.world, event.getPlayer(), event.x, event.y, event.z, event.blockMetadata)) {
             event.world.setBlockToAir(event.x, event.y, event.z);
@@ -314,10 +316,12 @@ public class ToolLevelHandler {
             EntityItem entityItem = new EntityItem(event.world, event.x + d0, event.y + d1, event.z + d2, new ItemStack(event.block, 1, event.blockMetadata));
             entityItem.delayBeforeCanPickup = 10;
             event.world.spawnEntityInWorld(entityItem);
+            return true;
         }
+        return false;
     }
 
-    public void handleAutoSmeltUpgrade(BlockEvent.BreakEvent event) {
+    public boolean handleAutoSmeltUpgrade(BlockEvent.BreakEvent event) {
         ItemStack stack = event.getPlayer().inventory.getCurrentItem();
         if (hasUpgrade(stack, ToolUpgrade.autoSmelt)) {
             List<ItemStack> drops = event.block.getDrops(event.world, event.x, event.y, event.z, event.blockMetadata, 0);
@@ -337,29 +341,35 @@ public class ToolLevelHandler {
                     entityItem.delayBeforeCanPickup = 10;
                     event.world.spawnEntityInWorld(entityItem);
                 }
+                return true;
             }
         }
+        return false;
     }
 
-    public void handleSharpnessUpgrade(LivingAttackEvent event) {
+    public boolean handleSharpnessUpgrade(LivingAttackEvent event) {
         EntityPlayer player = (EntityPlayer) event.source.getSourceOfDamage();
         if(player != null) {
             ItemStack stack = player.inventory.getCurrentItem();
             if (hasUpgrade(stack, ToolUpgrade.sharpness)) {
                 float amount = calcAttackDamage(stack);
                 event.entityLiving.attackEntityFrom(DamageSource.generic, amount);
+                return true;
             }
         }
+        return false;
     }
 
-    public void handleFireyUpgrade(LivingAttackEvent event) {
+    public boolean handleFireyUpgrade(LivingAttackEvent event) {
         EntityPlayer player = (EntityPlayer) event.source.getSourceOfDamage();
         if(player != null) {
             ItemStack stack = player.inventory.getCurrentItem();
             if (hasUpgrade(stack, ToolUpgrade.firey)) {
                 event.entityLiving.setFire(5 * getLevelOfUpgrade(stack, ToolUpgrade.firey));
+                return true;
             }
         }
+        return false;
     }
     //endregion
 }
