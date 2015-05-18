@@ -17,6 +17,7 @@ import net.minecraft.util.MovingObjectPosition;
 import net.minecraft.world.World;
 import net.minecraftforge.event.entity.living.LivingAttackEvent;
 import net.minecraftforge.event.entity.living.LivingDeathEvent;
+import net.minecraftforge.event.entity.living.LivingDropsEvent;
 import net.minecraftforge.event.world.BlockEvent;
 
 import java.time.LocalTime;
@@ -42,6 +43,11 @@ public class EventManager {
 
         }
 
+    }
+
+    @SubscribeEvent
+    public void onEntityDropItem(LivingDropsEvent event) {
+        ToolLevelHandler.getInstance().handleLuckUpgrade(event);
     }
 
     @SubscribeEvent

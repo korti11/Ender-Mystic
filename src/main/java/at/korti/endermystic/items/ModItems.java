@@ -33,6 +33,7 @@ public class ModItems {
     public static EnderSoulFill enderSoulFill;
     public static CrystalItem crystalItem;
     public static OrbCoreItem orbCoreItem;
+    public static BookItem bookItem;
 
     //Baubles integration
 //    public static AirRing airRing;
@@ -60,6 +61,7 @@ public class ModItems {
         enderSoulFill = new EnderSoulFill();
         crystalItem = new CrystalItem();
         orbCoreItem = new OrbCoreItem();
+        bookItem = new BookItem();
 
 //        airRing = new AirRing();
 //        baublesBackPack = new BaublesBackPack("Baubles Back Pack");
@@ -90,6 +92,7 @@ public class ModItems {
         GameRegistry.registerItem(crystalItem, crystalItem.getName(), ModInfo.MODID);
         GameRegistry.registerItem(orbCoreItem, orbCoreItem.getName(), ModInfo.MODID);
 
+        GameRegistry.registerItem(bookItem, bookItem.getName(), ModInfo.MODID);
 //        GameRegistry.registerItem(airRing, airRing.getName(), ModInfo.MODID);
 //        GameRegistry.registerItem(baublesBackPack, baublesBackPack.getName(), ModInfo.MODID);
 

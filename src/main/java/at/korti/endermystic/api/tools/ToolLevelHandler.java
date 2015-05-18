@@ -17,6 +17,7 @@ import net.minecraft.util.EnumChatFormatting;
 import net.minecraft.world.World;
 import net.minecraftforge.common.config.Property;
 import net.minecraftforge.event.entity.living.LivingAttackEvent;
+import net.minecraftforge.event.entity.living.LivingDropsEvent;
 import net.minecraftforge.event.world.BlockEvent;
 
 import java.time.LocalTime;
@@ -320,18 +321,28 @@ public class ToolLevelHandler {
         return 0.0F;
     }
 
-    //TODO: Handle luck for sword
-
     public boolean handleLuckUpgrade(BlockEvent.BreakEvent event) {
         return handleLuckUpgrade(event.getPlayer().inventory.getCurrentItem(), event.world, event.block, event.x, event.y, event.z);
     }
 
-    public boolean handleLuckUpgrade(LivingAttackEvent event) {
-        EntityPlayer player = (EntityPlayer) event.source.getSourceOfDamage();
-        if (player != null) {
-            ItemStack stack = player.inventory.getCurrentItem();
-            if (hasUpgrade(stack, ToolUpgrade.luck)) {
-
+    public boolean handleLuckUpgrade(LivingDropsEvent event) {
+        if(event.source.getSourceOfDamage() instanceof EntityPlayer) {
+            EntityPlayer player = (EntityPlayer) event.source.getSourceOfDamage();
+            if (player != null) {
+                ItemStack stack = player.inventory.getCurrentItem();
+                if (hasUpgrade(stack, ToolUpgrade.luck)) {
+                    List<EntityItem> drops = event.drops;
+                    List<EntityItem> newDrops = new ArrayList<>();
+                    for (int i = 0; i < drops.size(); i++) {
+                        EntityItem item = drops.get(i);
+                        for (int j = 0; i < getLevelOfUpgrade(stack, ToolUpgrade.luck) * (random.nextInt(1) + 1) + 1; j++) {
+                            newDrops.add(new EntityItem(item.worldObj, item.posX, item.posY, item.posZ, item.getEntityItem().copy()));
+                        }
+                    }
+                    for (int i = 0; i < newDrops.size(); i++) {
+                        drops.add(newDrops.get(i));
+                    }
+                }
             }
         }
         return false;
@@ -384,25 +395,29 @@ public class ToolLevelHandler {
     }
 
     public boolean handleSharpnessUpgrade(LivingAttackEvent event) {
-        EntityPlayer player = (EntityPlayer) event.source.getSourceOfDamage();
-        if(player != null) {
-            ItemStack stack = player.inventory.getCurrentItem();
-            if (hasUpgrade(stack, ToolUpgrade.sharpness)) {
-                float amount = calcAttackDamage(stack);
-                event.entityLiving.attackEntityFrom(DamageSource.generic, amount);
-                return true;
+        if(event.source.getSourceOfDamage() instanceof EntityPlayer) {
+            EntityPlayer player = (EntityPlayer) event.source.getSourceOfDamage();
+            if (player != null) {
+                ItemStack stack = player.inventory.getCurrentItem();
+                if (hasUpgrade(stack, ToolUpgrade.sharpness)) {
+                    float amount = calcAttackDamage(stack);
+                    event.entityLiving.attackEntityFrom(DamageSource.generic, amount);
+                    return true;
+                }
             }
         }
         return false;
     }
 
     public boolean handleFireyUpgrade(LivingAttackEvent event) {
-        EntityPlayer player = (EntityPlayer) event.source.getSourceOfDamage();
-        if(player != null) {
-            ItemStack stack = player.inventory.getCurrentItem();
-            if (hasUpgrade(stack, ToolUpgrade.firey)) {
-                event.entityLiving.setFire(5 * getLevelOfUpgrade(stack, ToolUpgrade.firey));
-                return true;
+        if (event.source.getSourceOfDamage() instanceof EntityPlayer) {
+            EntityPlayer player = (EntityPlayer) event.source.getSourceOfDamage();
+            if (player != null) {
+                ItemStack stack = player.inventory.getCurrentItem();
+                if (hasUpgrade(stack, ToolUpgrade.firey)) {
+                    event.entityLiving.setFire(5 * getLevelOfUpgrade(stack, ToolUpgrade.firey));
+                    return true;
+                }
             }
         }
         return false;

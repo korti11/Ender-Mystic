@@ -66,3 +66,16 @@ upgrade.endermystic.haste=Haste
 upgrade.endermystic.sharpness=Sharpness
 upgrade.endermystic.autosmelt=Auto Smelt
 upgrade.endermystic.firey=Firey
+
+#Book
+book.entry.CrystalCombiner.title=Crystal Combiner
+book.entry.CrystalCombiner.text=With the Crystal Combiner can you craft each Crystal.
+
+book.entry.OrbInfuser.title=Orb Infuser
+book.entry.OrbInfuser.text=With the Orb Infuser can you craft the cores for the orbs.
+
+book.entry.Network.title=Energy Network
+book.entry.Network.text=Every crafting mechanic use power. So you have to transfer power from one point to another. For that you need a Energy Drain and some Energy Relays.
+
+book.entry.EnergyDrain.title=Energy Drain
+book.entry.EnergyDrain.text=The Energy Drain provide your energy network with energy from the player network. To get the drain running you need the Energy Drain self and a Energy Crystal that is bound to a player.
