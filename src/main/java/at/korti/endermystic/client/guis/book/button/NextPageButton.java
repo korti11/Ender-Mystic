@@ -26,7 +26,7 @@ public class NextPageButton extends GuiButton {
         if (this.visible) {
             boolean flag = posX >= this.xPosition && posY >= this.yPosition && posX < this.xPosition + this.width && posY < this.yPosition + this.height;
             GL11.glColor4f(1.0F, 1.0F, 1.0F, 1.0F);
-            mc.renderEngine.bindTexture(BookPage.texture);
+            mc.renderEngine.bindTexture(BookPage.defaultTexture);
             int k = 0;
             int l = 192;
 

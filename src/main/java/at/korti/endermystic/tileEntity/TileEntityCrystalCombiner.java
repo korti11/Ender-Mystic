@@ -103,7 +103,7 @@ public class TileEntityCrystalCombiner extends TileEntity implements IInventory{
 
     @Override
     public boolean isItemValidForSlot(int slot, ItemStack stack) {
-        return stack.getItem() instanceof CrystalItem || stack.getItem() instanceof EnderItem || stack.getItem() == Items.iron_ingot;
+        return true;
     }
 
     @Override
@@ -116,25 +116,27 @@ public class TileEntityCrystalCombiner extends TileEntity implements IInventory{
 
         if(provider != null && provider.canProvideEnergy()) {
             if (timeToCraft == 0 && recipe == null && timeStartToCraft == 0) {
-                for (int i = 0; i < CraftingRegistry.getInstance().recipeCrystalCombinerCount(); i++) {
+                for (int i = 0; i < CraftingRegistry.getInstance().recipeCount(); i++) {
                     recipe = CraftingRegistry.getInstance().getCrystalCombinerRecipe(i);
                     checkRequirementCount = 0;
 
-                    for (int j = 0; j < recipe.requirementsCount(); j++) {
-                        for (int l = 0; l < getSizeInventory() - 1; l++) {
-                            if (getStackInSlot(l) == null) {
-                                continue;
-                            }
+                    if (recipe != null) {
+                        for (int j = 0; j < recipe.requirementsCount(); j++) {
+                            for (int l = 0; l < getSizeInventory() - 1; l++) {
+                                if (getStackInSlot(l) == null) {
+                                    continue;
+                                }
 
-                            if (getStackInSlot(l).getItem() == recipe.getRequirements(j).getItem() && getStackInSlot(l).getItemDamage() == recipe.getRequirements(j).getItemDamage()) {
-                                checkRequirementCount++;
-                                break;
+                                if (getStackInSlot(l).getItem() == recipe.getRequirements(j).getItem() && getStackInSlot(l).getItemDamage() == recipe.getRequirements(j).getItemDamage()) {
+                                    checkRequirementCount++;
+                                    break;
+                                }
                             }
                         }
-                    }
 
-                    if (recipe.requirementsCount() == checkRequirementCount && countSlotsUsed() == recipe.requirementsCount()) {
-                        break;
+                        if (recipe.requirementsCount() == checkRequirementCount && countSlotsUsed() == recipe.requirementsCount()) {
+                            break;
+                        }
                     }
                 }
 

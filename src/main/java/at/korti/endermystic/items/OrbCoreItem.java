@@ -11,7 +11,7 @@ import java.util.List;
  */
 public class OrbCoreItem extends ModItem {
 
-    private final int count = 7;
+    private final int count = 12;
 
     public OrbCoreItem() {
         super("OrbCore");
@@ -36,6 +36,16 @@ public class OrbCoreItem extends ModItem {
                 return 0x29a4a4;
             case 6:
                 return 0x258474;
+            case 7:
+                return 0x3C3C8D;
+            case 8:
+                return 0x620000;
+            case 9:
+                return 0x00A6CF;
+            case 10:
+                return 0x000066;
+            case 11:
+                return 0x00001F;
             default:
                 return 0;
         }
@@ -65,6 +75,21 @@ public class OrbCoreItem extends ModItem {
                 break;
             case 6:
                 subName = "BasicEnder";
+                break;
+            case 7:
+                subName = "Apprentice";
+                break;
+            case 8:
+                subName = "Guardians";
+                break;
+            case 9:
+                subName = "Master";
+                break;
+            case 10:
+                subName = "Galaxy";
+                break;
+            case 11:
+                subName = "Universe";
                 break;
             default:
                 subName = "OrbCore";

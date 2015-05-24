@@ -11,12 +11,10 @@ import java.util.List;
 public class CraftingRegistry {
 
     private static CraftingRegistry instance;
-    private List<CrystalCombinerRecipe> crystalCombinerRecipes;
-    private List<OrbInfuserRecipe> orbInfuserRecipes;
+    private List<CraftingRecipe> recipes;
 
     private CraftingRegistry() {
-        crystalCombinerRecipes = new LinkedList<CrystalCombinerRecipe>();
-        orbInfuserRecipes = new LinkedList<OrbInfuserRecipe>();
+        recipes = new LinkedList<>();
     }
 
     public static CraftingRegistry getInstance(){
@@ -26,59 +24,45 @@ public class CraftingRegistry {
         return instance;
     }
 
+    public void addCraftingRecipe(ItemStack result, ItemStack... requirements) {
+        recipes.add(new CraftingRecipe(0, 0, result, requirements, requirements.length));
+    }
 
-    //region Crystal Combiner
     public void addCrystalCombinerRecipe(int timeToCraft, int energyUsePerTick, ItemStack result, ItemStack... requirements) {
-        crystalCombinerRecipes.add(new CrystalCombinerRecipe(timeToCraft, energyUsePerTick, result, requirements));
+        recipes.add(new CrystalCombinerRecipe(timeToCraft, energyUsePerTick, result, requirements));
     }
 
     public CrystalCombinerRecipe getCrystalCombinerRecipe(int slot){
-        return crystalCombinerRecipes.get(slot);
-    }
-
-    public CrystalCombinerRecipe getCrystalCombinerRecipe(ItemStack result){
-        for(CrystalCombinerRecipe recipe : crystalCombinerRecipes) {
-            if (result.getItem() == recipe.getResult().getItem()) {
-                return recipe;
-            }
+        CraftingRecipe recipe = recipes.get(slot);
+        if (recipe instanceof CrystalCombinerRecipe) {
+            return (CrystalCombinerRecipe) recipe;
         }
-
         return null;
     }
 
-    public void deleteCrystalCombinerRecipe(CrystalCombinerRecipe recipe){
-        crystalCombinerRecipes.remove(recipe);
-    }
-
-    public int recipeCrystalCombinerCount(){
-        return crystalCombinerRecipes.size();
-    }
-    //endregion
-
-    //region Orb Infuser
     public void addOrbInfuserRecipe(int timeToCraft, int energyUsePerTick, ItemStack result, ItemStack... requirements) {
-        orbInfuserRecipes.add(new OrbInfuserRecipe(timeToCraft, energyUsePerTick, result, requirements));
+        recipes.add(new OrbInfuserRecipe(timeToCraft, energyUsePerTick, result, requirements));
     }
 
     public OrbInfuserRecipe getOrbInfuserRecipe(int slot) {
-        return orbInfuserRecipes.get(slot);
+        CraftingRecipe recipe = recipes.get(slot);
+        if (recipe instanceof OrbInfuserRecipe) {
+            return (OrbInfuserRecipe) recipe;
+        }
+        return null;
     }
 
-    public OrbInfuserRecipe getOrbInfuserRecipe(ItemStack result) {
-        for (OrbInfuserRecipe recipe : orbInfuserRecipes) {
-            if (result.getItem() == recipe.getResult().getItem()) {
+    public CraftingRecipe getCraftingRecipe(ItemStack stack) {
+        for (CraftingRecipe recipe : recipes) {
+            if (recipe.getResult().getItem() == stack.getItem() && recipe.getResult().getItemDamage() == stack.getItemDamage()) {
                 return recipe;
             }
         }
         return null;
     }
 
-    public void deletOrbInfuserRecipe(OrbInfuserRecipe recipe) {
-        orbInfuserRecipes.remove(recipe);
+    public int recipeCount() {
+        return recipes.size();
     }
 
-    public int recipeOrbInfuserRecipe() {
-        return orbInfuserRecipes.size();
-    }
-    //endregion
 }

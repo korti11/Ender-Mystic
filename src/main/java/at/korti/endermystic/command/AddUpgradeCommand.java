@@ -43,7 +43,7 @@ public class AddUpgradeCommand implements ICommand {
         }
 
         EntityPlayer player = iCommandSender.getEntityWorld().getPlayerEntityByName(iCommandSender.getCommandSenderName());
-        boolean check = ToolLevelHandler.getInstance().addUpgrad(player.inventory.getCurrentItem(), args[0], args[1]);
+        boolean check = ToolLevelHandler.getInstance().addUpgrad(player.inventory.getCurrentItem(), args[0], args[1], true);
 
         if(check) {
             iCommandSender.addChatMessage(new ChatComponentText("Upgrade with id " + args[0] + " added on item " + player.inventory.getCurrentItem().getDisplayName()));

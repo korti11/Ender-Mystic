@@ -30,7 +30,15 @@ public class ToolUpgrade {
     }
 
     public String getName() {
-        return LanguageRegistry.instance().getStringLocalization(locolizeKey);
+        String name = LanguageRegistry.instance().getStringLocalization(locolizeKey);
+        if (name.equals("")) {
+            name = LanguageRegistry.instance().getStringLocalization(locolizeKey, "en_US");
+        }
+        return name;
+    }
+
+    public String getLocolizeKey() {
+        return locolizeKey;
     }
 
     public String getColor() {

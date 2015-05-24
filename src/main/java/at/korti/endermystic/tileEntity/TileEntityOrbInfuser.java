@@ -122,27 +122,29 @@ public class TileEntityOrbInfuser extends TileEntity implements IInventory{
 
         if(provider != null && provider.canProvideEnergy()) {
             if (timeToCraft == 0 && recipe == null && timeStartToCraft == 0) {
-                for (int i = 0; i < CraftingRegistry.getInstance().recipeCrystalCombinerCount(); i++) {
+                for (int i = 0; i < CraftingRegistry.getInstance().recipeCount(); i++) {
                     recipe = CraftingRegistry.getInstance().getOrbInfuserRecipe(i);
                     usedSlots.clear();
                     checkRequirementCount = 0;
 
-                    for (int j = 0; j < recipe.requirementsCount(); j++) {
-                        for (int l = 0; l < getSizeInventory(); l++) {
-                            if (getStackInSlot(l) == null) {
-                                continue;
-                            }
+                    if(recipe != null) {
+                        for (int j = 0; j < recipe.requirementsCount(); j++) {
+                            for (int l = 0; l < getSizeInventory(); l++) {
+                                if (getStackInSlot(l) == null) {
+                                    continue;
+                                }
 
-                            if (getStackInSlot(l).getItem() == recipe.getRequirements(j).getItem() && getStackInSlot(l).getItemDamage() == recipe.getRequirements(j).getItemDamage() && !usedSlots.contains(l)) {
-                                checkRequirementCount++;
-                                usedSlots.add(l);
-                                break;
+                                if (getStackInSlot(l).getItem() == recipe.getRequirements(j).getItem() && getStackInSlot(l).getItemDamage() == recipe.getRequirements(j).getItemDamage() && !usedSlots.contains(l)) {
+                                    checkRequirementCount++;
+                                    usedSlots.add(l);
+                                    break;
+                                }
                             }
                         }
-                    }
 
-                    if (recipe.requirementsCount() == checkRequirementCount && countSlotsUsed() == recipe.requirementsCount()) {
-                        break;
+                        if (recipe.requirementsCount() == checkRequirementCount && countSlotsUsed() == recipe.requirementsCount()) {
+                            break;
+                        }
                     }
                 }
 

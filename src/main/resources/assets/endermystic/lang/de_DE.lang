@@ -1,6 +1,12 @@
 itemGroup.endermystic=Ender Mystic
 
 item.endermystic.BasicEnderOrb.name=Basic Ender Orb
+item.endermystic.ApprenticeOrb.name=Lehrlings Orb
+item.endermystic.GuardiansOrb.name=Beschützer Orb
+item.endermystic.MasterOrb.name=Meister Orb
+item.endermystic.GalaxyOrb.name=Galaxis Orb
+item.endermystic.UniverseOrb.name=Universums Orb
+
 item.endermystic.EmeraldOrb.name=Smaragd Orb
 item.endermystic.WaterOrb.name=Wasser Orb
 item.endermystic.FireOrb.name=Feuer Orb
@@ -29,6 +35,13 @@ item.endermystic.Crystal.Life.name=Lebens Kristall
 item.endermystic.Crystal.Human.name=Menschen Kristall
 item.endermystic.Crystal.Grain.name=Getreide Kristall
 item.endermystic.Crystal.Energy.name=Energie Kristall
+item.endermystic.Crystal.Shield.name=Schield Kristall
+item.endermystic.Crystal.Stone.name=Stein Kristall
+item.endermystic.Crystal.Metal.name=Metal Kristall
+item.endermystic.Crystal.Magic.name=Magie Kristall
+item.endermystic.Crystal.Darkness.name=Dunkelheit Crystal
+item.endermystic.Crystal.Void.name=Leere Crystal
+item.endermystic.Crystal.Emerald.name=Smaragd Crystal
 
 #Orb Cores
 item.endermystic.OrbCore.Air.name=Luft Kern
@@ -38,6 +51,11 @@ item.endermystic.OrbCore.EnderZar.name=Ender Zar Kern
 item.endermystic.OrbCore.Fire.name=Feuer Kern
 item.endermystic.OrbCore.Water.name=Wasser Kern
 item.endermystic.OrbCore.BasicEnder.Name=Basic Ender Kern
+item.endermystic.OrbCore.Apprentice.name=Lehrlings Kern
+item.endermystic.OrbCore.Guardians.name=Beschützer Kern
+item.endermystic.OrbCore.Master.name=Meister Kern
+item.endermystic.OrbCore.Galaxy.name=Galaxis Core
+item.endermystic.OrbCore.Universe.name=Univerum Core
 
 item.endermystic.AirRing.name=Luft Ring
 
@@ -60,3 +78,64 @@ upgrade.endermystic.luck=Glück
 upgrade.endermystic.silktouch=Samtig
 upgrade.endermystic.haste=Eile
 upgrade.endermystic.sharpness=Schärfe
+upgrade.endermystic.autosmelt=Schmelzen
+upgrade.endermystic.firey=Feuer
+
+#Book Entries
+book.entry.CrystalCombiner.title=Kristall Combiner
+book.entry.CrystalCombiner.text=Mit dem Kristall Combiner kannst du verschiedene Arten von Kristallen und andere Items craften. Es ist sehr einfach den Kristall Combiner zu nutzen, einfach rechts Klick auf den Kontainer.
+
+book.entry.Crystal.title=Kristall
+book.entry.Crystal.text=Jeder Kristall hat seine eigenen Eigenschaften. So kannst du sie für verschiedene sachen nutzen, aber du weist noch nicht alles von ihnen.
+
+book.entry.CrystalList.title=Kristall Crafting
+
+book.entry.OrbInfuser.title=Orb Brüheinheit
+book.entry.OrbInfuser.text=Mit der Orb Brüheinheit kannst du die Kerne für die verschiedenen Orbs craften. Um einen Kristall hinzuzufügen musst du einfach rechts Klicken auf den Kristall Halter.
+
+book.entry.OrbCoreList.title=Orb Kern Crafting
+
+book.entry.Network.title=Energie Netzwerk
+book.entry.Network.text=Jede crafting Mechanik nutzt Energie. Deshalb musst du Energie weiter leiten von einem Punkt zu einem anderen. Für das brauchst du einen Energie Ausguss und einpaar Energie Relais.
+
+book.entry.EnergyDrain.title=Energie Ausguss
+book.entry.EnergyDrain.text=Der Energie Ausguss liefert die Energie von deinem Spieler Netzwerk in das Energie Netzwerk. Um die Energie Ausguss zum laufen zu griegen brauchst du einen Energie Kristall.
+
+book.entry.EnergyCrystal.title=Energie Kristall
+book.entry.EnergyCrystal.text=Um ihn nutzen zu können musst du in an dich binden. Um ihn an dich zu binden können musst du rechts Kilcken machen.
+
+book.entry.PlayerNetwork.title=Spieler Netzwerk
+book.entry.PlayerNetwork.text=Das Spieler Netzwerk ist gebunden an einem Spieler. Einige Items brauchen Energie um zu funktionieren, Items wie Werkzeuge und die Orbs.
+
+book.entry.EnderSacrifice.text=Die Ender Opferung wird genutzt um die Ender Mans zu töten und um Energie zu gewinnen. Diese Energie wird in deinem Spieler Energie Netzwerk gespeichert.
+
+book.entry.CapacityOrb.title=Speicher Orbs
+book.entry.CapacityOrb.text=Jeder Speicher Orb erhöht die maximale Kapazität von deinem Spieler Netzwerk, aber jeder Orb kann nur einmal hinzugefügt werden.
+
+book.entry.Orb.title=Orbs
+book.entry.Orb.text=Ein Orb kann coole Dinge machen. Es gibt verschiedene Arten von Orbs und jeder Orb kann unterschiedliche Dinge.
+
+book.entry.OrbList.title=Orb Crafting
+
+book.entry.CapacityOrb.text=Jeder Speicher Orb erhöht die maximale Kapazität von deinem Spieler Netzwerk, aber jeder Orb kann nur einmal hinzugefügt werden.
+book.entry.AirOrb.text=Wenn du den rechten Maus Button klickst, kannst du mit diesem Orb durch die Luft fliegen. Mit Shift + rechts Kick kanst du den Potion Effect Atmung aktevieren.
+book.entry.EarthOrb.text=Mit diesem Orb kannst du mehrer Blöcke in einem gewissen Radius abbauen. Der aktulle Radius steht auf dem Tooltip.
+book.entry.EmeraldOrb.text=Um die derzeit gespeicherte Energie zu sehen kanst du diesen Orb benutzen. Einfach rechts Klick um die Werte zu bekommen.
+book.entry.EnderZarOrb.text=Um großen schaden an der Welt anzurichten kannst du diesen Orb aufladen und entladen mit "." und "," (Standard Keys). Je größer die Ladung desto größer ist die Explosion.
+book.entry.FireOrb.text=Um schnell an Lava zukommen kannst du einfach mit diesem Orb einen Lava Block erstellen.
+book.entry.WaterOrb.text=In deiner nähe gibt es keinen Wasser, mit diesem Orb kannst du schnell einen Wasser Block erstellen.
+
+book.entry.ToolList.title=Werkzeuge
+
+book.entry.ToolLevel.title=Werkzeug Leveling
+book.entry.ToolLevel.text=Die Ender Seelen Werkzeuge haben ein eingebautes Level System. Wenn du sie benutzt erhalten sie Erfahrung. Wenn das Werkzeug dann ein Level höher ist, erhält es ein zufälliges Upgrade.
+
+book.entry.Luck.text=Dieses Upgrade erhöht deine Chancen mehrere Items von einem Erz zu bekommen. Die Menge erhöht sich mit dem Level.
+book.entry.Haste.text=Mit dem Eile Upgrade kannst du die Blöcke schneller abbauen. Die Geschwindigkeit erhöht sich mit dem Level.
+book.entry.SilkTouch.text=Mit dem Samtig Upgrade bekommst du den Block genau so wie du ihn vor dir siehst. Das Samtig Upgrade kann man nicht mit Glück oder dem Schmelzen Upgrade kombiniert werden.
+book.entry.Sharpness.text=Mit dem Schärfe Upgrade macht dein Schwert mehr Schaden.
+book.entry.AutoSmelt.text=Das Schmelzen Upgrade schmelzt die Erze, die du abbaust direkt in ihrer Barren Form. In Kombination mit dem Glück Upgrade kannst du mehrere Barren bekommen.
+book.entry.Firey.text=Mit dem Feuer Upgrade kannst du Mobs und Spieler anzünden.
+
+book.crafting.timetocraft.name=Benötigte Zeit
+book.crafting.energyuse.name=Benötigte Energie

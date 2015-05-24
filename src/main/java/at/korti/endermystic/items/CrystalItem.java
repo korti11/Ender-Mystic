@@ -15,7 +15,7 @@ import java.util.List;
  */
 public class CrystalItem extends ModItem {
 
-    private int crystalCount = 8;
+    private int crystalCount = 14;
 
     public CrystalItem() {
         super("Crystal");
@@ -70,6 +70,20 @@ public class CrystalItem extends ModItem {
                 return 10053171;
             case 7:
                 return 16777062;
+            case 8:
+                return 0xA30000;
+            case 9:
+                return 0x999999;
+            case 10:
+                return 0xB8B8B8;
+            case 11:
+                return 0x8F006B;
+            case 12:
+                return 0x000029;
+            case 13:
+                return 0x000004;
+            case 14:
+                return 0x00f200;
             default:
                 return 0;
         }
@@ -102,6 +116,27 @@ public class CrystalItem extends ModItem {
                 break;
             case 7:
                 subName = "Energy";
+                break;
+            case 8:
+                subName = "Shield";
+                break;
+            case 9:
+                subName = "Stone";
+                break;
+            case 10:
+                subName = "Metal";
+                break;
+            case 11:
+                subName = "Magic";
+                break;
+            case 12:
+                subName = "Darkness";
+                break;
+            case 13:
+                subName = "Void";
+                break;
+            case 14:
+                subName = "Emerald";
                 break;
             default:
                 subName = "Crystal";

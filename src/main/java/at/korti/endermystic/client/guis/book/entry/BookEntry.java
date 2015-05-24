@@ -12,6 +12,7 @@ import java.util.List;
 public class BookEntry extends BookPage {
 
     private String name;
+    private String title;
     private BookPage prevEntry;
     private BookPage nextEntry;
     protected int posX;
@@ -25,25 +26,55 @@ public class BookEntry extends BookPage {
         this.prevEntry = prevEntry;
         this.textPosX = 38;
         this.textPosY = 46;
+        if(prevEntry instanceof BookEntry && !(this instanceof BookCombiCrafting) && !(this instanceof BookCraftingTable)) {
+            ((BookEntry) prevEntry).setNextEntry(this);
+        }
+    }
+
+    public BookEntry(String name, String title, BookPage prevEntry) {
+        this(name, prevEntry);
+
+        this.title = title;
     }
 
     public String getTitle() {
-        return LanguageRegistry.instance().getStringLocalization("book.entry." + name + ".title");
+        if(this.title == null) {
+            String title = LanguageRegistry.instance().getStringLocalization("book.entry." + name + ".title");
+            if (title.equals("")) {
+                return LanguageRegistry.instance().getStringLocalization("book.entry." + name + ".title", "en_US");
+            }
+            return title;
+        }
+        else {
+            String title = LanguageRegistry.instance().getStringLocalization(this.title);
+            if (title.equals("")) {
+                return LanguageRegistry.instance().getStringLocalization(this.title, "en_US");
+            }
+            return title;
+        }
     }
 
     public String getText() {
-        return LanguageRegistry.instance().getStringLocalization("book.entry." + name + ".text");
+        String text = LanguageRegistry.instance().getStringLocalization("book.entry." + name + ".text");
+        if (text.equals("")) {
+            return LanguageRegistry.instance().getStringLocalization("book.entry." + name + ".text", "en_US");
+        }
+        return text;
     }
 
     public BookPage getPrevEntry() {
         return prevEntry;
     }
 
+    public void setPrevEntry(BookPage entry){
+        this.prevEntry = entry;
+    }
+
     public BookPage getNextEntry() {
         return nextEntry;
     }
 
-    public void setNextEntry(BookEntry entry) {
+    public void setNextEntry(BookPage entry) {
         this.nextEntry = entry;
     }
 
@@ -68,7 +99,7 @@ public class BookEntry extends BookPage {
         this.fontRendererObj.drawString(getTitle(), posX + (this.bookImageWidth / 2) - (fontRendererObj.getStringWidth(getTitle()) / 2) - 5, posY + 22, 0);
         List<String> lines = this.fontRendererObj.listFormattedStringToWidth(getText(), (this.bookImageWidth / 2) + 14);
         for (int i = 0; i < lines.size(); i++) {
-            this.fontRendererObj.drawString(lines.get(i), posX + 38, posY + 46 + (12 * i), 0);
+            this.fontRendererObj.drawString(lines.get(i), posX + textPosX, posY + textPosY + (12 * i), 0);
         }
     }
 }

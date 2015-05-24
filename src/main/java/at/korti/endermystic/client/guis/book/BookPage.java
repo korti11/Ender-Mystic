@@ -1,11 +1,16 @@
 package at.korti.endermystic.client.guis.book;
 
 import at.korti.endermystic.ModInfo;
+import at.korti.endermystic.api.tools.ToolLevelHandler;
+import at.korti.endermystic.api.tools.ToolUpgrade;
 import at.korti.endermystic.blocks.ModBlocks;
 import at.korti.endermystic.client.guis.book.button.EntryButton;
 import at.korti.endermystic.client.guis.book.button.NextPageButton;
 import at.korti.endermystic.client.guis.book.entry.BookEntry;
-import at.korti.endermystic.client.guis.book.entry.BookEntryItem;
+import at.korti.endermystic.client.guis.book.entry.BookEntryImage;
+import at.korti.endermystic.client.guis.book.entry.BookEntryItemList;
+import at.korti.endermystic.items.ModItem;
+import at.korti.endermystic.items.ModItems;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiScreen;
 import net.minecraft.item.ItemStack;
@@ -20,7 +25,8 @@ import java.util.List;
  */
 public class BookPage extends GuiScreen{
 
-    public static ResourceLocation texture = new ResourceLocation(ModInfo.MODID + ":textures/gui/book/book.png");
+    public static ResourceLocation defaultTexture = new ResourceLocation(ModInfo.MODID + ":textures/gui/book/book.png");
+    public ResourceLocation texture = defaultTexture;
     protected int bookImageWidth = 192;
     protected int bookImageHeigth = 192;
     private boolean mainPage;
@@ -35,27 +41,95 @@ public class BookPage extends GuiScreen{
     }
 
     private void generateBookEntries() {
+        //Crystals and Crystal Combiner
         BookEntry crystalCombiner = new BookEntry("CrystalCombiner", this);
-        BookEntry crystalCombiner1 = new BookEntry("CrystalCombiner1", crystalCombiner);
-        crystalCombiner.setNextEntry(crystalCombiner1);
+        BookEntry crystalEntry = new BookEntry("Crystal", crystalCombiner);
+        BookEntryItemList crystalList = new BookEntryItemList("CrystalList", crystalEntry, ModItems.crystalItem);
 
+        //Orb Infuser
         BookEntry orbInfuser = new BookEntry("OrbInfuser", this);
-        BookEntry orbInfuser1 = new BookEntry("OrbInfuser1", orbInfuser);
-        orbInfuser.setNextEntry(orbInfuser1);
+        BookEntryItemList orbCoreList = new BookEntryItemList("OrbCoreList", orbInfuser, ModItems.orbCoreItem);
 
+        //Energy Network
         BookEntry energyNetwork = new BookEntry("Network", this);
-        BookEntryItem energyDrainSub = new BookEntryItem("EnergyDrain", energyNetwork);
+
+        BookEntryImage energyDrainSub = new BookEntryImage("EnergyDrain", energyNetwork, false);
         energyDrainSub.addStackImage(new ItemStack(ModBlocks.energyDrain), 38, 22);
-        energyDrainSub.setTextPosY(35);
-        BookEntryItem energyDrainMain = new BookEntryItem("EnergyDrain", this);
-        energyDrainMain.addStackImage(new ItemStack(ModBlocks.energyDrain), 38, 22);
-        energyDrainMain.setTextPosY(35);
-        energyNetwork.setNextEntry(energyDrainSub);
+        energyDrainSub.addStackImage(new ItemStack(ModItems.crystalItem, 1, 7), 130, 18);
+
+        BookEntryImage energyCrystal = new BookEntryImage("EnergyCrystal", energyDrainSub, false);
+        energyCrystal.addStackImage(new ItemStack(ModItems.crystalItem, 1, 7), 34, 18);
+
+        //Player Network
+        BookEntry playerNetwork = new BookEntry("PlayerNetwork", this);
+
+        BookEntryImage enderSacfrice = new BookEntryImage("EnderSacrifice", ModItems.enderSacrifice.getUnlocalizedName() + ".name", playerNetwork, false);
+        enderSacfrice.addStackImage(new ItemStack(ModItems.enderSacrifice), 34, 22);
+        BookEntry capacityOrb = new BookEntry("CapacityOrb", enderSacfrice);
+
+        //Orbs
+        BookEntry orbEntry = new BookEntry("Orb", this);
+
+        BookEntryItemList orbList = new BookEntryItemList("OrbList", orbEntry);
+        orbList.addItem(new ItemStack(ModItems.enderOrb));
+        orbList.addItem(new ItemStack(ModItems.apprenticeOrb));
+        orbList.addItem(new ItemStack(ModItems.guardiansOrb));
+        orbList.addItem(new ItemStack(ModItems.masterOrb));
+        orbList.addItem(new ItemStack(ModItems.galaxyOrb));
+        orbList.addItem(new ItemStack(ModItems.universeOrb));
+        orbList.addItem(new ItemStack(ModItems.airOrb));
+        orbList.addItem(new ItemStack(ModItems.emeraldOrb));
+        orbList.addItem(new ItemStack(ModItems.earthOrb));
+        orbList.addItem(new ItemStack(ModItems.enderZarOrb));
+        orbList.addItem(new ItemStack(ModItems.fireOrb));
+        orbList.addItem(new ItemStack(ModItems.waterOrb));
+
+        //Tools
+        BookEntryItemList toolList = new BookEntryItemList("ToolList", this);
+        toolList.addItem(new ItemStack(ModItems.enderSoulSword));
+        toolList.addItem(new ItemStack(ModItems.enderSoulPickaxe));
+        toolList.addItem(new ItemStack(ModItems.enderSoulShovel));
+        toolList.addItem(new ItemStack(ModItems.enderSoulHammer));
+        toolList.addItem(new ItemStack(ModItems.enderSoulExcavator));
+
+        BookEntry toolLevel = new BookEntry("ToolLevel", toolList);
+
+        BookEntryImage luckEntry = new BookEntryImage("Luck", ToolUpgrade.luck.getLocolizeKey(), toolLevel, true);
+        ItemStack tool = new ItemStack(ModItems.enderSoulPickaxe);
+        ToolLevelHandler.getInstance().addUpgrad(tool, ToolUpgrade.luck.getId(), ToolUpgrade.luck.getMaxLevel());
+        luckEntry.addStackImage(tool, 38, 22);
+
+        BookEntryImage hasteEntry = new BookEntryImage("Haste", ToolUpgrade.haste.getLocolizeKey(), luckEntry, true);
+        tool = new ItemStack(ModItems.enderSoulPickaxe);
+        ToolLevelHandler.getInstance().addUpgrad(tool, ToolUpgrade.haste.getId(), ToolUpgrade.haste.getMaxLevel());
+        hasteEntry.addStackImage(tool, 38, 22);
+
+        BookEntryImage silkEntry = new BookEntryImage("SilkTouch", ToolUpgrade.silkTouch.getLocolizeKey(), hasteEntry, true);
+        tool = new ItemStack(ModItems.enderSoulPickaxe);
+        ToolLevelHandler.getInstance().addUpgrad(tool, ToolUpgrade.silkTouch.getId(), ToolUpgrade.silkTouch.getMaxLevel());
+        silkEntry.addStackImage(tool, 38, 22);
+
+        BookEntryImage sharpnessEntry = new BookEntryImage("Sharpness", ToolUpgrade.sharpness.getLocolizeKey(), silkEntry, true);
+        tool = new ItemStack(ModItems.enderSoulSword);
+        ToolLevelHandler.getInstance().addUpgrad(tool, ToolUpgrade.sharpness.getId(), ToolUpgrade.sharpness.getMaxLevel());
+        sharpnessEntry.addStackImage(tool, 38, 22);
+
+        BookEntryImage autoSmeltEntry = new BookEntryImage("AutoSmelt", ToolUpgrade.autoSmelt.getLocolizeKey(), sharpnessEntry, true);
+        tool = new ItemStack(ModItems.enderSoulPickaxe);
+        ToolLevelHandler.getInstance().addUpgrad(tool, ToolUpgrade.autoSmelt.getId(), ToolUpgrade.autoSmelt.getMaxLevel());
+        autoSmeltEntry.addStackImage(tool, 38, 22);
+
+        BookEntryImage fireyEntry = new BookEntryImage("Firey", ToolUpgrade.firey.getLocolizeKey(), autoSmeltEntry, true);
+        tool = new ItemStack(ModItems.enderSoulSword);
+        ToolLevelHandler.getInstance().addUpgrad(tool, ToolUpgrade.firey.getId(), ToolUpgrade.firey.getMaxLevel());
+        fireyEntry.addStackImage(tool, 38, 22);
 
         entries.add(crystalCombiner);
         entries.add(orbInfuser);
         entries.add(energyNetwork);
-        entries.add(energyDrainMain);
+        entries.add(playerNetwork);
+        entries.add(orbEntry);
+        entries.add(toolList);
     }
 
     @Override
@@ -85,7 +159,6 @@ public class BookPage extends GuiScreen{
         int posX = (super.width - this.bookImageWidth) / 2;
         int posY = 2;
         super.drawTexturedModalRect(posX, posY, 0, 0, this.bookImageWidth, this.bookImageHeigth);
-        //drawEntrys();
         super.drawScreen(x, y, scale);
     }
 
@@ -94,7 +167,6 @@ public class BookPage extends GuiScreen{
             int posX = (this.width - this.bookImageWidth) / 2;
             int posY = 2;
             for (int i = 0; i < entries.size(); i++) {
-                //super.fontRendererObj.drawString(entries.get(i).getTitle(), posX + 38, posY + 22 + (12 * i), 0);
                 this.buttonList.add(new EntryButton(i, posX + 38, posY + 22 + (12 * i), fontRendererObj, entries.get(i)));
             }
         }

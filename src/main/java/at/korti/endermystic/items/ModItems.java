@@ -1,8 +1,6 @@
 package at.korti.endermystic.items;
 
 import at.korti.endermystic.ModInfo;
-import at.korti.endermystic.modintegration.baubles.BaublesBackPack;
-import at.korti.endermystic.modintegration.baubles.rings.AirRing;
 import at.korti.endermystic.items.orbs.*;
 import at.korti.endermystic.items.tools.*;
 import cpw.mods.fml.common.registry.GameRegistry;
@@ -13,6 +11,12 @@ import cpw.mods.fml.common.registry.GameRegistry;
 public class ModItems {
 
     public static CapacityOrb enderOrb;
+    public static CapacityOrb apprenticeOrb;
+    public static CapacityOrb guardiansOrb;
+    public static CapacityOrb masterOrb;
+    public static CapacityOrb galaxyOrb;
+    public static CapacityOrb universeOrb;
+
     public static EmeraldOrb emeraldOrb;
     public static WaterOrb waterOrb;
     public static FireOrb fireOrb;
@@ -41,6 +45,12 @@ public class ModItems {
 
     public static void init(){
         enderOrb = new CapacityOrb("BasicEnderOrb", 0x258474, 10000);
+        apprenticeOrb = new CapacityOrb("ApprenticeOrb", 0x3C3C8D, 25000);
+        guardiansOrb = new CapacityOrb("GuardiansOrb", 0x620000, 40000);
+        masterOrb = new CapacityOrb("MasterOrb", 0x00A6CF, 55000);
+        galaxyOrb = new CapacityOrb("GalaxyOrb", 0x000066, 70000);
+        universeOrb = new CapacityOrb("UniverseOrb", 0x00001F, 85000);
+
         emeraldOrb = new EmeraldOrb();
         waterOrb = new WaterOrb();
         fireOrb = new FireOrb();
@@ -70,13 +80,21 @@ public class ModItems {
 
     public static void load(){
 
+        GameRegistry.registerItem(bookItem, bookItem.getName(), ModInfo.MODID);
+
         GameRegistry.registerItem(enderOrb, enderOrb.getName(), ModInfo.MODID);
+        GameRegistry.registerItem(apprenticeOrb, apprenticeOrb.getName());
+        GameRegistry.registerItem(guardiansOrb, guardiansOrb.getName());
+        GameRegistry.registerItem(masterOrb, masterOrb.getName());
+        GameRegistry.registerItem(galaxyOrb, galaxyOrb.getName());
+        GameRegistry.registerItem(universeOrb, universeOrb.getName());
+
+        GameRegistry.registerItem(airOrb, airOrb.getName(), ModInfo.MODID);
+        GameRegistry.registerItem(earthOrb, earthOrb.getName(), ModInfo.MODID);
         GameRegistry.registerItem(emeraldOrb, emeraldOrb.getName(), ModInfo.MODID);
+        GameRegistry.registerItem(enderZarOrb, enderZarOrb.getName(), ModInfo.MODID);
         GameRegistry.registerItem(waterOrb, waterOrb.getName(), ModInfo.MODID);
         GameRegistry.registerItem(fireOrb, fireOrb.getName(), ModInfo.MODID);
-        GameRegistry.registerItem(earthOrb, earthOrb.getName(), ModInfo.MODID);
-        GameRegistry.registerItem(airOrb, airOrb.getName(), ModInfo.MODID);
-        GameRegistry.registerItem(enderZarOrb, enderZarOrb.getName(), ModInfo.MODID);
 
         GameRegistry.registerItem(testOrb, testOrb.getName(), ModInfo.MODID);
 
@@ -92,7 +110,6 @@ public class ModItems {
         GameRegistry.registerItem(crystalItem, crystalItem.getName(), ModInfo.MODID);
         GameRegistry.registerItem(orbCoreItem, orbCoreItem.getName(), ModInfo.MODID);
 
-        GameRegistry.registerItem(bookItem, bookItem.getName(), ModInfo.MODID);
 //        GameRegistry.registerItem(airRing, airRing.getName(), ModInfo.MODID);
 //        GameRegistry.registerItem(baublesBackPack, baublesBackPack.getName(), ModInfo.MODID);
 

@@ -5,7 +5,7 @@ import at.korti.endermystic.blocks.ModBlocks;
 import at.korti.endermystic.client.guis.GuiHandler;
 import at.korti.endermystic.command.AddUpgradeCommand;
 import at.korti.endermystic.command.AddXpCommand;
-import at.korti.endermystic.crafting.CraftingRecipes;
+import at.korti.endermystic.crafting.CraftingManager;
 import at.korti.endermystic.event.EventManager;
 import at.korti.endermystic.network.PacketPipeline;
 import at.korti.endermystic.potion.PotionHelper;
@@ -58,9 +58,10 @@ public class EnderMystic {
         proxy.initKeys();
         MinecraftForge.EVENT_BUS.register(new EventManager());
 
-        CraftingRecipes.registerCrystalCombinerRecipes();
-        CraftingRecipes.registerOrbInfuserRecipes();
-        CraftingRecipes.registerVanillaRecipes();
+        CraftingManager.registerCrystalCombinerRecipes();
+        CraftingManager.registerOrbInfuserRecipes();
+        CraftingManager.registerVanillaRecipes();
+        CraftingManager.registerBookRecipes();
 
         ToolLevelHandler.getInstance().initToolLevelSystem();
     }
@@ -78,6 +79,7 @@ public class EnderMystic {
     @Mod.EventHandler
     public static void postInit(FMLPostInitializationEvent event){
         pipeline.postInitialise();
+        CraftingManager.loadRecipes();
         config.save();
     }
 

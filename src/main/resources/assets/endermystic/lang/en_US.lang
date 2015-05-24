@@ -1,6 +1,12 @@
 itemGroup.endermystic=Ender Mystic
 
 item.endermystic.BasicEnderOrb.name=Basic Ender Orb
+item.endermystic.ApprenticeOrb.name=Apprentice Orb
+item.endermystic.GuardiansOrb.name=Guardians Orb
+item.endermystic.MasterOrb.name=Master Orb
+item.endermystic.GalaxyOrb.name=Galaxy Orb
+item.endermystic.UniverseOrb.name=Universe Orb
+
 item.endermystic.EmeraldOrb.name=Emerald Orb
 item.endermystic.WaterOrb.name=Water Orb
 item.endermystic.FireOrb.name=Fire Orb
@@ -23,6 +29,7 @@ item.endermystic.EnderItem.EnderRod.name=Ender Rod
 
 item.endermystic.EnderSoulFillEmpty.name=Ender Soul Fill (Empty)
 item.endermystic.EnderSoulFillFilled.name=Ender Soul Fill (Filled)
+item.endermystic.Book.name=Knowledge of Ender 89th Edition
 
 #Crystals
 item.endermystic.Crystal.Water.name=Water Crystal
@@ -33,6 +40,13 @@ item.endermystic.Crystal.Life.name=Life Crystal
 item.endermystic.Crystal.Human.name=Human Crystal
 item.endermystic.Crystal.Grain.name=Grain Crystal
 item.endermystic.Crystal.Energy.name=Energy Crystal
+item.endermystic.Crystal.Shield.name=Shield Crystal
+item.endermystic.Crystal.Stone.name=Stone Crystal
+item.endermystic.Crystal.Metal.name=Metal Crystal
+item.endermystic.Crystal.Magic.name=Magic Crystal
+item.endermystic.Crystal.Darkness.name=Darkness Crystal
+item.endermystic.Crystal.Void.name=Void Crystal
+item.endermystic.Crystal.Emerald.name=Emerald Crystal
 
 #Orb Cores
 item.endermystic.OrbCore.Air.name=Air Core
@@ -42,6 +56,11 @@ item.endermystic.OrbCore.EnderZar.name=Ender Zar Core
 item.endermystic.OrbCore.Fire.name=Fire Core
 item.endermystic.OrbCore.Water.name=Water Core
 item.endermystic.OrbCore.BasicEnder.name=Basic Ender Core
+item.endermystic.OrbCore.Apprentice.name=Apprentice Core
+item.endermystic.OrbCore.Guardians.name=Guardians Core
+item.endermystic.OrbCore.Master.name=Master Core
+item.endermystic.OrbCore.Galaxy.name=Galaxy Core
+item.endermystic.OrbCore.Universe.name=Universe Core
 
 item.endermystic.AirRing.name=Air Ring
 
@@ -67,15 +86,61 @@ upgrade.endermystic.sharpness=Sharpness
 upgrade.endermystic.autosmelt=Auto Smelt
 upgrade.endermystic.firey=Firey
 
-#Book
+#Book Entries
 book.entry.CrystalCombiner.title=Crystal Combiner
-book.entry.CrystalCombiner.text=With the Crystal Combiner can you craft each Crystal.
+book.entry.CrystalCombiner.text=With the Crystal Combiner you can craft different types of crystals and some other stuff. It's very easy to use the Crystal Combiner, simply right click on the container.
+
+book.entry.Crystal.title=Crystal
+book.entry.Crystal.text=Each crystal has her own properties. So you can use for different things, but you don't know all about.
+
+book.entry.CrystalList.title=Crystal Crafting
 
 book.entry.OrbInfuser.title=Orb Infuser
-book.entry.OrbInfuser.text=With the Orb Infuser can you craft the cores for the orbs.
+book.entry.OrbInfuser.text=With the Orb Infuser you can craft the cores of the different orbs. To add an item simply right click on the crystal holder.
+
+book.entry.OrbCoreList.title=Orb Core Crafting
 
 book.entry.Network.title=Energy Network
 book.entry.Network.text=Every crafting mechanic use power. So you have to transfer power from one point to another. For that you need a Energy Drain and some Energy Relays.
 
 book.entry.EnergyDrain.title=Energy Drain
-book.entry.EnergyDrain.text=The Energy Drain provide your energy network with energy from the player network. To get the drain running you need the Energy Drain self and a Energy Crystal that is bound to a player.
+book.entry.EnergyDrain.text=The Energy Drain provide your energy network with energy from the player network. To get the drain running you need the Energy Drain self and a Energy Crystal.
+
+book.entry.EnergyCrystal.title=Energy Crystal
+book.entry.EnergyCrystal.text=To use it, you have to bind the crystal to a player. To bind the crystal you must press the right mouse button.
+
+book.entry.PlayerNetwork.title=Player Network
+book.entry.PlayerNetwork.text=The player energy network is bound to the player. So some items need energy to operate, items like the tools and the orbs.
+
+book.entry.EnderSacrifice.text=You use the ender sacrifice to kill ender mans and collect energy of it. This energy is stored to your player endergy network.
+
+book.entry.CapacityOrb.title=Capacity Orbs
+book.entry.CapacityOrb.text=Each capacity orb increase your max storage of your player network, but each tier can only add her storage one time.
+
+book.entry.Orb.title=Orbs
+book.entry.Orb.text=A orb can do really cool things. There are different types of orbs so each orb can do a different thing.
+
+book.entry.OrbList.title=Orb Crafting
+
+book.entry.CapacityOrb.text=A capacity orb increase the max storage of the player energy network. Each level of this orb can increase the storage only one time.
+book.entry.AirOrb.text=If you press the right mouse button on this orb you can fly around. You can shift right click to get the potion effect breathing. With this effect you can breath in the water.
+book.entry.EarthOrb.text=With this orb you can break blocks in a specific radius. The current radius can you read in the tooltip of the orb.
+book.entry.EmeraldOrb.text=To get the current stored energy and the current max storage, you can use this orb. Simple right click to get the values.
+book.entry.EnderZarOrb.text=To create a big explosion you can charge and discharge this orb with "." and "," (default keys). More charge means more destruction.
+book.entry.FireOrb.text=If you need lava, you can simple create a lava block with one right click. With shift right click you get the fire resistance potion effect.
+book.entry.WaterOrb.text=There is no water in your near. So with a right click you can create unlimited amount of water blocks.
+
+book.entry.ToolList.title=Tools
+
+book.entry.ToolLevel.title=Tool Leveling
+book.entry.ToolLevel.text=The Ender Soul Tools have a inbuilt tool leveling system. You can get xp through use the tools. If the tool leveled up you get a random upgrade.
+
+book.entry.Luck.text=With the luck upgrade you have a chance to get more drops from an ore. The drop amount increase with the level.
+book.entry.Haste.text=With the haste upgrade you can mine faster. The speed increase with the level.
+book.entry.SilkTouch.text=With the silk touch upgrade you get the exact block that you break. You can't get luck or auto smelting on your tool if you get silk touch.
+book.entry.Sharpness.text=With the sharpness upgrade your sword do more damage to mobs or players.
+book.entry.AutoSmelt.text=With the auto smelt upgrade your tool smelt the ore like iron ore directly in the ingot. In combination of luck you can get more of the ore.
+book.entry.Firey.text=With the firey upgrade you can get mobs or players on fire.
+
+book.crafting.timetocraft.name=Time to craft
+book.crafting.energyuse.name=Energy use

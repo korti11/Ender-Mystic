@@ -139,34 +139,45 @@ public class ToolLevelHandler {
     }
     //endregion
 
+
     //region Upgrade Handeling
-    public boolean addUpgrad(ItemStack stack, String upgradeId, String level) {
+    public boolean addUpgrad(ItemStack stack, String upgradeId, String level, boolean showChatMessage) {
         if (stack.getItem() instanceof IEnderSoulTool) {
+            if (stack.stackTagCompound == null) {
+                stack.stackTagCompound = new NBTTagCompound();
+            }
             NBTTagList tagList = stack.stackTagCompound.getTagList("Upgrades", 10);
             ToolUpgrade toolUpgrade = getUpgradeById(Integer.parseInt(upgradeId));
-            if(hasUpgrade(stack, toolUpgrade) && canAddLevel(stack, toolUpgrade, Integer.parseInt(level))) {
+            if (hasUpgrade(stack, toolUpgrade) && canAddLevel(stack, toolUpgrade, Integer.parseInt(level))) {
                 for (int i = 0; i < tagList.tagCount(); i++) {
                     NBTTagCompound tagCompound = tagList.getCompoundTagAt(i);
                     if (tagCompound.getInteger("Upgrade") == toolUpgrade.getId()) {
                         tagCompound.setInteger("Level", tagCompound.getInteger("Level") + Integer.parseInt(level));
                         stack.stackTagCompound.setTag("Upgrades", tagList);
-                        Minecraft.getMinecraft().thePlayer.addChatMessage(new ChatComponentText("Added " + level + " level(s) to " + toolUpgrade.getColor() + toolUpgrade.getName() + EnumChatFormatting.RESET.toString() +  " on " + stack.getDisplayName()));
+                        if(showChatMessage) {
+                            Minecraft.getMinecraft().thePlayer.addChatMessage(new ChatComponentText("Added " + level + " level(s) to " + toolUpgrade.getColor() + toolUpgrade.getName() + EnumChatFormatting.RESET.toString() + " on " + stack.getDisplayName()));
+                        }
                         return true;
                     }
                 }
-            }
-            else if(isUpgradeValid(toolUpgrade, stack) && canAddLevel(stack, toolUpgrade, Integer.parseInt(level))){
+            } else if (isUpgradeValid(toolUpgrade, stack) && canAddLevel(stack, toolUpgrade, Integer.parseInt(level))) {
                 NBTTagCompound tagCompound = new NBTTagCompound();
                 tagCompound.setInteger("Upgrade", toolUpgrade.getId());
                 tagCompound.setInteger("Level", Integer.parseInt(level));
                 tagList.appendTag(tagCompound);
                 stack.stackTagCompound.setTag("Upgrades", tagList);
-                Minecraft.getMinecraft().thePlayer.addChatMessage(new ChatComponentText("Added " + toolUpgrade.getColor() + toolUpgrade.getName() + EnumChatFormatting.RESET.toString() + " with " + level + " level(s) on " + stack.getDisplayName()));
+                if(showChatMessage) {
+                    Minecraft.getMinecraft().thePlayer.addChatMessage(new ChatComponentText("Added " + toolUpgrade.getColor() + toolUpgrade.getName() + EnumChatFormatting.RESET.toString() + " with " + level + " level(s) on " + stack.getDisplayName()));
+                }
                 return true;
             }
             return false;
         }
         return false;
+    }
+
+    public boolean addUpgrad(ItemStack stack, int id, int level) {
+        return addUpgrad(stack, String.valueOf(id), String.valueOf(level), false);
     }
 
     public boolean addRandomUpgrade(ItemStack stack) {
@@ -180,7 +191,7 @@ public class ToolLevelHandler {
             }
         }while (check = (!isUpgradeValid(getUpgradeById(id), stack) || !canAddLevel(stack, getUpgradeById(id), 1)) && checkedUpgrades.size() != 6);
         if(!check) {
-            return addUpgrad(stack, String.valueOf(id), "1");
+            return addUpgrad(stack, String.valueOf(id), "1", true);
         }
         return false;
     }
@@ -228,11 +239,13 @@ public class ToolLevelHandler {
     }
 
     public boolean hasUpgrade(ItemStack stack, ToolUpgrade upgrade) {
-        NBTTagList tagList = stack.stackTagCompound.getTagList("Upgrades", 10);
         boolean check = false;
-        for (int i = 0; i < tagList.tagCount() && !check && stack.getItem() instanceof IEnderSoulTool; i++) {
-            NBTTagCompound tagCompound = tagList.getCompoundTagAt(i);
-            check = tagCompound.getInteger("Upgrade") == upgrade.getId();
+        if(stack.getItem() instanceof IEnderSoulTool) {
+            NBTTagList tagList = stack.stackTagCompound.getTagList("Upgrades", 10);
+            for (int i = 0; i < tagList.tagCount() && !check && stack.getItem() instanceof IEnderSoulTool; i++) {
+                NBTTagCompound tagCompound = tagList.getCompoundTagAt(i);
+                check = tagCompound.getInteger("Upgrade") == upgrade.getId();
+            }
         }
         return check;
     }
@@ -422,5 +435,7 @@ public class ToolLevelHandler {
         }
         return false;
     }
+
+
     //endregion
 }
