@@ -200,6 +200,7 @@ public class CraftingManager {
         for(int i = 0; i < 4; i++) {
             GameRegistry.addShapelessRecipe(new ItemStack(ModItems.enderItem), new ItemStack(ModItems.enderSoulFill, 1, 1), new ItemStack(ModItems.crystalItem, 1, i));
         }
+        GameRegistry.addShapelessRecipe(new ItemStack(ModItems.bookItem), new ItemStack(ModItems.enderSoulFill, 1, 1) , new ItemStack(Items.book));
 
         GameRegistry.addShapelessRecipe(new ItemStack(ModBlocks.energyRelay), new ItemStack(ModItems.crystalItem, 1, 7), new ItemStack(Blocks.obsidian));
 

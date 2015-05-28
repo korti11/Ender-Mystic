@@ -34,6 +34,7 @@ public class CrystalOre extends Block {
         this.setHarvestLevel("pickaxe", 2);
         this.setStepSound(soundTypeStone);
         this.setHardness(3F);
+        this.setLightLevel(0.4F);
     }
 
     @SideOnly(Side.CLIENT)

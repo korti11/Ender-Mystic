@@ -124,12 +124,17 @@ public class BookPage extends GuiScreen{
         ToolLevelHandler.getInstance().addUpgrad(tool, ToolUpgrade.firey.getId(), ToolUpgrade.firey.getMaxLevel());
         fireyEntry.addStackImage(tool, 38, 22);
 
+        BookEntryItemList utilEntry = new BookEntryItemList("Util", this);
+        utilEntry.addItem(new ItemStack(ModItems.enderSacrifice));
+        utilEntry.addItem(new ItemStack(ModItems.enderSoulFill));
+
         entries.add(crystalCombiner);
         entries.add(orbInfuser);
         entries.add(energyNetwork);
         entries.add(playerNetwork);
         entries.add(orbEntry);
         entries.add(toolList);
+        entries.add(utilEntry);
     }
 
     @Override

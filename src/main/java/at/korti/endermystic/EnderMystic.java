@@ -12,12 +12,14 @@ import at.korti.endermystic.potion.PotionHelper;
 import at.korti.endermystic.proxy.CommonProxy;
 import at.korti.endermystic.items.ModItems;
 import at.korti.endermystic.tileEntity.TileEntities;
+import at.korti.endermystic.world.OreGeneration;
 import cpw.mods.fml.common.Mod;
 import cpw.mods.fml.common.SidedProxy;
 import cpw.mods.fml.common.event.FMLInitializationEvent;
 import cpw.mods.fml.common.event.FMLPostInitializationEvent;
 import cpw.mods.fml.common.event.FMLPreInitializationEvent;
 import cpw.mods.fml.common.event.FMLServerStartingEvent;
+import cpw.mods.fml.common.registry.GameRegistry;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.init.Items;
 import net.minecraft.item.Item;
@@ -33,7 +35,7 @@ public class EnderMystic {
     @Mod.Instance(ModInfo.MODID)
     public static EnderMystic instance;
 
-    @SidedProxy(clientSide = "at.korti.endermystic.proxy.ClientProxy", serverSide = "at.korti.proxy.CommonProxy")
+    @SidedProxy(clientSide = "at.korti.endermystic.proxy.ClientProxy", serverSide = "at.korti.endermystic.proxy.CommonProxy")
     public static CommonProxy proxy;
 
     public static CreativeTabs tab = new CreativeTabs(ModInfo.MODID) {
@@ -57,6 +59,7 @@ public class EnderMystic {
         PotionHelper.preInit();
         proxy.initKeys();
         MinecraftForge.EVENT_BUS.register(new EventManager());
+        GameRegistry.registerWorldGenerator(new OreGeneration(), 1);
 
         CraftingManager.registerCrystalCombinerRecipes();
         CraftingManager.registerOrbInfuserRecipes();

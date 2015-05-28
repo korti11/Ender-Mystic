@@ -121,4 +121,15 @@ public class EnderSoulShovel extends ItemSpade implements IEnderSoulTool{
             return deactive;
         }
     }
+
+    @Override
+    public boolean onBlockDestroyed(ItemStack stack, World world, Block block, int x, int y, int z, EntityLivingBase player) {
+        if(!world.isRemote) {
+            ToolLevelHandler.getInstance().addXP(((EntityPlayer) player).inventory.getCurrentItem(), 1, (EntityPlayer) player);
+            ToolLevelHandler.getInstance().handleLuckUpgrade(stack, world, block, x, y, z);
+            ToolLevelHandler.getInstance().handleSilkTouchUpgrade(stack, world, block, x, y, z);
+            ToolLevelHandler.getInstance().handleAutoSmeltUpgrade(stack, world, block, x, y, z);
+        }
+        return super.onBlockDestroyed(stack, world, block, x, y, z, player);
+    }
 }

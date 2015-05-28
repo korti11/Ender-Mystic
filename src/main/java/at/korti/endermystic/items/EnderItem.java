@@ -17,7 +17,7 @@ import java.util.List;
 public class EnderItem extends ModItem{
 
     private final int itemCount = 3;
-    @SideOnly(Side.CLIENT)
+    //@SideOnly(Side.CLIENT)
     private IIcon[] icons;
 
     public EnderItem() {
@@ -27,6 +27,7 @@ public class EnderItem extends ModItem{
         icons = new IIcon[itemCount];
     }
 
+    //@SideOnly(Side.CLIENT)
     @Override
     public void registerIcons(IIconRegister register) {
         icons[0] = register.registerIcon(ModInfo.MODID + ":EnderShard");

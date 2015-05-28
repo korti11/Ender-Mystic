@@ -121,4 +121,15 @@ public class EnderSoulExcavator extends ItemSpade implements IEnderSoulTool{
             return deactive;
         }
     }
+
+    @Override
+    public boolean onBlockDestroyed(ItemStack stack, World world, Block block, int x, int y, int z, EntityLivingBase player) {
+        if(!world.isRemote) {
+            MovingObjectPosition mop = AbilityHelper.raytraceFromEntity(world, player, false, 4.5D);
+            if (mop != null) {
+                AbilityHelper.BreakMultiBlocks((EntityPlayer) player, stack, world, x, y, z, mop.sideHit, 3);
+            }
+        }
+        return super.onBlockDestroyed(stack, world, block, x, y, z, player);
+    }
 }

@@ -4,7 +4,7 @@ import at.korti.endermystic.EnderMystic;
 import at.korti.endermystic.items.tools.ToolMaterials;
 import cpw.mods.fml.common.eventhandler.Event;
 import net.minecraft.block.Block;
-import net.minecraft.client.Minecraft;
+import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.item.EntityItem;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.*;
@@ -16,11 +16,7 @@ import net.minecraft.util.DamageSource;
 import net.minecraft.util.EnumChatFormatting;
 import net.minecraft.world.World;
 import net.minecraftforge.common.config.Property;
-import net.minecraftforge.event.entity.living.LivingAttackEvent;
-import net.minecraftforge.event.entity.living.LivingDropsEvent;
-import net.minecraftforge.event.world.BlockEvent;
 
-import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
@@ -45,7 +41,7 @@ public class ToolLevelHandler {
     private List<ToolUpgrade> upgrades;
 
     private ToolLevelHandler() {
-        random = new Random(LocalTime.now().getNano());
+        random = new Random();
         upgrades = new ArrayList<>();
     }
 
@@ -105,20 +101,20 @@ public class ToolLevelHandler {
     //endregion
 
     //region Xp Handeling
-    public void addXP(ItemStack stack, int xp) {
-        if(stack.getItem() instanceof IEnderSoulTool) {
+    public void addXP(ItemStack stack, int xp, EntityPlayer player) {
+        if(stack != null && stack.getItem() instanceof IEnderSoulTool) {
             if (stack.stackTagCompound.getInteger(XP_TAG) + xp >= stack.stackTagCompound.getInteger(MAX_XP_TAG)) {
                 if(stack.stackTagCompound.getInteger(LEVEL_TAG) < levelNames.length) {
                     stack.stackTagCompound.setInteger(XP_TAG, 0);
                     stack.stackTagCompound.setInteger(LEVEL_TAG, stack.stackTagCompound.getInteger(LEVEL_TAG) + 1);
                     stack.stackTagCompound.setInteger(MAX_XP_TAG, maxXpForLevels[stack.stackTagCompound.getInteger(LEVEL_TAG)]);
                     stack.stackTagCompound.setString(LEVEL_NAME_TAG, levelNames[stack.stackTagCompound.getInteger(LEVEL_TAG)]);
-                    addRandomUpgrade(stack);
+                    addRandomUpgrade(stack, player);
                 }
                 else if (stack.stackTagCompound.getInteger(LEVEL_TAG) == levelNames.length) {
                     stack.stackTagCompound.setInteger(XP_TAG, maxXpForLevels[levelNames.length - 1]);
                     stack.stackTagCompound.setInteger(LEVEL_TAG, stack.stackTagCompound.getInteger(LEVEL_TAG) + 1);
-                    addRandomUpgrade(stack);
+                    addRandomUpgrade(stack, player);
                 }
             } else {
                 stack.stackTagCompound.setInteger(XP_TAG, stack.stackTagCompound.getInteger(XP_TAG) + xp);
@@ -141,7 +137,7 @@ public class ToolLevelHandler {
 
 
     //region Upgrade Handeling
-    public boolean addUpgrad(ItemStack stack, String upgradeId, String level, boolean showChatMessage) {
+    public boolean addUpgrad(ItemStack stack, String upgradeId, String level, EntityPlayer player, boolean showChatMessage) {
         if (stack.getItem() instanceof IEnderSoulTool) {
             if (stack.stackTagCompound == null) {
                 stack.stackTagCompound = new NBTTagCompound();
@@ -154,8 +150,8 @@ public class ToolLevelHandler {
                     if (tagCompound.getInteger("Upgrade") == toolUpgrade.getId()) {
                         tagCompound.setInteger("Level", tagCompound.getInteger("Level") + Integer.parseInt(level));
                         stack.stackTagCompound.setTag("Upgrades", tagList);
-                        if(showChatMessage) {
-                            Minecraft.getMinecraft().thePlayer.addChatMessage(new ChatComponentText("Added " + level + " level(s) to " + toolUpgrade.getColor() + toolUpgrade.getName() + EnumChatFormatting.RESET.toString() + " on " + stack.getDisplayName()));
+                        if (showChatMessage) {
+                            player.addChatMessage(new ChatComponentText("Added " + level + " level(s) to " + toolUpgrade.getColor() + toolUpgrade.getName() + EnumChatFormatting.RESET.toString() + " on " + stack.getDisplayName()));
                         }
                         return true;
                     }
@@ -166,8 +162,8 @@ public class ToolLevelHandler {
                 tagCompound.setInteger("Level", Integer.parseInt(level));
                 tagList.appendTag(tagCompound);
                 stack.stackTagCompound.setTag("Upgrades", tagList);
-                if(showChatMessage) {
-                    Minecraft.getMinecraft().thePlayer.addChatMessage(new ChatComponentText("Added " + toolUpgrade.getColor() + toolUpgrade.getName() + EnumChatFormatting.RESET.toString() + " with " + level + " level(s) on " + stack.getDisplayName()));
+                if (showChatMessage) {
+                    player.addChatMessage(new ChatComponentText("Added " + level + " level(s) to " + toolUpgrade.getColor() + toolUpgrade.getName() + EnumChatFormatting.RESET.toString() + " on " + stack.getDisplayName()));
                 }
                 return true;
             }
@@ -177,10 +173,10 @@ public class ToolLevelHandler {
     }
 
     public boolean addUpgrad(ItemStack stack, int id, int level) {
-        return addUpgrad(stack, String.valueOf(id), String.valueOf(level), false);
+        return addUpgrad(stack, String.valueOf(id), String.valueOf(level), null, false);
     }
 
-    public boolean addRandomUpgrade(ItemStack stack) {
+    public boolean addRandomUpgrade(ItemStack stack, EntityPlayer player) {
         int id;
         boolean check;
         List<Integer> checkedUpgrades = new ArrayList<>();
@@ -191,7 +187,7 @@ public class ToolLevelHandler {
             }
         }while (check = (!isUpgradeValid(getUpgradeById(id), stack) || !canAddLevel(stack, getUpgradeById(id), 1)) && checkedUpgrades.size() != 6);
         if(!check) {
-            return addUpgrad(stack, String.valueOf(id), "1", true);
+            return addUpgrad(stack, String.valueOf(id), "1", player, true);
         }
         return false;
     }
@@ -199,20 +195,14 @@ public class ToolLevelHandler {
     private boolean isUpgradeValid(ToolUpgrade upgrade, ItemStack stack) {
         Item item = stack.getItem();
         boolean check = false;
-        if (ToolUpgrade.luck == upgrade) {
-            check = item instanceof ItemPickaxe || item instanceof ItemSpade || item instanceof ItemSword;
-            if (ToolUpgrade.luck == upgrade) {
-                check = !hasUpgrade(stack, ToolUpgrade.silkTouch);
-            }
-        }
-        else if (ToolUpgrade.haste == upgrade || ToolUpgrade.silkTouch == upgrade || ToolUpgrade.autoSmelt == upgrade) {
+        if (ToolUpgrade.haste == upgrade || ToolUpgrade.silkTouch == upgrade || ToolUpgrade.autoSmelt == upgrade || ToolUpgrade.luck == upgrade) {
             check = item instanceof ItemPickaxe || item instanceof ItemSpade;
             if(ToolUpgrade.silkTouch == upgrade) {
                 if (hasUpgrade(stack, ToolUpgrade.luck) || hasUpgrade(stack, ToolUpgrade.autoSmelt)) {
                     check = false;
                 }
             }
-            else if (ToolUpgrade.autoSmelt == upgrade) {
+            else if (ToolUpgrade.autoSmelt == upgrade || ToolUpgrade.luck == upgrade) {
                 check = !hasUpgrade(stack, ToolUpgrade.silkTouch);
             }
         }
@@ -240,7 +230,7 @@ public class ToolLevelHandler {
 
     public boolean hasUpgrade(ItemStack stack, ToolUpgrade upgrade) {
         boolean check = false;
-        if(stack.getItem() instanceof IEnderSoulTool) {
+        if(stack != null && stack.getItem() instanceof IEnderSoulTool) {
             NBTTagList tagList = stack.stackTagCompound.getTagList("Upgrades", 10);
             for (int i = 0; i < tagList.tagCount() && !check && stack.getItem() instanceof IEnderSoulTool; i++) {
                 NBTTagCompound tagCompound = tagList.getCompoundTagAt(i);
@@ -321,10 +311,8 @@ public class ToolLevelHandler {
         world.spawnEntityInWorld(entityItem);
     }
 
-    public void cancleEventIf(Event event, ItemStack stack) {
-        if (stack.getItem() instanceof IEnderSoulTool) {
-            event.setCanceled(true);
-        }
+    public void cancleEvent(Event event) {
+        event.setCanceled(true);
     }
 
     public float handleHasteUpgrade(ItemStack stack) {
@@ -334,28 +322,19 @@ public class ToolLevelHandler {
         return 0.0F;
     }
 
-    public boolean handleLuckUpgrade(BlockEvent.BreakEvent event) {
-        return handleLuckUpgrade(event.getPlayer().inventory.getCurrentItem(), event.world, event.block, event.x, event.y, event.z);
-    }
-
-    public boolean handleLuckUpgrade(LivingDropsEvent event) {
-        if(event.source.getSourceOfDamage() instanceof EntityPlayer) {
-            EntityPlayer player = (EntityPlayer) event.source.getSourceOfDamage();
-            if (player != null) {
-                ItemStack stack = player.inventory.getCurrentItem();
-                if (hasUpgrade(stack, ToolUpgrade.luck)) {
-                    List<EntityItem> drops = event.drops;
-                    List<EntityItem> newDrops = new ArrayList<>();
-                    for (int i = 0; i < drops.size(); i++) {
-                        EntityItem item = drops.get(i);
-                        for (int j = 0; i < getLevelOfUpgrade(stack, ToolUpgrade.luck) * (random.nextInt(1) + 1) + 1; j++) {
-                            newDrops.add(new EntityItem(item.worldObj, item.posX, item.posY, item.posZ, item.getEntityItem().copy()));
-                        }
-                    }
-                    for (int i = 0; i < newDrops.size(); i++) {
-                        drops.add(newDrops.get(i));
-                    }
+    public boolean handleLuckUpgrade(EntityPlayer player, EntityLivingBase entity) {
+        ItemStack stack = player.inventory.getCurrentItem();
+        if (hasUpgrade(stack, ToolUpgrade.luck)) {
+            List<EntityItem> drops = entity.capturedDrops;
+            List<EntityItem> newDrops = new ArrayList<>();
+            for (int i = 0; i < drops.size(); i++) {
+                EntityItem item = drops.get(i);
+                for (int j = 0; j < getLevelOfUpgrade(stack, ToolUpgrade.luck) * (random.nextInt(1) + 1) + 1; j++) {
+                    newDrops.add(new EntityItem(item.worldObj, item.posX, item.posY, item.posZ, item.getEntityItem().copy()));
                 }
+            }
+            for (int i = 0; i < newDrops.size(); i++) {
+                drops.add(newDrops.get(i));
             }
         }
         return false;
@@ -371,21 +350,13 @@ public class ToolLevelHandler {
         return false;
     }
 
-    public boolean handleSilkTouchUpgrade(BlockEvent.BreakEvent event) {
-        return handleSilkTouchUpgrade(event.getPlayer().inventory.getCurrentItem(), event.world, event.block, event.x, event.y, event.z, event.getPlayer());
-    }
-
-    public boolean handleSilkTouchUpgrade(ItemStack stack, World world, Block block, int x, int y, int z, EntityPlayer player) {
-        if (hasUpgrade(stack, ToolUpgrade.silkTouch) && block.canSilkHarvest(world, player, x, y, z, block.getDamageValue(world, x, y, z))) {
+    public boolean handleSilkTouchUpgrade(ItemStack stack, World world, Block block, int x, int y, int z) {
+        if (hasUpgrade(stack, ToolUpgrade.silkTouch)) {
             world.setBlockToAir(x, y, z);
             spawnItem(world, new ItemStack(block, 1, block.getDamageValue(world, x, y, z)), x, y, z);
             return true;
         }
         return false;
-    }
-
-    public boolean handleAutoSmeltUpgrade(BlockEvent.BreakEvent event) {
-        return handleAutoSmeltUpgrade(event.getPlayer().inventory.getCurrentItem(), event.world, event.block, event.x, event.y, event.z);
     }
 
     public boolean handleAutoSmeltUpgrade(ItemStack stack, World world, Block block, int x, int y, int z) {
@@ -407,32 +378,22 @@ public class ToolLevelHandler {
         return false;
     }
 
-    public boolean handleSharpnessUpgrade(LivingAttackEvent event) {
-        if(event.source.getSourceOfDamage() instanceof EntityPlayer) {
-            EntityPlayer player = (EntityPlayer) event.source.getSourceOfDamage();
-            if (player != null) {
-                ItemStack stack = player.inventory.getCurrentItem();
-                if (hasUpgrade(stack, ToolUpgrade.sharpness)) {
-                    float amount = calcAttackDamage(stack);
-                    event.entityLiving.attackEntityFrom(DamageSource.generic, amount);
-                    return true;
-                }
-            }
+    public boolean handleSharpnessUpgrade(EntityPlayer player, EntityLivingBase entity) {
+        ItemStack stack = player.inventory.getCurrentItem();
+        if (hasUpgrade(stack, ToolUpgrade.sharpness)) {
+            float amount = calcAttackDamage(stack);
+            entity.attackEntityFrom(DamageSource.generic, amount);
+            return true;
         }
         return false;
     }
 
-    public boolean handleFireyUpgrade(LivingAttackEvent event) {
-        if (event.source.getSourceOfDamage() instanceof EntityPlayer) {
-            EntityPlayer player = (EntityPlayer) event.source.getSourceOfDamage();
-            if (player != null) {
-                ItemStack stack = player.inventory.getCurrentItem();
-                if (hasUpgrade(stack, ToolUpgrade.firey)) {
-                    event.entityLiving.setFire(5 * getLevelOfUpgrade(stack, ToolUpgrade.firey));
-                    return true;
-                }
+    public boolean handleFireyUpgrade(EntityPlayer player, EntityLivingBase entity) {
+            ItemStack stack = player.inventory.getCurrentItem();
+            if (hasUpgrade(stack, ToolUpgrade.firey)) {
+                entity.setFire(5 * getLevelOfUpgrade(stack, ToolUpgrade.firey));
+                return true;
             }
-        }
         return false;
     }
 

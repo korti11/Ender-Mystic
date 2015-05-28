@@ -43,7 +43,7 @@ public class AddXpCommand implements ICommand{
         }
 
         EntityPlayer player = iCommandSender.getEntityWorld().getPlayerEntityByName(iCommandSender.getCommandSenderName());
-        ToolLevelHandler.getInstance().addXP(player.inventory.getCurrentItem(), Integer.parseInt(args[0]));
+        ToolLevelHandler.getInstance().addXP(player.inventory.getCurrentItem(), Integer.parseInt(args[0]), player);
         iCommandSender.addChatMessage(new ChatComponentText("Added " + args[0] + " XP to " + player.inventory.getCurrentItem().getDisplayName()));
     }
 

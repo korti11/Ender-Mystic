@@ -25,7 +25,7 @@ public class EnergyNetworkHandler {
         }
         else{
             if(network.mysticCapacity < capacity){
-                network.mysticCapacity += capacity;
+                network.mysticCapacity = capacity;
                 network.markDirty();
                 return true;
             }

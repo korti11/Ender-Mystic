@@ -4,10 +4,12 @@ import at.korti.endermystic.EnderMystic;
 import at.korti.endermystic.ModInfo;
 import at.korti.endermystic.api.tools.IEnderSoulTool;
 import at.korti.endermystic.api.tools.ToolLevelHandler;
+import at.korti.endermystic.api.util.AbilityHelper;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 import net.minecraft.client.renderer.texture.IIconRegister;
 import net.minecraft.entity.Entity;
+import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.ItemSword;
@@ -69,6 +71,18 @@ public class EnderSoulSword extends ItemSword implements IEnderSoulTool{
         info.add("Xp: " + ToolLevelHandler.getInstance().getXp(stack) + "/" + ToolLevelHandler.getInstance().getMaxXp(stack));
         ToolLevelHandler.getInstance().writeInfo(stack, info);
 
+    }
+
+    @Override
+    public boolean hitEntity(ItemStack stack, EntityLivingBase entity, EntityLivingBase player) {
+        AbilityHelper.addEnderHeartBleedPotion(stack, entity);
+        ToolLevelHandler.getInstance().addXP(stack, 1, (EntityPlayer) player);
+        ToolLevelHandler.getInstance().handleSharpnessUpgrade((EntityPlayer) player, entity);
+        ToolLevelHandler.getInstance().handleFireyUpgrade((EntityPlayer) player, entity);
+//        if (entity.) {
+//            ToolLevelHandler.getInstance().handleLuckUpgrade((EntityPlayer) player, entity);
+//        }
+        return super.hitEntity(stack, entity, player);
     }
 
     @Override
