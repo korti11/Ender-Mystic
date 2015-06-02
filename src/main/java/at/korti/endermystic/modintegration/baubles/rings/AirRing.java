@@ -1,11 +1,11 @@
 package at.korti.endermystic.modintegration.baubles.rings;
 
-import at.korti.endermystic.api.mysticEnergyNetwork.EnergyNetwork;
-import at.korti.endermystic.modintegration.baubles.api.BaubleType;
-import at.korti.endermystic.modintegration.baubles.api.IBauble;
+import at.korti.endermystic.api.mysticEnergyNetwork.EnergyNetworkHandler;
 import at.korti.endermystic.items.EnergyItem;
 import at.korti.endermystic.items.orbs.OrbStats;
 import at.korti.endermystic.potion.PotionHelper;
+import baubles.api.BaubleType;
+import baubles.api.IBauble;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
@@ -16,7 +16,7 @@ import net.minecraft.util.ChatComponentText;
 /**
  * Created by Korti on 05.11.2014.
  */
-public class AirRing extends EnergyItem implements IBauble{
+public class AirRing extends EnergyItem implements IBauble {
 
     public AirRing() {
         super("AirRing");
@@ -33,15 +33,9 @@ public class AirRing extends EnergyItem implements IBauble{
             itemstack.stackTagCompound = new NBTTagCompound();
         }
 
-        EnergyNetwork energyNetwork = (EnergyNetwork) player.worldObj.loadItemData(EnergyNetwork.class, itemstack.stackTagCompound.getString("em_owner"));
-
-        if (energyNetwork != null) {
-
-            if(energyNetwork.mysticEnergy - OrbStats.usageWaterAir >= 0){
-                player.addPotionEffect(new PotionEffect(PotionHelper.waterBreathing.getId(), 50));
-                energyNetwork.mysticEnergy -= OrbStats.usageWaterAir;
-            }
-
+        if(EnergyNetworkHandler.IsEnoughEnergy(OrbStats.usageBreathing, itemstack.stackTagCompound.getString("em_owner"))){
+            player.addPotionEffect(new PotionEffect(PotionHelper.waterBreathing.getId(), 50));
+            EnergyNetworkHandler.DecEnergy(OrbStats.usageBreathing, itemstack.stackTagCompound.getString("em_owner"));
         }
     }
 

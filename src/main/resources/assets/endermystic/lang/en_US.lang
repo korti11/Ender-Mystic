@@ -62,7 +62,10 @@ item.endermystic.OrbCore.Master.name=Master Core
 item.endermystic.OrbCore.Galaxy.name=Galaxy Core
 item.endermystic.OrbCore.Universe.name=Universe Core
 
+#Baubles
 item.endermystic.AirRing.name=Air Ring
+item.endermystic.AirBelt.name=Air Belt
+item.endermystic.FireRing.name=Fire Ring
 
 tile.endermystic.CrystalOre.Earth.name=Earth Crystal Ore
 tile.endermystic.CrystalOre.Air.name=Air Crystal Ore
@@ -130,6 +133,15 @@ book.entry.EnderZarOrb.text=To create a big explosion you can charge and dischar
 book.entry.FireOrb.text=If you need lava, you can simple create a lava block with one right click. With shift right click you get the fire resistance potion effect.
 book.entry.WaterOrb.text=There is no water in your near. So with a right click you can create unlimited amount of water blocks.
 
+book.entry.Baubles.title=Baubles
+book.entry.Baubles.text=Baubles is a small addon mod. It adds 4 new slots: an amulet, belt and two rings slots.
+
+book.entry.BaublesItems.title=Baubles Items
+
+book.entry.AirRing.text=The air ring add the potion effect breathing. With breathing you can breath under the water.
+book.entry.AirBelt.text=If equipped the air belt you get the potion effect swiftness. With this effect you can run faster.
+book.entry.FireRing.text=With the fire ring you get the effect fire resistance. With this potion effect you get no damage from fire and lava.
+
 book.entry.ToolList.title=Tools
 
 book.entry.ToolLevel.title=Tool Leveling
@@ -144,3 +156,5 @@ book.entry.Firey.text=With the firey upgrade you can get mobs or players on fire
 
 book.crafting.timetocraft.name=Time to craft
 book.crafting.energyuse.name=Energy use
+
+book.entry.Util.title=Util

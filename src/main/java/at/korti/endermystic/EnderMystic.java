@@ -30,7 +30,7 @@ import net.minecraftforge.common.config.Configuration;
 /**
  * Created by Korti on 15.10.2014.
  */
-@Mod(modid = ModInfo.MODID, name = ModInfo.NAME, version = ModInfo.VERSION)
+@Mod(modid = ModInfo.MODID, name = ModInfo.NAME, version = ModInfo.VERSION, dependencies = "after:Baubles; after:Waila")
 public class EnderMystic {
 
     @Mod.Instance(ModInfo.MODID)
@@ -61,6 +61,7 @@ public class EnderMystic {
         ModItems.load();
 
         PotionHelper.preInit();
+        ModIntegration.preInit();
 
         proxy.initKeys();
 
@@ -74,8 +75,6 @@ public class EnderMystic {
         CraftingManager.registerBookRecipes();
 
         ToolLevelHandler.getInstance().initToolLevelSystem();
-
-        ModIntegration.preInit();
     }
 
     @Mod.EventHandler

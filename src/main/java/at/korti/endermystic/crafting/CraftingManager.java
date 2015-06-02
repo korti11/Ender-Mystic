@@ -5,6 +5,7 @@ import at.korti.endermystic.api.tools.IEnderSoulTool;
 import at.korti.endermystic.blocks.ModBlocks;
 import at.korti.endermystic.items.ModItem;
 import at.korti.endermystic.items.ModItems;
+import at.korti.endermystic.modintegration.baubles.Baubles;
 import cpw.mods.fml.common.registry.GameRegistry;
 import net.minecraft.init.Blocks;
 import net.minecraft.init.Items;
@@ -321,6 +322,25 @@ public class CraftingManager {
                 "HCH",
                 "HHH", 'E', new ItemStack(Items.ender_eye), 'H', new ItemStack(Blocks.hardened_clay), 'C', new ItemStack(ModItems.crystalItem, 1, 7)
         );
+
+        //Baubles
+        if(Baubles.isLoaded) {
+            GameRegistry.addShapedRecipe(new ItemStack(Baubles.airBelt),
+                    " L ",
+                    "L L",
+                    "OL ", 'L', new ItemStack(Items.leather), 'O', new ItemStack(ModItems.airOrb)
+            );
+            GameRegistry.addShapedRecipe(new ItemStack(Baubles.airRing),
+                    "OG ",
+                    "G G",
+                    " G ", 'G', new ItemStack(Items.gold_ingot), 'O', new ItemStack(ModItems.airOrb)
+            );
+            GameRegistry.addShapedRecipe(new ItemStack(Baubles.fireRing),
+                    "OG ",
+                    "G G",
+                    " G ", 'G', new ItemStack(Items.gold_ingot), 'O', new ItemStack(ModItems.fireOrb)
+            );
+        }
     }
 
     public static void registerBookRecipes() {

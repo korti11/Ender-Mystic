@@ -7,7 +7,7 @@ public class OrbStats {
 
     //Fire Orb
     public static final int usageFireOrb = 250;
-    public static final int usageFireResistance = 20;
+    public static final int usageFireResistance = 2;
 
     //Water Orb
     public static final int usageWaterOrb = 150;
@@ -17,8 +17,6 @@ public class OrbStats {
 
     //Air Orb
     public static final int usageAirOrb = 200;
-    public static final int usageWaterAir = 10;
-
-    //Ender Zar Orb
-    public static final int usageEnderZarOrb = 520;
+    public static final int usageBreathing = 1;
+    public static final int usageSwiftness = 2;
 }

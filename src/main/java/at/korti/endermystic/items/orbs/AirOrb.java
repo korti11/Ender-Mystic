@@ -1,7 +1,6 @@
 package at.korti.endermystic.items.orbs;
 
 import at.korti.endermystic.api.mysticEnergyNetwork.EnergyNetworkHandler;
-import at.korti.endermystic.items.EnergyItem;
 import at.korti.endermystic.potion.PotionHelper;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.EntityPlayer;
@@ -94,7 +93,7 @@ public class AirOrb extends Orb {
                 stack.stackTagCompound = new NBTTagCompound();
             }
 
-            if(stack.stackTagCompound.getBoolean("em_active") && EnergyNetworkHandler.DecEnergy(OrbStats.usageWaterAir, stack.stackTagCompound.getString("em_owner"))){
+            if(stack.stackTagCompound.getBoolean("em_active") && EnergyNetworkHandler.DecEnergy(OrbStats.usageBreathing, stack.stackTagCompound.getString("em_owner"))){
                 ((EntityPlayer)entity).addPotionEffect(new PotionEffect(PotionHelper.waterBreathing.getId(), 50));
             }
 

@@ -11,6 +11,8 @@ import at.korti.endermystic.client.guis.book.entry.BookEntryImage;
 import at.korti.endermystic.client.guis.book.entry.BookEntryItemList;
 import at.korti.endermystic.items.ModItem;
 import at.korti.endermystic.items.ModItems;
+import at.korti.endermystic.modintegration.baubles.Baubles;
+import cpw.mods.fml.common.Loader;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiScreen;
 import net.minecraft.item.ItemStack;
@@ -84,6 +86,16 @@ public class BookPage extends GuiScreen{
         orbList.addItem(new ItemStack(ModItems.fireOrb));
         orbList.addItem(new ItemStack(ModItems.waterOrb));
 
+        //Baubles
+        BookEntry baubles = null;
+        if (Baubles.isLoaded) {
+            baubles = new BookEntry("Baubles", this);
+            BookEntryItemList baublesItems = new BookEntryItemList("BaublesItems", baubles);
+            baublesItems.addItem(new ItemStack(Baubles.airBelt));
+            baublesItems.addItem(new ItemStack(Baubles.airRing));
+            baublesItems.addItem(new ItemStack(Baubles.fireRing));
+        }
+
         //Tools
         BookEntryItemList toolList = new BookEntryItemList("ToolList", this);
         toolList.addItem(new ItemStack(ModItems.enderSoulSword));
@@ -135,6 +147,10 @@ public class BookPage extends GuiScreen{
         entries.add(orbEntry);
         entries.add(toolList);
         entries.add(utilEntry);
+
+        if (Baubles.isLoaded) {
+            entries.add(baubles);
+        }
     }
 
     @Override
