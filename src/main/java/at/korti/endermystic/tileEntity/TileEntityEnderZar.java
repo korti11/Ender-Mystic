@@ -65,4 +65,12 @@ public class TileEntityEnderZar extends TileEntity {
     public void setStoredEnergy(int storedEnergy) {
         this.storedEnergy = storedEnergy;
     }
+
+    public int getStoredEnergy() {
+        return storedEnergy;
+    }
+
+    public int getTimer() {
+        return timer / 20;
+    }
 }

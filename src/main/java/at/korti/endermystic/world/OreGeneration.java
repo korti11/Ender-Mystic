@@ -16,17 +16,17 @@ import java.util.Random;
 public class OreGeneration implements IWorldGenerator{
     @Override
     public void generate(Random random, int chunkX, int chunkZ, World world, IChunkProvider chunkGenerator, IChunkProvider chunkProvider) {
-        switch (world.provider.dimensionId) {
-            case 0:
-                generateOverworld(world, random, chunkX * 16, chunkZ * 16);
+        //TODO: Fix it.
+        if (world.provider.dimensionId != 1 && world.provider.dimensionId != -1) {
+            generateOverworld(world, random, chunkX, chunkZ);
         }
     }
 
     public void generateOverworld(World world, Random random, int x, int z) {
-        addOreSpawn(ModBlocks.crystalOre, 0, world, random, x, z, 16, 16, 3, 15, 10, 50);
-        addOreSpawn(ModBlocks.crystalOre, 1, world, random, x, z, 16, 16, 3, 15, 10, 50);
-        addOreSpawn(ModBlocks.crystalOre, 2, world, random, x, z, 16, 16, 3, 15, 10, 50);
-        addOreSpawn(ModBlocks.crystalOre, 3, world, random, x, z, 16, 16, 3, 15, 10, 50);
+        addOreSpawn(ModBlocks.crystalOre, 0, world, random, x, z, 16, 16, 9, 30, 10, 50);
+        addOreSpawn(ModBlocks.crystalOre, 1, world, random, x, z, 16, 16, 9, 30, 10, 50);
+        addOreSpawn(ModBlocks.crystalOre, 2, world, random, x, z, 16, 16, 9, 30, 10, 50);
+        addOreSpawn(ModBlocks.crystalOre, 3, world, random, x, z, 16, 16, 9, 30, 10, 50);
     }
 
     public void addOreSpawn(Block ore, int meta, World world, Random random, int blockXPos, int blockZPos, int maxX, int maxZ, int maxVeinSize, int chancesToSpawn, int minY, int maxY){

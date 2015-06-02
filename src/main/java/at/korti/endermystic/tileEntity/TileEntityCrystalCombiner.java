@@ -160,8 +160,8 @@ public class TileEntityCrystalCombiner extends TileEntity implements IInventory{
                 markDirty();
             } else if (timeToCraft > 0 && timeStartToCraft == 0 && recipe != null && provider.hasEnoughEnergy(recipe.getEnergyUsePerTick())) {
                 timeToCraft--;
-                provider.decrEnergy(recipe.getEnergyUsePerTick());
                 if (timeToCraft % 2 == 0) {
+                    provider.decrEnergy(recipe.getEnergyUsePerTick());
                     for (int l = 0; l < 128; ++l) {
                         float f = (worldObj.rand.nextFloat() - 0.5F) * 0.2F;
                         float f1 = (worldObj.rand.nextFloat() - 0.5F) * 0.2F;
@@ -254,5 +254,24 @@ public class TileEntityCrystalCombiner extends TileEntity implements IInventory{
             }
         }
         return count;
+    }
+
+    public boolean isConnected(){
+        return EnergyNetworkHandler.getProvider(worldObj, xCoord, yCoord, zCoord, range) != null;
+    }
+
+    /**
+     * Get the rest time to craft in seconds.
+     * @return Rest time.
+     */
+    public float getRestTime(){
+        return timeToCraft / 20;
+    }
+
+    public String getResultItemName() {
+        if (recipe != null) {
+            return recipe.getResult().getDisplayName();
+        }
+        return "";
     }
 }
