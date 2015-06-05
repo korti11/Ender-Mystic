@@ -1,7 +1,6 @@
 package at.korti.endermystic.api.mysticEnergyNetwork;
 
-import javafx.concurrent.Worker;
-import net.minecraft.entity.player.EntityPlayer;
+import at.korti.endermystic.tileEntity.TileEntityEnergyCrystalStorage;
 import net.minecraft.server.MinecraftServer;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.world.World;
@@ -74,15 +73,37 @@ public class EnergyNetworkHandler {
     }
 
     public static IEnergyProvider getProvider(World worldObj,int xCoord, int yCoord, int zCoord, int range){
+        boolean isStorage = worldObj.getTileEntity(xCoord,yCoord,zCoord) instanceof TileEntityEnergyCrystalStorage;
         for (int x = xCoord - (range / 2); x < xCoord + (range / 2); x++) {
             for (int y = yCoord - (range / 2); y < yCoord + (range / 2); y++) {
                 for (int z = zCoord - (range / 2); z < zCoord + (range / 2); z++) {
                     TileEntity tileEntity = worldObj.getTileEntity(x, y, z);
                     if(tileEntity instanceof IEnergyProvider){
-                        return (IEnergyProvider)tileEntity;
+                        if(isStorage && !(tileEntity instanceof TileEntityEnergyCrystalStorage)) {
+                            IEnergyProvider provider = (IEnergyProvider) tileEntity;
+                            if(provider != null && provider.hasEnoughEnergy(1)){
+                                return provider;
+                            }
+                        }
+                        else if(!isStorage) {
+                            IEnergyProvider provider = (IEnergyProvider) tileEntity;
+                            if(provider != null && provider.hasEnoughEnergy(1)) {
+                                return provider;
+                            }
+                        }
                     }
                     else if(tileEntity instanceof IEnergyRelay){
-                        return ((IEnergyRelay)tileEntity).getConnectionToProvider();
+                        IEnergyProvider provider = ((IEnergyRelay)tileEntity).getConnectionToProvider();
+                        if(isStorage && !(provider instanceof TileEntityEnergyCrystalStorage)) {
+                            if (provider != null && provider.hasEnoughEnergy(1)) {
+                                return provider;
+                            }
+                        }
+                        else if(!isStorage){
+                            if (provider != null && provider.hasEnoughEnergy(1)) {
+                                return provider;
+                            }
+                        }
                     }
                 }
             }

@@ -1,29 +1,26 @@
 package at.korti.endermystic.blocks;
 
-import at.korti.endermystic.EnderMystic;
 import at.korti.endermystic.ModInfo;
-import at.korti.endermystic.tileEntity.TileEntityEnergyRelay;
+import at.korti.endermystic.tileEntity.TileEntityEnergyCrystalStorage;
 import net.minecraft.block.BlockContainer;
 import net.minecraft.block.material.Material;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.world.World;
 
 /**
- * Created by Korti on 14.04.2015.
+ * Created by Korti on 02.06.2015.
  */
-public class EnergyRelay extends BlockContainer {
+public class EnergyCrystalStorage extends BlockContainer{
 
-    public EnergyRelay() {
+    protected EnergyCrystalStorage() {
         super(Material.rock);
 
-        this.setBlockBounds(0.4F, 0.45F, 0.4F, 0.6F, 0.75F, 0.6F);
-        this.setCreativeTab(EnderMystic.tab);
-        this.setBlockName(ModInfo.MODID + ".EnergyRelay");
+        setBlockName(ModInfo.MODID + ".EnergyCrystalStorage");
     }
 
     @Override
     public TileEntity createNewTileEntity(World p_149915_1_, int p_149915_2_) {
-        return new TileEntityEnergyRelay();
+        return new TileEntityEnergyCrystalStorage();
     }
 
     @Override

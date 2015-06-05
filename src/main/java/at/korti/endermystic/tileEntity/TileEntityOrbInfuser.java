@@ -169,8 +169,15 @@ public class TileEntityOrbInfuser extends TileEntity implements IInventory{
                 markDirty();
             } else if (timeToCraft > 0 && timeStartToCraft == 0 && recipe != null && provider.hasEnoughEnergy(recipe.getEnergyUsePerTick())) {
                 timeToCraft--;
-                if (timeToCraft % 2 == 0) {
+                if (provider instanceof TileEntityEnergyDrain) {
+                    if (timeToCraft % 2 == 0) {
+                        provider.decrEnergy(recipe.getEnergyUsePerTick());
+                    }
+                }
+                else {
                     provider.decrEnergy(recipe.getEnergyUsePerTick());
+                }
+                if (timeToCraft % 2 == 0) {
                     for (int l = 0; l < 128; ++l) {
                         float f = (worldObj.rand.nextFloat() - 0.5F) * 0.2F;
                         float f1 = (worldObj.rand.nextFloat() - 0.5F) * 0.2F;
@@ -189,7 +196,6 @@ public class TileEntityOrbInfuser extends TileEntity implements IInventory{
         if(worldObj.isRemote){
             worldObj.markBlockForUpdate(xCoord, yCoord, zCoord);
         }
-
     }
 
     @Override

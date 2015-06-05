@@ -13,6 +13,7 @@ public class TileEntities {
         GameRegistry.registerTileEntity(TileEntityEnergyRelay.class, "tileEntityEnergyRelay");
         GameRegistry.registerTileEntity(TileEntityEnderZar.class, "tileEntityEnderZar");
         GameRegistry.registerTileEntity(TileEntityOrbInfuser.class, "tileEntityOrbInfuser");
+        GameRegistry.registerTileEntity(TileEntityEnergyCrystalStorage.class, "tileEntityEnergyCrystalStorage");
     }
 
 }

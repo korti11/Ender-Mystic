@@ -77,6 +77,7 @@ tile.endermystic.EnergyDrain.name=Energy Drain
 tile.endermystic.CrystalCombiner.name=Crystal Combiner
 tile.endermystic.EnderZar.name=Ender Zar
 tile.endermystic.OrbInfuser.name=Orb Infuser
+tile.endermystic.EnergyCrystalStorage.name=Energy Crystal Storage
 
 potion.Breathing=Breathing
 potion.enderHearBleed=Ender Heart Bleed

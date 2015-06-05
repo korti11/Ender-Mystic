@@ -38,11 +38,13 @@ public class Waila implements IIntegration {
         registrar.registerBodyProvider(new WailaOrbInfuserHandler(), TileEntityOrbInfuser.class);
         registrar.registerBodyProvider(new WailaEnergyRelayHandler(), TileEntityEnergyRelay.class);
         registrar.registerBodyProvider(new WailaEnderZarHandler(), TileEntityEnderZar.class);
+        registrar.registerBodyProvider(new WailaEnergyCrystalStorageHandler(), TileEntityEnergyCrystalStorage.class);
 
         registrar.registerNBTProvider(new WailaCrystalCombinerHandler(), TileEntityCrystalCombiner.class);
         registrar.registerNBTProvider(new WailaEnergyDrainHandler(), TileEntityEnergyDrain.class);
         registrar.registerNBTProvider(new WailaOrbInfuserHandler(), TileEntityOrbInfuser.class);
         registrar.registerNBTProvider(new WailaEnergyRelayHandler(), TileEntityEnergyRelay.class);
         registrar.registerNBTProvider(new WailaEnderZarHandler(), TileEntityEnderZar.class);
+        registrar.registerNBTProvider(new WailaEnergyCrystalStorageHandler(), TileEntityEnergyCrystalStorage.class);
     }
 }

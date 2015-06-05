@@ -1,29 +1,20 @@
 package at.korti.endermystic.client.render.blocks;
 
-import at.korti.endermystic.ModInfo;
 import at.korti.endermystic.client.model.CrystalCombinerModel;
-import at.korti.endermystic.items.ModItems;
 import at.korti.endermystic.tileEntity.TileEntityCrystalCombiner;
-import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.entity.RenderItem;
 import net.minecraft.client.renderer.entity.RenderManager;
-import net.minecraft.client.renderer.tileentity.TileEntitySpecialRenderer;
-import net.minecraft.entity.Entity;
 import net.minecraft.entity.item.EntityItem;
-import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
-import net.minecraft.util.ResourceLocation;
 import org.lwjgl.opengl.GL11;
 
 /**
  * Created by Korti on 11.04.2015.
  */
-public class CrystalCombinerRenderer extends TileEntitySpecialRenderer{
-
-    private final CrystalCombinerModel model;
+public class CrystalCombinerRenderer extends TileEntityBlockRenderer{
 
     public CrystalCombinerRenderer(){
-        model = new CrystalCombinerModel();
+        super(new CrystalCombinerModel(), "textures/model/CrystalCombiner.png");
     }
 
     @Override
@@ -31,16 +22,7 @@ public class CrystalCombinerRenderer extends TileEntitySpecialRenderer{
 
         TileEntityCrystalCombiner combiner = (TileEntityCrystalCombiner)tileEntity;
 
-        GL11.glPushMatrix();
-        GL11.glTranslatef((float)x + 0.5F, (float)y + 1.5F, (float)z + 0.5F);
-        ResourceLocation texture = new ResourceLocation(ModInfo.MODID + ":textures/model/CrystalCombiner.png");
-        Minecraft.getMinecraft().renderEngine.bindTexture(texture);
-
-        GL11.glPushMatrix();
-        GL11.glRotatef(180F, 0F, 0F, 1F);
-        this.model.render(null, 0F, 0F, -0.1F, 0F, 0F, 0.0625F);
-        GL11.glPopMatrix();
-        GL11.glPopMatrix();
+        super.renderTileEntityAt(tileEntity, x, y, z, scale);
 
         for(int i = 0; i < combiner.getSizeInventory(); i++){
             if(combiner.getStackInSlot(i) != null) {

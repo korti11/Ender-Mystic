@@ -97,7 +97,7 @@ public class TileEntityEnergyDrain extends TileEntity implements IInventory, IEn
             this.worldObj.spawnParticle("portal", xCoord + 0.5, yCoord + 0.75, zCoord + 0.5, 0, -0.5, 0);
         }
 
-        if(worldObj.isRemote) {
+        if(!worldObj.isRemote) {
             worldObj.markBlockForUpdate(xCoord, yCoord, zCoord);
         }
     }
@@ -159,11 +159,13 @@ public class TileEntityEnergyDrain extends TileEntity implements IInventory, IEn
     }
 
     @Override
-    public void decrEnergy(int energyUse) {
+    public int decrEnergy(int energyUse) {
         ItemStack stack = getStackInSlot(0);
         if(stack != null && getEnergyToProvide() >= 0) {
             EnergyNetworkHandler.DecEnergy(energyUse, getOwner(stack));
+            return energyUse;
         }
+        return 0;
     }
 
     @Override

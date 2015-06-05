@@ -2,6 +2,9 @@ package at.korti.endermystic.proxy;
 
 import at.korti.endermystic.blocks.ModBlocks;
 import at.korti.endermystic.client.keybinding.KeyHandler;
+import at.korti.endermystic.client.model.EnderZarModel;
+import at.korti.endermystic.client.model.EnergyCrystalStorageModel;
+import at.korti.endermystic.client.model.EnergyRelayModel;
 import at.korti.endermystic.client.render.blocks.*;
 import at.korti.endermystic.client.render.items.TileEntityItemRenderer;
 import at.korti.endermystic.tileEntity.*;
@@ -20,15 +23,17 @@ public class ClientProxy extends CommonProxy {
     public void initRenderes() {
         ClientRegistry.bindTileEntitySpecialRenderer(TileEntityCrystalCombiner.class, new CrystalCombinerRenderer());
         ClientRegistry.bindTileEntitySpecialRenderer(TileEntityEnergyDrain.class, new EnergyDrainRenderer());
-        ClientRegistry.bindTileEntitySpecialRenderer(TileEntityEnergyRelay.class, new EnergyRelayRenderer());
-        ClientRegistry.bindTileEntitySpecialRenderer(TileEntityEnderZar.class, new EnderZarRenderer());
+        ClientRegistry.bindTileEntitySpecialRenderer(TileEntityEnergyRelay.class, new TileEntityBlockRenderer(new EnergyRelayModel(), "textures/model/EnergyRelay.png"));
+        ClientRegistry.bindTileEntitySpecialRenderer(TileEntityEnderZar.class, new TileEntityBlockRenderer(new EnderZarModel(), "textures/model/Ender Zar.png"));
         ClientRegistry.bindTileEntitySpecialRenderer(TileEntityOrbInfuser.class, new OrbInfuserRenderer());
+        ClientRegistry.bindTileEntitySpecialRenderer(TileEntityEnergyCrystalStorage.class, new TileEntityBlockRenderer(new EnergyCrystalStorageModel(), "textures/model/EnergyCrystalStorage.png"));
 
         MinecraftForgeClient.registerItemRenderer(Item.getItemFromBlock(ModBlocks.energyDrain), new TileEntityItemRenderer(new EnergyDrainRenderer(), new TileEntityEnergyDrain()));
-        MinecraftForgeClient.registerItemRenderer(Item.getItemFromBlock(ModBlocks.energyRelay), new TileEntityItemRenderer(new EnergyRelayRenderer(), new TileEntityEnergyRelay()));
+        MinecraftForgeClient.registerItemRenderer(Item.getItemFromBlock(ModBlocks.energyRelay), new TileEntityItemRenderer(new TileEntityBlockRenderer(new EnergyRelayModel(), "textures/model/EnergyRelay.png"), new TileEntityEnergyRelay()));
         MinecraftForgeClient.registerItemRenderer(Item.getItemFromBlock(ModBlocks.crystalCombiner), new TileEntityItemRenderer(new CrystalCombinerRenderer(), new TileEntityCrystalCombiner()));
-        MinecraftForgeClient.registerItemRenderer(Item.getItemFromBlock(ModBlocks.enderZar), new TileEntityItemRenderer(new EnderZarRenderer(), new TileEntityEnderZar()));
+        MinecraftForgeClient.registerItemRenderer(Item.getItemFromBlock(ModBlocks.enderZar), new TileEntityItemRenderer(new TileEntityBlockRenderer(new EnderZarModel(), "textures/model/Ender Zar.png"), new TileEntityEnderZar()));
         MinecraftForgeClient.registerItemRenderer(Item.getItemFromBlock(ModBlocks.orbInfuser), new TileEntityItemRenderer(new OrbInfuserRenderer(), new TileEntityOrbInfuser()));
+        MinecraftForgeClient.registerItemRenderer(Item.getItemFromBlock(ModBlocks.energyCrystalStorage), new TileEntityItemRenderer(new TileEntityBlockRenderer(new EnergyCrystalStorageModel(), "textures/model/EnergyCrystalStorage.png"), new TileEntityEnergyCrystalStorage()));
     }
 
     @Override

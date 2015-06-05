@@ -29,7 +29,7 @@ public class WailaOrbInfuserHandler implements IWailaDataProvider {
     @Override
     public List<String> getWailaBody(ItemStack itemStack, List<String> list, IWailaDataAccessor iWailaDataAccessor, IWailaConfigHandler iWailaConfigHandler) {
         NBTTagCompound tagCompound = iWailaDataAccessor.getNBTData();
-        list.add("Is connected: " + tagCompound.getBoolean("Connected"));
+        list.add("Has network enough energy: " + tagCompound.getBoolean("Connected"));
         list.add("Rest time to craft: " + tagCompound.getFloat("TimeToCraft") + "s");
         list.add("Result Item: " + tagCompound.getString("ResultItem"));
         return list;

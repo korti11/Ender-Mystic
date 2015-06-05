@@ -7,7 +7,7 @@ public interface IEnergyProvider extends IEnergy {
 
     int getEnergyToProvide();
 
-    void decrEnergy(int energyUse);
+    int decrEnergy(int energyUse);
 
     boolean canProvideEnergy();
 

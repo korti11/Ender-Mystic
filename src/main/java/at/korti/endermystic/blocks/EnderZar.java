@@ -5,7 +5,6 @@ import at.korti.endermystic.ModInfo;
 import at.korti.endermystic.tileEntity.TileEntityEnderZar;
 import net.minecraft.block.BlockContainer;
 import net.minecraft.block.material.Material;
-import net.minecraft.client.renderer.texture.IIconRegister;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.world.World;
 

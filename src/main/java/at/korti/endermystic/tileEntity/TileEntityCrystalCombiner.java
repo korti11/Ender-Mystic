@@ -1,14 +1,10 @@
 package at.korti.endermystic.tileEntity;
 
-import at.korti.endermystic.api.crafting.CrystalCombinerRecipe;
 import at.korti.endermystic.api.crafting.CraftingRegistry;
+import at.korti.endermystic.api.crafting.CrystalCombinerRecipe;
 import at.korti.endermystic.api.mysticEnergyNetwork.EnergyNetworkHandler;
 import at.korti.endermystic.api.mysticEnergyNetwork.IEnergyProvider;
-import at.korti.endermystic.items.CrystalItem;
-import at.korti.endermystic.items.EnderItem;
-import at.korti.endermystic.items.EnderSoulFill;
 import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.init.Items;
 import net.minecraft.inventory.IInventory;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
@@ -160,8 +156,15 @@ public class TileEntityCrystalCombiner extends TileEntity implements IInventory{
                 markDirty();
             } else if (timeToCraft > 0 && timeStartToCraft == 0 && recipe != null && provider.hasEnoughEnergy(recipe.getEnergyUsePerTick())) {
                 timeToCraft--;
-                if (timeToCraft % 2 == 0) {
+                if (provider instanceof TileEntityEnergyDrain) {
+                    if (timeToCraft % 2 == 0) {
+                        provider.decrEnergy(recipe.getEnergyUsePerTick());
+                    }
+                }
+                else {
                     provider.decrEnergy(recipe.getEnergyUsePerTick());
+                }
+                if (timeToCraft % 2 == 0) {
                     for (int l = 0; l < 128; ++l) {
                         float f = (worldObj.rand.nextFloat() - 0.5F) * 0.2F;
                         float f1 = (worldObj.rand.nextFloat() - 0.5F) * 0.2F;

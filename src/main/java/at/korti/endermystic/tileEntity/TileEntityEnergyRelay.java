@@ -29,10 +29,15 @@ public class TileEntityEnergyRelay extends TileEntity implements IEnergyRelay{
                             if (tileEntity instanceof IEnergyRelay) {
                                 IEnergyRelay relay = (IEnergyRelay) tileEntity;
                                 connectionsToProvider = connectionsToProvider > relay.getConnectionsToProvider() ? relay.getConnectionsToProvider() + 1 : connectionsToProvider;
+                                if (connectionsToProvider == relay.getConnectionsToProvider()) {
+                                    connectionsToProvider = Integer.MAX_VALUE;
+                                    continue;
+                                }
                                 connection = (IEnergy) tileEntity;
-                            } else if (tileEntity instanceof IEnergyProvider) {
+                            } else if (tileEntity instanceof IEnergyProvider && connectionsToProvider > 0) {
                                 connectionsToProvider = 0;
                                 connection = (IEnergy) tileEntity;
+                                return;
                             }
                         }
                     }
