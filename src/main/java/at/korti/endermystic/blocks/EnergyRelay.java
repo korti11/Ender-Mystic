@@ -19,6 +19,7 @@ public class EnergyRelay extends BlockContainer {
         this.setBlockBounds(0.4F, 0.45F, 0.4F, 0.6F, 0.75F, 0.6F);
         this.setCreativeTab(EnderMystic.tab);
         this.setBlockName(ModInfo.MODID + ".EnergyRelay");
+        this.setStepSound(soundTypeStone);
     }
 
     @Override

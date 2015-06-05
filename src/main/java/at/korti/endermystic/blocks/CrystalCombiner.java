@@ -21,6 +21,7 @@ public class CrystalCombiner extends BlockContainer{
         this.setCreativeTab(EnderMystic.tab);
         this.setBlockName(ModInfo.MODID + ".CrystalCombiner");
         this.setBlockBounds(0F, 0F, 0F, 1F, 1F, 1F);
+        this.setStepSound(soundTypeStone);
     }
 
 //    @Override

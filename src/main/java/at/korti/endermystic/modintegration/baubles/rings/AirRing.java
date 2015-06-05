@@ -33,9 +33,9 @@ public class AirRing extends EnergyItem implements IBauble {
             itemstack.stackTagCompound = new NBTTagCompound();
         }
 
-        if(EnergyNetworkHandler.IsEnoughEnergy(OrbStats.usageBreathing, itemstack.stackTagCompound.getString("em_owner"))){
+        if(EnergyNetworkHandler.isEnoughEnergy(OrbStats.usageBreathing, itemstack.stackTagCompound.getString("em_owner"))){
             player.addPotionEffect(new PotionEffect(PotionHelper.waterBreathing.getId(), 50));
-            EnergyNetworkHandler.DecEnergy(OrbStats.usageBreathing, itemstack.stackTagCompound.getString("em_owner"));
+            EnergyNetworkHandler.decEnergy(OrbStats.usageBreathing, itemstack.stackTagCompound.getString("em_owner"));
         }
     }
 

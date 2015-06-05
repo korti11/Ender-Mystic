@@ -33,10 +33,10 @@ public class Baubles implements IIntegration{
 
     @Override
     public void preInit() {
-        if(Loader.isModLoaded(ModInfo.BAUBLES)) {
+        isLoaded = Loader.isModLoaded(ModInfo.BAUBLES);
+        if (isLoaded) {
             initItems();
             loadItems();
-            isLoaded = true;
         }
     }
 

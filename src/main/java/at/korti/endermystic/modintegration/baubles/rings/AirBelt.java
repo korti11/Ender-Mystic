@@ -35,10 +35,10 @@ public class AirBelt extends EnergyItem implements IBauble {
 
         String playerName = itemStack.stackTagCompound.getString("em_owner");
 
-        if (EnergyNetworkHandler.IsEnoughEnergy(OrbStats.usageSwiftness, playerName)) {
+        if (EnergyNetworkHandler.isEnoughEnergy(OrbStats.usageSwiftness, playerName)) {
             entityLivingBase.addPotionEffect(new PotionEffect(Potion.moveSpeed.getId(), 200));
             if (entityLivingBase.moveForward > 0.01F || entityLivingBase.moveForward < -0.01F || entityLivingBase.moveStrafing > 0.01F || entityLivingBase.moveStrafing < -0.01F) {
-                EnergyNetworkHandler.DecEnergy(OrbStats.usageSwiftness, playerName);
+                EnergyNetworkHandler.decEnergy(OrbStats.usageSwiftness, playerName);
             }
         }
     }

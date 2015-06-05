@@ -1,29 +1,29 @@
-package at.korti.endermystic.blocks;
+package at.korti.endermystic.modintegration.cofh.blocks;
 
 import at.korti.endermystic.EnderMystic;
 import at.korti.endermystic.ModInfo;
-import at.korti.endermystic.tileEntity.TileEntityEnergyCrystalStorage;
+import at.korti.endermystic.modintegration.cofh.tileentity.TileEntityMysticDynamo;
 import net.minecraft.block.BlockContainer;
 import net.minecraft.block.material.Material;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.world.World;
 
 /**
- * Created by Korti on 02.06.2015.
+ * Created by Korti on 05.06.2015.
  */
-public class EnergyCrystalStorage extends BlockContainer{
+public class MysticDynamo extends BlockContainer {
 
-    protected EnergyCrystalStorage() {
+    public MysticDynamo() {
         super(Material.rock);
 
-        setCreativeTab(EnderMystic.tab);
-        setBlockName(ModInfo.MODID + ".EnergyCrystalStorage");
+        setBlockName(ModInfo.MODID + "MysticDynamo");
         setStepSound(soundTypeStone);
+        setCreativeTab(EnderMystic.tab);
     }
 
     @Override
     public TileEntity createNewTileEntity(World p_149915_1_, int p_149915_2_) {
-        return new TileEntityEnergyCrystalStorage();
+        return new TileEntityMysticDynamo();
     }
 
     @Override

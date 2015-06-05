@@ -33,11 +33,11 @@ public class EnderZarOrb extends Orb {
             TileEntityEnderZar enderZar = (TileEntityEnderZar) AbilityHelper.getTileEntityFromSide(x, y, z, side, world);
             enderZar.setStoredEnergy((stack.getMaxDamage() - 1) - stack.getItemDamage());
             if(!world.isRemote) {
-                if (EnergyNetworkHandler.GetEnergy(stack.stackTagCompound.getString("em_owner")) >= (stack.getMaxDamage() - 1) - stack.getItemDamage()) {
-                    EnergyNetworkHandler.DecEnergy((stack.getMaxDamage()) - 1 - stack.getItemDamage(), stack.stackTagCompound.getString("em_owner"));
+                if (EnergyNetworkHandler.getEnergy(stack.stackTagCompound.getString("em_owner")) >= (stack.getMaxDamage() - 1) - stack.getItemDamage()) {
+                    EnergyNetworkHandler.decEnergy((stack.getMaxDamage()) - 1 - stack.getItemDamage(), stack.stackTagCompound.getString("em_owner"));
                 } else {
-                    int energyCanUse =  (EnergyNetworkHandler.GetEnergy(stack.stackTagCompound.getString("em_owner")) / 100) * 100;
-                    EnergyNetworkHandler.DecEnergy(energyCanUse, stack.stackTagCompound.getString("em_owner"));
+                    int energyCanUse =  (EnergyNetworkHandler.getEnergy(stack.stackTagCompound.getString("em_owner")) / 100) * 100;
+                    EnergyNetworkHandler.decEnergy(energyCanUse, stack.stackTagCompound.getString("em_owner"));
                     stack.setItemDamage((stack.getMaxDamage() - energyCanUse) - 1);
                 }
             }

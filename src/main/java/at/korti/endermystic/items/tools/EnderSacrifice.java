@@ -1,6 +1,5 @@
 package at.korti.endermystic.items.tools;
 
-import at.korti.endermystic.api.mysticEnergyNetwork.EnergyNetwork;
 import at.korti.endermystic.api.mysticEnergyNetwork.EnergyNetworkHandler;
 import at.korti.endermystic.items.ModItem;
 import net.minecraft.entity.EntityLivingBase;
@@ -24,7 +23,7 @@ public class EnderSacrifice extends ModItem {
 
         if(!entity.worldObj.isRemote){
             if(entity instanceof EntityEnderman){
-                if(EnergyNetworkHandler.AddEnergy(700, ((EntityPlayer)player).getDisplayName())){
+                if(EnergyNetworkHandler.addEnergy(700, ((EntityPlayer) player).getDisplayName())){
                     entity.setDead();
                     return true;
                 }

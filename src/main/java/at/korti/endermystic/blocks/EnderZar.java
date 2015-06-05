@@ -19,6 +19,7 @@ public class EnderZar extends BlockContainer {
         setCreativeTab(EnderMystic.tab);
         setBlockName(ModInfo.MODID + ".EnderZar");
         setBlockBounds(0.2F, 0F, 0.2F, 0.8F, 0.1F, 0.8F);
+        setStepSound(soundTypeStone);
     }
 
     @Override

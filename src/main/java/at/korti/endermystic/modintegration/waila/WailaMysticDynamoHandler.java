@@ -1,6 +1,6 @@
 package at.korti.endermystic.modintegration.waila;
 
-import at.korti.endermystic.tileEntity.TileEntityOrbInfuser;
+import at.korti.endermystic.modintegration.cofh.tileentity.TileEntityMysticDynamo;
 import mcp.mobius.waila.api.IWailaConfigHandler;
 import mcp.mobius.waila.api.IWailaDataAccessor;
 import mcp.mobius.waila.api.IWailaDataProvider;
@@ -13,9 +13,9 @@ import net.minecraft.world.World;
 import java.util.List;
 
 /**
- * Created by Korti on 02.06.2015.
+ * Created by Korti on 05.06.2015.
  */
-public class WailaOrbInfuserHandler implements IWailaDataProvider {
+public class WailaMysticDynamoHandler implements IWailaDataProvider {
     @Override
     public ItemStack getWailaStack(IWailaDataAccessor iWailaDataAccessor, IWailaConfigHandler iWailaConfigHandler) {
         return null;
@@ -29,9 +29,8 @@ public class WailaOrbInfuserHandler implements IWailaDataProvider {
     @Override
     public List<String> getWailaBody(ItemStack itemStack, List<String> list, IWailaDataAccessor iWailaDataAccessor, IWailaConfigHandler iWailaConfigHandler) {
         NBTTagCompound tagCompound = iWailaDataAccessor.getNBTData();
-        list.add("Connected to network: " + tagCompound.getBoolean("Connected"));
-        list.add("Rest time to craft: " + tagCompound.getFloat("TimeToCraft") + "s");
-        list.add("Result Item: " + tagCompound.getString("ResultItem"));
+        list.add("Can provide energy: " + tagCompound.getBoolean("CanProvide"));
+        list.add("Stored Energy: " + tagCompound.getInteger("Energy"));
         return list;
     }
 
@@ -42,11 +41,10 @@ public class WailaOrbInfuserHandler implements IWailaDataProvider {
 
     @Override
     public NBTTagCompound getNBTData(EntityPlayerMP entityPlayerMP, TileEntity tileEntity, NBTTagCompound nbtTagCompound, World world, int i, int i1, int i2) {
-        if (tileEntity instanceof TileEntityOrbInfuser) {
-            TileEntityOrbInfuser infuser = (TileEntityOrbInfuser) tileEntity;
-            nbtTagCompound.setBoolean("Connected", infuser.isConnected());
-            nbtTagCompound.setFloat("TimeToCraft", infuser.getRestTime());
-            nbtTagCompound.setString("ResultItem", infuser.getResultItemName());
+        if (tileEntity instanceof TileEntityMysticDynamo) {
+            TileEntityMysticDynamo mysticDynamo = (TileEntityMysticDynamo) tileEntity;
+            nbtTagCompound.setBoolean("CanProvide", mysticDynamo.canProvideEnergy());
+            nbtTagCompound.setInteger("Energy", mysticDynamo.getEnergyToProvide());
         }
         return nbtTagCompound;
     }

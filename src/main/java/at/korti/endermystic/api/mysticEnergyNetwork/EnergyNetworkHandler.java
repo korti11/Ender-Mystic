@@ -10,9 +10,9 @@ import net.minecraft.world.World;
  */
 public class EnergyNetworkHandler {
 
-    public static boolean AddCapacity(int capacity, String itemName){
-        World world = GetWorld();
-        EnergyNetwork network = GetNetwork(itemName);
+    public static boolean addCapacity(int capacity, String itemName){
+        World world = getWorld();
+        EnergyNetwork network = getNetwork(itemName);
 
         if(network == null){
             network = new EnergyNetwork("em_" + itemName);
@@ -33,8 +33,8 @@ public class EnergyNetworkHandler {
         return false;
     }
 
-    public static boolean AddEnergy(int energy, String itemName){
-        EnergyNetwork network = GetNetwork(itemName);
+    public static boolean addEnergy(int energy, String itemName){
+        EnergyNetwork network = getNetwork(itemName);
         if(network != null) {
             network.mysticEnergy = Math.min(network.mysticCapacity, network.mysticEnergy + energy);
             network.markDirty();
@@ -43,19 +43,19 @@ public class EnergyNetworkHandler {
         return false;
     }
 
-    public static boolean IsEnoughEnergy(int usage, String itemName){
-        EnergyNetwork energyNetwork = GetNetwork(itemName);
+    public static boolean isEnoughEnergy(int usage, String itemName){
+        EnergyNetwork energyNetwork = getNetwork(itemName);
         return energyNetwork != null ? usage <= energyNetwork.mysticCapacity : false;
     }
 
-    private static boolean IsEnoughEnergy(int usage, int energy){
+    private static boolean isEnoughEnergy(int usage, int energy){
         return usage <= energy;
     }
 
-    public static boolean DecEnergy(int usage, String itemName){
-        EnergyNetwork energyNetwork = GetNetwork(itemName);
+    public static boolean decEnergy(int usage, String itemName){
+        EnergyNetwork energyNetwork = getNetwork(itemName);
         if(energyNetwork != null){
-            if(IsEnoughEnergy(usage, energyNetwork.mysticEnergy)){
+            if(isEnoughEnergy(usage, energyNetwork.mysticEnergy)){
                 energyNetwork.mysticEnergy -= usage;
                 energyNetwork.markDirty();
                 return true;
@@ -64,12 +64,12 @@ public class EnergyNetworkHandler {
         return false;
     }
 
-    public static int GetEnergy(String itemName){
-        return GetNetwork(itemName).mysticEnergy;
+    public static int getEnergy(String itemName){
+        return getNetwork(itemName).mysticEnergy;
     }
 
-    public static int GetCapacity(String itemName){
-        return GetNetwork(itemName).mysticCapacity;
+    public static int getCapacity(String itemName){
+        return getNetwork(itemName).mysticCapacity;
     }
 
     public static IEnergyProvider getProvider(World worldObj,int xCoord, int yCoord, int zCoord, int range){
@@ -112,12 +112,12 @@ public class EnergyNetworkHandler {
         return null;
     }
 
-    private static World GetWorld(){
+    private static World getWorld(){
         return MinecraftServer.getServer().worldServers[0];
     }
 
-    private static EnergyNetwork GetNetwork(String itemName){
-        World world = GetWorld();
+    private static EnergyNetwork getNetwork(String itemName){
+        World world = getWorld();
         return (EnergyNetwork)world.loadItemData(EnergyNetwork.class, "em_" + itemName);
     }
 }

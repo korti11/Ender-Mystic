@@ -97,7 +97,7 @@ public class EnderSoulPickaxe extends ItemPickaxe implements IEnderSoulTool{
     @Override
     public void onUpdate(ItemStack stack, World p_77663_2_, Entity p_77663_3_, int p_77663_4_, boolean p_77663_5_) {
         if(stack.isItemDamaged()){
-            if(EnergyNetworkHandler.DecEnergy(ToolStats.enderSoulPickaxeUsage, stack.stackTagCompound.getString("em_owner"))){
+            if(EnergyNetworkHandler.decEnergy(ToolStats.enderSoulPickaxeUsage, stack.stackTagCompound.getString("em_owner"))){
                 stack.setItemDamage(0);
             }
         }

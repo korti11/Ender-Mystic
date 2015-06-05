@@ -7,6 +7,9 @@ import at.korti.endermystic.client.model.EnergyCrystalStorageModel;
 import at.korti.endermystic.client.model.EnergyRelayModel;
 import at.korti.endermystic.client.render.blocks.*;
 import at.korti.endermystic.client.render.items.TileEntityItemRenderer;
+import at.korti.endermystic.modintegration.cofh.Cofh;
+import at.korti.endermystic.modintegration.cofh.client.model.MysticDynamoModel;
+import at.korti.endermystic.modintegration.cofh.tileentity.TileEntityMysticDynamo;
 import at.korti.endermystic.tileEntity.*;
 import cpw.mods.fml.client.registry.ClientRegistry;
 import cpw.mods.fml.client.registry.ISimpleBlockRenderingHandler;
@@ -34,6 +37,13 @@ public class ClientProxy extends CommonProxy {
         MinecraftForgeClient.registerItemRenderer(Item.getItemFromBlock(ModBlocks.enderZar), new TileEntityItemRenderer(new TileEntityBlockRenderer(new EnderZarModel(), "textures/model/Ender Zar.png"), new TileEntityEnderZar()));
         MinecraftForgeClient.registerItemRenderer(Item.getItemFromBlock(ModBlocks.orbInfuser), new TileEntityItemRenderer(new OrbInfuserRenderer(), new TileEntityOrbInfuser()));
         MinecraftForgeClient.registerItemRenderer(Item.getItemFromBlock(ModBlocks.energyCrystalStorage), new TileEntityItemRenderer(new TileEntityBlockRenderer(new EnergyCrystalStorageModel(), "textures/model/EnergyCrystalStorage.png"), new TileEntityEnergyCrystalStorage()));
+
+        //CoFH
+        if (Cofh.isLoaded) {
+            ClientRegistry.bindTileEntitySpecialRenderer(TileEntityMysticDynamo.class, new TileEntityBlockRenderer(new MysticDynamoModel(), "textures/model/MysticDynamo.png"));
+
+            MinecraftForgeClient.registerItemRenderer(Item.getItemFromBlock(Cofh.mysticDynamo), new TileEntityItemRenderer(new TileEntityBlockRenderer(new MysticDynamoModel(), "textures/model/MysticDynamo.png"), new TileEntityMysticDynamo()));
+        }
     }
 
     @Override

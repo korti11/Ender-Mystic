@@ -52,7 +52,7 @@ public class FireOrb extends Orb {
             }
 
             if (!player.isSneaking()) {
-                if (EnergyNetworkHandler.DecEnergy(OrbStats.usageFireOrb, stack.stackTagCompound.getString("em_owner"))) {
+                if (EnergyNetworkHandler.decEnergy(OrbStats.usageFireOrb, stack.stackTagCompound.getString("em_owner"))) {
                     AbilityHelper.SetBlock(x, y, z, side, Blocks.lava, world);
                 }
             }
@@ -95,7 +95,7 @@ public class FireOrb extends Orb {
                 stack.stackTagCompound = new NBTTagCompound();
             }
 
-            if (stack.stackTagCompound.getBoolean("em_active") && EnergyNetworkHandler.DecEnergy(OrbStats.usageFireResistance, stack.stackTagCompound.getString("em_owner"))) {
+            if (stack.stackTagCompound.getBoolean("em_active") && EnergyNetworkHandler.decEnergy(OrbStats.usageFireResistance, stack.stackTagCompound.getString("em_owner"))) {
                 ((EntityPlayer) entity).addPotionEffect(new PotionEffect(Potion.fireResistance.getId(), 50));
             }
         }

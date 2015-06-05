@@ -12,5 +12,6 @@ public class ModInfo {
     //Dependencies
     public static final String BAUBLES = "Baubles";
     public static final String WAILA = "Waila";
+    public static final String COFH = "CoFHCore";
 
 }

@@ -3,7 +3,6 @@ package at.korti.endermystic.modintegration.baubles.rings;
 import at.korti.endermystic.api.mysticEnergyNetwork.EnergyNetworkHandler;
 import at.korti.endermystic.items.EnergyItem;
 import at.korti.endermystic.items.orbs.OrbStats;
-import at.korti.endermystic.potion.PotionHelper;
 import baubles.api.BaubleType;
 import baubles.api.IBauble;
 import net.minecraft.entity.EntityLivingBase;
@@ -33,8 +32,8 @@ public class FireRing extends EnergyItem implements IBauble{
             itemStack.stackTagCompound = new NBTTagCompound();
         }
 
-        if (EnergyNetworkHandler.IsEnoughEnergy(OrbStats.usageFireResistance, itemStack.stackTagCompound.getString("em_owner")) && entityLivingBase.isBurning()) {
-            EnergyNetworkHandler.DecEnergy(OrbStats.usageFireResistance, itemStack.stackTagCompound.getString("em_owner"));
+        if (EnergyNetworkHandler.isEnoughEnergy(OrbStats.usageFireResistance, itemStack.stackTagCompound.getString("em_owner")) && entityLivingBase.isBurning()) {
+            EnergyNetworkHandler.decEnergy(OrbStats.usageFireResistance, itemStack.stackTagCompound.getString("em_owner"));
             entityLivingBase.addPotionEffect(new PotionEffect(Potion.fireResistance.getId(), 200));
         }
     }

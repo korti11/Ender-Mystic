@@ -152,7 +152,7 @@ public class TileEntityEnergyDrain extends TileEntity implements IInventory, IEn
     public int getEnergyToProvide() {
         ItemStack stack = getStackInSlot(0);
         if (stack != null) {
-            return EnergyNetworkHandler.GetEnergy(getOwner(stack));
+            return EnergyNetworkHandler.getEnergy(getOwner(stack));
         }
 
         return 0;
@@ -162,7 +162,7 @@ public class TileEntityEnergyDrain extends TileEntity implements IInventory, IEn
     public int decrEnergy(int energyUse) {
         ItemStack stack = getStackInSlot(0);
         if(stack != null && getEnergyToProvide() >= 0) {
-            EnergyNetworkHandler.DecEnergy(energyUse, getOwner(stack));
+            EnergyNetworkHandler.decEnergy(energyUse, getOwner(stack));
             return energyUse;
         }
         return 0;

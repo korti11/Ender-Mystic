@@ -1,11 +1,8 @@
 package at.korti.endermystic.items.orbs;
 
-import at.korti.endermystic.api.mysticEnergyNetwork.EnergyNetwork;
 import at.korti.endermystic.api.mysticEnergyNetwork.EnergyNetworkHandler;
-import at.korti.endermystic.items.EnergyItem;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
-import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.ChatComponentText;
 import net.minecraft.world.World;
 
@@ -32,7 +29,7 @@ public class EmeraldOrb extends Orb {
         super.onItemRightClick(stack, world, player);
 
         if (!world.isRemote) {
-            player.addChatMessage(new ChatComponentText("Mystic Energy: " + EnergyNetworkHandler.GetEnergy(stack.stackTagCompound.getString("em_owner")) + " of " + EnergyNetworkHandler.GetCapacity(stack.stackTagCompound.getString("em_owner"))));
+            player.addChatMessage(new ChatComponentText("Mystic Energy: " + EnergyNetworkHandler.getEnergy(stack.stackTagCompound.getString("em_owner")) + " of " + EnergyNetworkHandler.getCapacity(stack.stackTagCompound.getString("em_owner"))));
         }
         return stack;
     }

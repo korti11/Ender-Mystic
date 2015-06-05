@@ -1,7 +1,6 @@
 package at.korti.endermystic.items.orbs;
 
 import at.korti.endermystic.api.mysticEnergyNetwork.EnergyNetworkHandler;
-import at.korti.endermystic.items.EnergyItem;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
@@ -36,7 +35,7 @@ public class CapacityOrb extends Orb {
             }
 
             if (!itemStack.stackTagCompound.hasKey("em_owner")) {
-                if(EnergyNetworkHandler.AddCapacity(maxCapacity, player.getDisplayName())) {
+                if(EnergyNetworkHandler.addCapacity(maxCapacity, player.getDisplayName())) {
                     super.onItemRightClick(itemStack, world, player);
                 }
             }

@@ -87,17 +87,17 @@ public class AbilityHelper {
         if(isOrb) {
             if(!world.getBlock(x, y, z).getUnlocalizedName().equals(Blocks.bedrock.getUnlocalizedName())){
                 int harvestLevel = world.getBlock(x, y, z).getHarvestLevel(world.getBlock(x, y, z).getDamageValue(world, x, y, z)) == 0 ? 1 : world.getBlock(x, y, z).getHarvestLevel(world.getBlock(x, y, z).getDamageValue(world, x, y, z));
-                material = EnergyNetworkHandler.DecEnergy(harvestLevel * OrbStats.usageEarthOrb, itemName);
+                material = EnergyNetworkHandler.decEnergy(harvestLevel * OrbStats.usageEarthOrb, itemName);
             }
         }
         else {
             String harvestTool = world.getBlock(x,y,z).getHarvestTool(world.getBlock(x, y, z).getDamageValue(world, x, y, z));
             if(harvestTool != null && harvestTool.equals(toolClass)){
                 if(toolClass.equals("pickaxe")){
-                    material = EnergyNetworkHandler.DecEnergy(ToolStats.enderSoulPickaxeUsage, itemName);
+                    material = EnergyNetworkHandler.decEnergy(ToolStats.enderSoulPickaxeUsage, itemName);
                 }
                 else {
-                    material = EnergyNetworkHandler.DecEnergy(ToolStats.enderSoulShovelUsage, itemName);
+                    material = EnergyNetworkHandler.decEnergy(ToolStats.enderSoulShovelUsage, itemName);
                 }
                 ToolLevelHandler.getInstance().addXP(stack, 1, player);
             }
@@ -262,7 +262,7 @@ public class AbilityHelper {
                 stack.stackTagCompound = new NBTTagCompound();
             }
 
-            if (EnergyNetworkHandler.DecEnergy(ToolStats.enderSoulSwordUsage, stack.stackTagCompound.getString("em_owner"))) {
+            if (EnergyNetworkHandler.decEnergy(ToolStats.enderSoulSwordUsage, stack.stackTagCompound.getString("em_owner"))) {
                 if (stack.stackTagCompound.hasKey("em_owner") && stack.stackTagCompound.getBoolean("em_active")) {
                     entity.addPotionEffect(new PotionEffect(PotionHelper.enderHeartBleed.getId(), 200));
                 }

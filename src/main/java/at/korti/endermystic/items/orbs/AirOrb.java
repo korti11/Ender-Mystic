@@ -65,7 +65,7 @@ public class AirOrb extends Orb {
 
         if(!world.isRemote){
 
-            if (EnergyNetworkHandler.DecEnergy(OrbStats.usageAirOrb, stack.stackTagCompound.getString("em_owner"))) {
+            if (EnergyNetworkHandler.decEnergy(OrbStats.usageAirOrb, stack.stackTagCompound.getString("em_owner"))) {
                 stack.stackTagCompound.setBoolean("em_fly", true);
             }
         }
@@ -93,7 +93,7 @@ public class AirOrb extends Orb {
                 stack.stackTagCompound = new NBTTagCompound();
             }
 
-            if(stack.stackTagCompound.getBoolean("em_active") && EnergyNetworkHandler.DecEnergy(OrbStats.usageBreathing, stack.stackTagCompound.getString("em_owner"))){
+            if(stack.stackTagCompound.getBoolean("em_active") && EnergyNetworkHandler.decEnergy(OrbStats.usageBreathing, stack.stackTagCompound.getString("em_owner"))){
                 ((EntityPlayer)entity).addPotionEffect(new PotionEffect(PotionHelper.waterBreathing.getId(), 50));
             }
 

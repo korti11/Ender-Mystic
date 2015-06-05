@@ -30,7 +30,7 @@ import net.minecraftforge.common.config.Configuration;
 /**
  * Created by Korti on 15.10.2014.
  */
-@Mod(modid = ModInfo.MODID, name = ModInfo.NAME, version = ModInfo.VERSION, dependencies = "after:Baubles; after:Waila")
+@Mod(modid = ModInfo.MODID, name = ModInfo.NAME, version = ModInfo.VERSION, dependencies = "after:Baubles; after:Waila; after:CoFhCore")
 public class EnderMystic {
 
     @Mod.Instance(ModInfo.MODID)
@@ -83,14 +83,13 @@ public class EnderMystic {
 
         PotionHelper.init();
 
+        TileEntities.init();
+        ModIntegration.inti();
+
         proxy.initRenderes();
         proxy.registerDisplayInfromation();
 
-        TileEntities.init();
-
         new GuiHandler();
-
-        ModIntegration.inti();
     }
 
     @Mod.EventHandler
