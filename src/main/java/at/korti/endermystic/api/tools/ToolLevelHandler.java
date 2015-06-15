@@ -2,6 +2,7 @@ package at.korti.endermystic.api.tools;
 
 import at.korti.endermystic.EnderMystic;
 import at.korti.endermystic.items.tools.ToolMaterials;
+import at.korti.endermystic.util.Logger;
 import cpw.mods.fml.common.eventhandler.Event;
 import net.minecraft.block.Block;
 import net.minecraft.entity.EntityLivingBase;
@@ -54,6 +55,7 @@ public class ToolLevelHandler {
 
     //region System Init
     public void initToolLevelSystem(){
+        EnderMystic.logger.addMessage(Logger.LoggingLevel.INFO, "Init Tool Level System.");
         levelNames = EnderMystic.config.getStringList("Tool Level Names", "Tool Level System", new String[]{"Bad", "Clumsy", "Good", "Epic", "Legendary"}, "The count of level names equals the max level of the tools.");
         maxXpProperty = EnderMystic.config.get("Tool Level System", "Max xp per level", new int[]{160, 235, 327, 452, 590},
                 "The count of max xp values must equals the count of level names." +
@@ -72,6 +74,7 @@ public class ToolLevelHandler {
         }
         int pos = maxXpForLevels.length - 1;
         for (int i = maxXpForLevels.length; i < levelNames.length; i++) {
+            EnderMystic.logger.addMessage(Logger.LoggingLevel.INFO, "Generate max xp value for level" + levelNames[i] + ".");
             newMaxXpForLavels[i] = ((newMaxXpForLavels[pos++] / 100) * 100) + 100 + random.nextInt(100);
         }
         maxXpForLevels = newMaxXpForLavels;
@@ -88,6 +91,8 @@ public class ToolLevelHandler {
         if (stack.stackTagCompound == null) {
             stack.stackTagCompound = new NBTTagCompound();
         }
+
+        EnderMystic.logger.addMessage(Logger.LoggingLevel.INFO, "Init item " + stack.getDisplayName() + " for level system.");
 
         stack.stackTagCompound.setString(LEVEL_NAME_TAG, levelNames[0]);
         stack.stackTagCompound.setInteger(LEVEL_TAG, 0);

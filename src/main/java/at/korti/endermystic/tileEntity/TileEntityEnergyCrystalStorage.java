@@ -1,6 +1,7 @@
 package at.korti.endermystic.tileEntity;
 
 import at.korti.endermystic.api.mysticEnergyNetwork.EnergyNetworkHandler;
+import at.korti.endermystic.api.mysticEnergyNetwork.EnergyStorage;
 import at.korti.endermystic.api.mysticEnergyNetwork.IEnergyProvider;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.network.NetworkManager;
@@ -13,22 +14,19 @@ import net.minecraft.tileentity.TileEntity;
  */
 public class TileEntityEnergyCrystalStorage extends TileEntity implements IEnergyProvider {
 
-    private int maxStorage;
-    private int currentStorage;
+    private EnergyStorage storage;
     private final int range = 15;
-    private final int transferRate = 100;
 
     public TileEntityEnergyCrystalStorage(){
-        this.maxStorage = 50000;
-        this.currentStorage = 0;
+        storage = new EnergyStorage(50000, 100, 100);
     }
 
     @Override
     public void updateEntity() {
         if(!worldObj.isRemote) {
             IEnergyProvider provider = EnergyNetworkHandler.getProvider(worldObj, xCoord, yCoord, zCoord, range);
-            if (provider != null && transferRate <= provider.getEnergyToProvide() && currentStorage + transferRate <= maxStorage) {
-                currentStorage += provider.decrEnergy(transferRate);
+            if (provider != null && storage.getMaxTransferIn() <= provider.getEnergyToProvide()) {
+                storage.transferEnergyIn(provider.decrEnergy(storage.getMaxTransferIn()));
             }
             worldObj.markBlockForUpdate(xCoord, yCoord, zCoord);
         }
@@ -37,15 +35,13 @@ public class TileEntityEnergyCrystalStorage extends TileEntity implements IEnerg
     @Override
     public void writeToNBT(NBTTagCompound tagCompound) {
         super.writeToNBT(tagCompound);
-        tagCompound.setInteger("MaxStorage", maxStorage);
-        tagCompound.setInteger("CurrentStorage", currentStorage);
+        tagCompound.setInteger("CurrentStorage", storage.getCurrentEnergy());
     }
 
     @Override
     public void readFromNBT(NBTTagCompound tagCompound) {
         super.readFromNBT(tagCompound);
-        maxStorage = tagCompound.getInteger("MaxStorage");
-        currentStorage = tagCompound.getInteger("CurrentStorage");
+        storage.setCurrentEnergy(tagCompound.getInteger("CurrentStorage"));
     }
 
     @Override
@@ -62,13 +58,12 @@ public class TileEntityEnergyCrystalStorage extends TileEntity implements IEnerg
 
     @Override
     public int getEnergyToProvide() {
-        return currentStorage;
+        return storage.getCurrentEnergy();
     }
 
     @Override
     public int decrEnergy(int energyUse) {
-        this.currentStorage -= energyUse;
-        return energyUse;
+        return storage.transferEnergyOut(energyUse);
     }
 
     @Override
@@ -78,10 +73,10 @@ public class TileEntityEnergyCrystalStorage extends TileEntity implements IEnerg
 
     @Override
     public boolean hasEnoughEnergy(int toUse) {
-        return currentStorage >= toUse;
+        return storage.getCurrentEnergy() >= toUse;
     }
 
     public int getMaxStorage() {
-        return maxStorage;
+        return storage.getMaxStorage();
     }
 }

@@ -16,7 +16,7 @@ public class TileEntityMysticDynamo extends TileEntity implements IEnergyHandler
     private EnergyStorage energyStorage;
 
     public TileEntityMysticDynamo() {
-        energyStorage = new EnergyStorage(100000, 100, 100);
+        energyStorage = new EnergyStorage(10000, 100, 100);
     }
 
     @Override

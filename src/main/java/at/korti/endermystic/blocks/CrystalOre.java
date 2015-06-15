@@ -2,7 +2,7 @@ package at.korti.endermystic.blocks;
 
 import at.korti.endermystic.EnderMystic;
 import at.korti.endermystic.ModInfo;
-import at.korti.endermystic.client.render.blocks.BlockRenderConfig;
+import at.korti.endermystic.client.render.RenderConfig;
 import at.korti.endermystic.items.ModItems;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
@@ -80,6 +80,6 @@ public class CrystalOre extends Block {
 
     @Override
     public int getRenderType() {
-        return BlockRenderConfig.CrystelOreRenderId;
+        return RenderConfig.CrystelOreRenderId;
     }
 }

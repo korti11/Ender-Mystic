@@ -2,7 +2,9 @@ package at.korti.endermystic.network;
 
 import java.util.*;
 
+import at.korti.endermystic.EnderMystic;
 import at.korti.endermystic.ModInfo;
+import at.korti.endermystic.util.Logger;
 import io.netty.buffer.ByteBuf;
 import io.netty.buffer.Unpooled;
 import io.netty.channel.ChannelHandler;
@@ -39,6 +41,7 @@ public class PacketPipeline extends MessageToMessageCodec<FMLProxyPacket, Abstra
      * @return whether registration was successful. Failure may occur if 256 packets have been registered or if the registry already contains this packet
      */
     public boolean registerPacket(Class<? extends AbstractPacket> clazz) {
+        EnderMystic.logger.addMessage(Logger.LoggingLevel.INFO, "Register " + clazz.getSimpleName() + ".");
         if (this.packets.size() > 256) {
             // You should log here!!
             return false;
@@ -108,6 +111,7 @@ public class PacketPipeline extends MessageToMessageCodec<FMLProxyPacket, Abstra
 
     // Method to call from FMLInitializationEvent
     public void initialise() {
+        EnderMystic.logger.addMessage(Logger.LoggingLevel.INFO, "Init packet pipeline.");
         this.channels = NetworkRegistry.INSTANCE.newChannel(ModInfo.MODID, this);
         registerPackets();
     }
@@ -119,6 +123,7 @@ public class PacketPipeline extends MessageToMessageCodec<FMLProxyPacket, Abstra
     // Method to call from FMLPostInitializationEvent
     // Ensures that packet discriminators are common between server and client by using logical sorting
     public void postInitialise() {
+        EnderMystic.logger.addMessage(Logger.LoggingLevel.INFO, "Post Init packet pipeline.");
         if (this.isPostInitialised) {
             return;
         }

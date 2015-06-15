@@ -1,11 +1,13 @@
 package at.korti.endermystic.crafting;
 
+import at.korti.endermystic.EnderMystic;
 import at.korti.endermystic.api.crafting.CraftingRegistry;
 import at.korti.endermystic.api.tools.IEnderSoulTool;
 import at.korti.endermystic.blocks.ModBlocks;
 import at.korti.endermystic.items.ModItem;
 import at.korti.endermystic.items.ModItems;
 import at.korti.endermystic.modintegration.baubles.Baubles;
+import at.korti.endermystic.util.Logger;
 import cpw.mods.fml.common.registry.GameRegistry;
 import net.minecraft.init.Blocks;
 import net.minecraft.init.Items;
@@ -24,6 +26,7 @@ public class CraftingManager {
     private static List<IRecipe> loadedRecipes = new ArrayList<>();
 
     public static void registerCrystalCombinerRecipes(){
+        EnderMystic.logger.addMessage(Logger.LoggingLevel.INFO, "Register crystal combiner recipes.");
         CraftingRegistry registry = CraftingRegistry.getInstance();
 
         registry.addCrystalCombinerRecipe(30, 50, new ItemStack(ModItems.crystalItem, 1, 4),  //Life
@@ -89,6 +92,7 @@ public class CraftingManager {
     }
 
     public static void registerOrbInfuserRecipes(){
+        EnderMystic.logger.addMessage(Logger.LoggingLevel.INFO, "Register orb infuser recipes.");
         CraftingRegistry registry = CraftingRegistry.getInstance();
 
         registry.addOrbInfuserRecipe(30, 50, new ItemStack(ModItems.orbCoreItem, 1, 4), //Fire Core
@@ -196,6 +200,7 @@ public class CraftingManager {
     }
 
     public static void registerVanillaRecipes(){
+        EnderMystic.logger.addMessage(Logger.LoggingLevel.INFO, "Register vanilla recipes.");
         GameRegistry.addShapelessRecipe(new ItemStack(ModItems.orbCoreItem, 1, 6), new ItemStack(ModItems.enderSoulFill, 1, 1), new ItemStack(Items.ender_pearl));
         GameRegistry.addShapelessRecipe(new ItemStack(ModItems.enderSoulFill, 4, 0), new ItemStack(ModItems.enderSacrifice), new ItemStack(Items.glass_bottle));
         for(int i = 0; i < 4; i++) {
@@ -325,6 +330,7 @@ public class CraftingManager {
 
         //Baubles
         if(Baubles.isLoaded) {
+            EnderMystic.logger.addMessage(Logger.LoggingLevel.INFO, "Register Baubles recipes.");
             GameRegistry.addShapedRecipe(new ItemStack(Baubles.airBelt),
                     " L ",
                     "L L",
@@ -344,6 +350,7 @@ public class CraftingManager {
     }
 
     public static void registerBookRecipes() {
+        EnderMystic.logger.addMessage(Logger.LoggingLevel.INFO, "Register recipes for the book.");
         CraftingRegistry.getInstance().addCraftingRecipe(new ItemStack(ModItems.crystalItem, 1, 0), new ItemStack(ModBlocks.crystalOre, 1, 0), new ItemStack(Items.iron_pickaxe));
         CraftingRegistry.getInstance().addCraftingRecipe(new ItemStack(ModItems.crystalItem, 1, 1), new ItemStack(ModBlocks.crystalOre, 1, 1), new ItemStack(Items.iron_pickaxe));
         CraftingRegistry.getInstance().addCraftingRecipe(new ItemStack(ModItems.crystalItem, 1, 2), new ItemStack(ModBlocks.crystalOre, 1, 2), new ItemStack(Items.iron_pickaxe));
@@ -351,6 +358,7 @@ public class CraftingManager {
     }
 
     public static void loadRecipes() {
+        EnderMystic.logger.addMessage(Logger.LoggingLevel.INFO, "Load Ender Mystic vanilla recipes.");
         List recipes = net.minecraft.item.crafting.CraftingManager.getInstance().getRecipeList();
         for (int i = 0; i < recipes.size(); i++) {
             IRecipe iRecipe = (IRecipe) recipes.get(i);

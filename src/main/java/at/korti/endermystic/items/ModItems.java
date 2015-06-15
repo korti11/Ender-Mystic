@@ -1,8 +1,11 @@
 package at.korti.endermystic.items;
 
+import at.korti.endermystic.EnderMystic;
 import at.korti.endermystic.ModInfo;
+import at.korti.endermystic.items.armor.EnderSoulArmor;
 import at.korti.endermystic.items.orbs.*;
 import at.korti.endermystic.items.tools.*;
+import at.korti.endermystic.util.Logger;
 import cpw.mods.fml.common.registry.GameRegistry;
 
 /**
@@ -33,6 +36,10 @@ public class ModItems {
     public static EnderSoulHammer enderSoulHammer;
     public static EnderSoulExcavator enderSoulExcavator;
 
+    public static EnderSoulArmor enderSoulHelmet;
+    public static EnderSoulArmor enderSoulBreastplate;
+    public static EnderSoulArmor enderSoulLegs;
+
     public static EnderItem enderItem;
     public static EnderSoulFill enderSoulFill;
     public static CrystalItem crystalItem;
@@ -44,6 +51,7 @@ public class ModItems {
 //    public static BaublesBackPack baublesBackPack;
 
     public static void init(){
+        EnderMystic.logger.addMessage(Logger.LoggingLevel.INFO, "Init mod items.");
         enderOrb = new CapacityOrb("BasicEnderOrb", 0x258474, 10000);
         apprenticeOrb = new CapacityOrb("ApprenticeOrb", 0x3C3C8D, 25000);
         guardiansOrb = new CapacityOrb("GuardiansOrb", 0x620000, 40000);
@@ -67,6 +75,10 @@ public class ModItems {
         enderSoulHammer = new EnderSoulHammer();
         enderSoulExcavator = new EnderSoulExcavator();
 
+        enderSoulHelmet = new EnderSoulArmor(0);
+        enderSoulBreastplate = new EnderSoulArmor(1);
+        enderSoulLegs = new EnderSoulArmor(2);
+
         enderItem = new EnderItem();
         enderSoulFill = new EnderSoulFill();
         crystalItem = new CrystalItem();
@@ -79,7 +91,7 @@ public class ModItems {
     }
 
     public static void load(){
-
+        EnderMystic.logger.addMessage(Logger.LoggingLevel.INFO, "Load mod items.");
         GameRegistry.registerItem(bookItem, bookItem.getName(), ModInfo.MODID);
 
         GameRegistry.registerItem(enderOrb, enderOrb.getName(), ModInfo.MODID);
@@ -104,6 +116,10 @@ public class ModItems {
         GameRegistry.registerItem(enderSoulShovel, "EnderSoulShovel", ModInfo.MODID);
         GameRegistry.registerItem(enderSoulHammer, "EnderSoulHammer", ModInfo.MODID);
         GameRegistry.registerItem(enderSoulExcavator, "EnderSoulExcavator", ModInfo.MODID);
+
+        GameRegistry.registerItem(enderSoulHelmet, "EnderSoulHelmet");
+        GameRegistry.registerItem(enderSoulBreastplate, "EnderSoulBreastplate");
+        GameRegistry.registerItem(enderSoulLegs, "EnderSoulLegs");
 
         GameRegistry.registerItem(enderItem, enderItem.getName(), ModInfo.MODID);
         GameRegistry.registerItem(enderSoulFill, enderSoulFill.getName(), ModInfo.MODID);

@@ -1,6 +1,7 @@
 package at.korti.endermystic.client.render.blocks;
 
 import at.korti.endermystic.blocks.CrystalOre;
+import at.korti.endermystic.client.render.RenderConfig;
 import cpw.mods.fml.client.registry.ISimpleBlockRenderingHandler;
 import net.minecraft.block.Block;
 import net.minecraft.client.renderer.RenderBlocks;
@@ -52,6 +53,6 @@ public class CrystalOreRenderer extends BlockRenderer implements ISimpleBlockRen
 
     @Override
     public int getRenderId() {
-        return BlockRenderConfig.CrystelOreRenderId;
+        return RenderConfig.CrystelOreRenderId;
     }
 }

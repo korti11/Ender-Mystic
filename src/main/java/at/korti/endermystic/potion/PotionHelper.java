@@ -1,6 +1,7 @@
 package at.korti.endermystic.potion;
 
 import at.korti.endermystic.EnderMystic;
+import at.korti.endermystic.util.Logger;
 import net.minecraft.potion.Potion;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.common.config.Configuration;
@@ -18,7 +19,7 @@ public class PotionHelper {
     public static Potion enderScream;
 
     public static void preInit(){
-
+        EnderMystic.logger.addMessage(Logger.LoggingLevel.INFO, "Pre Init PotionHelper.");
         Potion[] potionTypes = null;
 
         for(Field f : net.minecraft.potion.Potion.class.getDeclaredFields()){
@@ -46,6 +47,7 @@ public class PotionHelper {
     }
 
     public static void init(){
+        EnderMystic.logger.addMessage(Logger.LoggingLevel.INFO, "Init potion effects.");
         enderHeartBleed = (new EnderHeartBleed(EnderMystic.config.get("Potion", "Ender Heart Bleed ID", 60).getInt(), false, 0)).setIconIndex(0,0).setPotionName("potion.enderHeartBleed");
         waterBreathing = (new WaterBreathing(EnderMystic.config.get("Potion", "Water Breathing ID", 61).getInt(), false, 0)).setIconIndex(0,0).setPotionName("potion.Breathing");
         enderScream = (new EnderScream(EnderMystic.config.get("Potion", "Ender Scream ID", 62).getInt(), false, 0)).setIconIndex(0, 0).setPotionName("potion.enderScream");
