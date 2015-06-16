@@ -1,4 +1,4 @@
-package at.korti.endermystic.client.model;
+package at.korti.endermystic.client.model.armor;
 
 import at.korti.endermystic.items.ModItems;
 import net.minecraft.client.model.ModelBiped;
@@ -92,10 +92,8 @@ public class EnderSoulArmorModel extends ModelBiped {
     public ModelRenderer PlateHelmetBack_1;
     public ModelRenderer PlateHelmetBack_2;
 
-    public EnderSoulArmorModel(int armorType) {
-        super();
-        this.textureWidth = 128;
-        this.textureHeight = 64;
+    public EnderSoulArmorModel(float f, boolean addHelmet, boolean addChestPiece, boolean addLeggings) {
+        super(f, 0.0F, 128, 64);
         this.LegsSwordHolder = new ModelRenderer(this, 8, 34);
         this.LegsSwordHolder.setRotationPoint(0F, 0F, 0.0F);
         this.LegsSwordHolder.addBox(2.6F, 2.5F, -7.0F, 1, 1, 3, 0.0F);
@@ -394,13 +392,13 @@ public class EnderSoulArmorModel extends ModelBiped {
         this.PlateHandRightFront_2.addBox(-4.0F, 2.5F, -2.7F, 5, 2, 1, 0.0F);
         this.setRotateAngle(PlateHandRightFront_2, -0.17453292519943295F, 0.0F, 0.0F);
 
-        if (armorType == 0) {
+        if (addHelmet) {
             addHelm();
         }
-        else if (armorType == 1) {
+        if (addChestPiece) {
             addBreastplate();
         }
-        else if (armorType == 2) {
+        if (addLeggings) {
             addLegs();
         }
     }

@@ -1,6 +1,6 @@
 package at.korti.endermystic.client.render.blocks;
 
-import at.korti.endermystic.client.model.CrystalCombinerModel;
+import at.korti.endermystic.client.model.blocks.CrystalCombinerModel;
 import at.korti.endermystic.tileEntity.TileEntityCrystalCombiner;
 import net.minecraft.client.renderer.entity.RenderItem;
 import net.minecraft.client.renderer.entity.RenderManager;

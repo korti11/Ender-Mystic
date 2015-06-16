@@ -1,6 +1,6 @@
 package at.korti.endermystic.client.render.blocks;
 
-import at.korti.endermystic.client.model.OrbInfuserModel;
+import at.korti.endermystic.client.model.blocks.OrbInfuserModel;
 import at.korti.endermystic.tileEntity.TileEntityOrbInfuser;
 import net.minecraft.client.renderer.entity.RenderItem;
 import net.minecraft.client.renderer.entity.RenderManager;

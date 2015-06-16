@@ -1,4 +1,4 @@
-package at.korti.endermystic.client.model;
+package at.korti.endermystic.client.model.blocks;
 
 import net.minecraft.client.model.ModelBase;
 import net.minecraft.client.model.ModelRenderer;

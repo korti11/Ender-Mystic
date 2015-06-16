@@ -1,6 +1,6 @@
 package at.korti.endermystic.client.render.blocks;
 
-import at.korti.endermystic.client.model.EnergyDrainModel;
+import at.korti.endermystic.client.model.blocks.EnergyDrainModel;
 import at.korti.endermystic.tileEntity.TileEntityEnergyDrain;
 import net.minecraft.tileentity.TileEntity;
 import org.lwjgl.opengl.GL11;
