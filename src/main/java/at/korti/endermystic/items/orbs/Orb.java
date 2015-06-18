@@ -52,6 +52,9 @@ public class Orb extends EnergyItem {
 
     @Override
     public int getColorFromItemStack(ItemStack stack, int pass) {
-        return pass == 1 ? this.color : 0xFFFFFF;
+        if (pass == 1) {
+            return this.color;
+        }
+        return super.getColorFromItemStack(stack, pass);
     }
 }

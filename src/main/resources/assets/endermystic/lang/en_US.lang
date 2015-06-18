@@ -1,5 +1,6 @@
 itemGroup.endermystic=Ender Mystic
 
+#Capacity Orbs
 item.endermystic.BasicEnderOrb.name=Basic Ender Orb
 item.endermystic.ApprenticeOrb.name=Apprentice Orb
 item.endermystic.GuardiansOrb.name=Guardians Orb
@@ -7,6 +8,7 @@ item.endermystic.MasterOrb.name=Master Orb
 item.endermystic.GalaxyOrb.name=Galaxy Orb
 item.endermystic.UniverseOrb.name=Universe Orb
 
+#Orbs
 item.endermystic.EmeraldOrb.name=Emerald Orb
 item.endermystic.WaterOrb.name=Water Orb
 item.endermystic.FireOrb.name=Fire Orb
@@ -15,12 +17,18 @@ item.endermystic.AirOrb.name=Air Orb
 item.endermystic.TestOrb.name=Test Orb
 item.endermystic.EnderZarOrb.name=Ender Zar Orb
 
+#Tools
 item.endermystic.EnderSacrifice.name=Ender Sacrifice
 item.endermystic.EnderSoulSword.name=Ender Soul Sword
 item.endermystic.EnderSoulPickaxe.name=Ender Soul Pickaxe
 item.endermystic.EnderSoulShovel.name=Ender Soul Shovel
 item.endermystic.EnderSoulHammer.name=Ender Soul Hammer
 item.endermystic.EnderSoulExcavator.name=Ender Soul Excavator
+
+#Armor
+item.endermystic.EnderSoulArmor.Helmet.name=Ender Soul Helmet
+item.endermystic.EnderSoulArmor.Breastplate.name=Ender Soul Chestplate
+item.endermystic.EnderSoulArmor.Legs.name=Ender Soul Leggings
 
 #Ender Item
 item.endermystic.EnderItem.EnderShard.name=Ender Shard
@@ -63,9 +71,9 @@ item.endermystic.OrbCore.Galaxy.name=Galaxy Core
 item.endermystic.OrbCore.Universe.name=Universe Core
 
 #Baubles
-item.endermystic.AirRing.name=Air Ring
-item.endermystic.AirBelt.name=Air Belt
-item.endermystic.FireRing.name=Fire Ring
+item.endermystic.AirRing.name=Ring of Breathing
+item.endermystic.AirBelt.name=Swiftness Belt
+item.endermystic.FireRing.name=Ring of Fire Resistance
 
 tile.endermystic.CrystalOre.Earth.name=Earth Crystal Ore
 tile.endermystic.CrystalOre.Air.name=Air Crystal Ore
@@ -79,6 +87,10 @@ tile.endermystic.EnderZar.name=Ender Zar
 tile.endermystic.OrbInfuser.name=Orb Infuser
 tile.endermystic.EnergyCrystalStorage.name=Energy Crystal Storage
 
+#CoFH
+tile.endermystic.MysticDynamo.name=Mystic Dynamo
+
+#Potion
 potion.Breathing=Breathing
 potion.enderHearBleed=Ender Heart Bleed
 
@@ -91,6 +103,8 @@ upgrade.endermystic.autosmelt=Auto Smelt
 upgrade.endermystic.firey=Firey
 
 #Book Entries
+book.entry.Blocks.title=Blocks
+
 book.entry.CrystalCombiner.title=Crystal Combiner
 book.entry.CrystalCombiner.text=With the Crystal Combiner you can craft different types of crystals and some other stuff. It's very easy to use the Crystal Combiner, simply right click on the container.
 
@@ -109,6 +123,11 @@ book.entry.Network.text=Every crafting mechanic use power. So you have to transf
 
 book.entry.EnergyDrain.title=Energy Drain
 book.entry.EnergyDrain.text=The Energy Drain provide your energy network with energy from the player network. To get the drain running you need the Energy Drain self and a Energy Crystal.
+
+book.entry.EnergyRelay.title=Energy Relay
+
+book.entry.EnergyCrystalStorage.title=Energy Crystal Storage
+book.entry.EnergyCrystalStorage.text=With the Energy Crystal Storage you can store energy in the energy network and can use it to increase your storage.
 
 book.entry.EnergyCrystal.title=Energy Crystal
 book.entry.EnergyCrystal.text=To use it, you have to bind the crystal to a player. To bind the crystal you must press the right mouse button.
@@ -137,12 +156,6 @@ book.entry.WaterOrb.text=There is no water in your near. So with a right click y
 book.entry.Baubles.title=Baubles
 book.entry.Baubles.text=Baubles is a small addon mod. It adds 4 new slots: an amulet, belt and two rings slots.
 
-book.entry.BaublesItems.title=Baubles Items
-
-book.entry.AirRing.text=The air ring add the potion effect breathing. With breathing you can breath under the water.
-book.entry.AirBelt.text=If equipped the air belt you get the potion effect swiftness. With this effect you can run faster.
-book.entry.FireRing.text=With the fire ring you get the effect fire resistance. With this potion effect you get no damage from fire and lava.
-
 book.entry.ToolList.title=Tools
 
 book.entry.ToolLevel.title=Tool Leveling
@@ -155,7 +168,19 @@ book.entry.Sharpness.text=With the sharpness upgrade your sword do more damage t
 book.entry.AutoSmelt.text=With the auto smelt upgrade your tool smelt the ore like iron ore directly in the ingot. In combination of luck you can get more of the ore.
 book.entry.Firey.text=With the firey upgrade you can get mobs or players on fire.
 
-book.crafting.timetocraft.name=Time to craft
-book.crafting.energyuse.name=Energy use
+book.entry.EnderSoulArmorBook.title=Ender Soul Armor
+book.entry.EnderSoulArmorBook.text=The Ender Soul Armor is ah fancy looking and very good armor. It protect you from damage and repair his self from energy.
 
 book.entry.Util.title=Util
+
+book.entry.BaublesItems.title=Baubles Items
+
+book.entry.AirRing.text=The air ring add the potion effect breathing. With breathing you can breath under the water.
+book.entry.AirBelt.text=If equipped the air belt you get the potion effect swiftness. With this effect you can run faster.
+book.entry.FireRing.text=With the fire ring you get the effect fire resistance. With this potion effect you get no damage from fire and lava.
+
+book.entry.CoFH.title=CoFH Integration
+book.entry.MysticDynamo.text=With the Mystic Dynamo you can convert RF power in mystic energy. This mystic machine is hard to understand how it work.
+
+book.crafting.timetocraft.name=Time to craft
+book.crafting.energyuse.name=Energy use

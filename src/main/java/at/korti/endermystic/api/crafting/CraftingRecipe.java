@@ -1,7 +1,6 @@
 package at.korti.endermystic.api.crafting;
 
 import at.korti.endermystic.EnderMystic;
-import at.korti.endermystic.util.Logger;
 import net.minecraft.item.ItemStack;
 
 /**
@@ -30,7 +29,6 @@ public class CraftingRecipe {
             this.requirements[i] = requirements[i];
         }
 
-        EnderMystic.logger.addMessage(Logger.LoggingLevel.INFO, "Create recipe for " + result.getDisplayName());
     }
 
     public ItemStack getResult() {

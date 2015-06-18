@@ -5,7 +5,6 @@ import at.korti.endermystic.ModInfo;
 import at.korti.endermystic.items.armor.EnderSoulArmor;
 import at.korti.endermystic.items.orbs.*;
 import at.korti.endermystic.items.tools.*;
-import at.korti.endermystic.util.Logger;
 import cpw.mods.fml.common.registry.GameRegistry;
 
 /**
@@ -51,7 +50,6 @@ public class ModItems {
 //    public static BaublesBackPack baublesBackPack;
 
     public static void init(){
-        EnderMystic.logger.addMessage(Logger.LoggingLevel.INFO, "Init mod items.");
         enderOrb = new CapacityOrb("BasicEnderOrb", 0x258474, 10000);
         apprenticeOrb = new CapacityOrb("ApprenticeOrb", 0x3C3C8D, 25000);
         guardiansOrb = new CapacityOrb("GuardiansOrb", 0x620000, 40000);
@@ -91,7 +89,6 @@ public class ModItems {
     }
 
     public static void load(){
-        EnderMystic.logger.addMessage(Logger.LoggingLevel.INFO, "Load mod items.");
         GameRegistry.registerItem(bookItem, bookItem.getName(), ModInfo.MODID);
 
         GameRegistry.registerItem(enderOrb, enderOrb.getName(), ModInfo.MODID);

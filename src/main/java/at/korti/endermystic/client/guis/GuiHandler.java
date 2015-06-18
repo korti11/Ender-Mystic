@@ -4,7 +4,6 @@ import at.korti.endermystic.EnderMystic;
 import at.korti.endermystic.client.containers.BookContainer;
 import at.korti.endermystic.client.guis.book.BookPage;
 import at.korti.endermystic.items.ModItems;
-import at.korti.endermystic.util.Logger;
 import cpw.mods.fml.common.network.IGuiHandler;
 import cpw.mods.fml.common.network.NetworkRegistry;
 import net.minecraft.entity.player.EntityPlayer;
@@ -17,7 +16,6 @@ import net.minecraft.world.World;
 public class GuiHandler implements IGuiHandler {
 
     public GuiHandler() {
-        EnderMystic.logger.addMessage(Logger.LoggingLevel.INFO, "Register gui handler.");
         NetworkRegistry.INSTANCE.registerGuiHandler(EnderMystic.instance, this);
     }
 

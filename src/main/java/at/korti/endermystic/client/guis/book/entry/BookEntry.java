@@ -19,6 +19,7 @@ public class BookEntry extends BookPage {
     protected int posY;
     protected int textPosX;
     protected int textPosY;
+    protected boolean showText;
 
     public BookEntry(String name, BookPage prevEntry) {
         super(false);
@@ -26,7 +27,9 @@ public class BookEntry extends BookPage {
         this.prevEntry = prevEntry;
         this.textPosX = 38;
         this.textPosY = 46;
-        if(prevEntry instanceof BookEntry && !(this instanceof BookCombiCrafting) && !(this instanceof BookCraftingTable)) {
+        this.showText = true;
+        boolean isListEntry = prevEntry instanceof BookCraftingTable || prevEntry instanceof BookCombiCrafting ? !(((BookEntry)prevEntry).getPrevEntry() instanceof BookEntryItemList) : true;
+        if(prevEntry instanceof BookEntry && isListEntry) {
             ((BookEntry) prevEntry).setNextEntry(this);
         }
     }
@@ -35,6 +38,18 @@ public class BookEntry extends BookPage {
         this(name, prevEntry);
 
         this.title = title;
+    }
+
+    public BookEntry(String name, BookPage prevEntry, boolean showText) {
+        this(name, prevEntry);
+
+        this.showText = showText;
+    }
+
+    public BookEntry(String name, String title, BookPage prevEntry, boolean showText) {
+        this(name, title, prevEntry);
+
+        this.showText = showText;
     }
 
     public String getTitle() {
@@ -97,9 +112,11 @@ public class BookEntry extends BookPage {
     public void drawScreen(int x, int y, float scale) {
         super.drawScreen(x, y, scale);
         this.fontRendererObj.drawString(getTitle(), posX + (this.bookImageWidth / 2) - (fontRendererObj.getStringWidth(getTitle()) / 2) - 5, posY + 22, 0);
-        List<String> lines = this.fontRendererObj.listFormattedStringToWidth(getText(), (this.bookImageWidth / 2) + 14);
-        for (int i = 0; i < lines.size(); i++) {
-            this.fontRendererObj.drawString(lines.get(i), posX + textPosX, posY + textPosY + (12 * i), 0);
+        if(showText) {
+            List<String> lines = this.fontRendererObj.listFormattedStringToWidth(getText(), (this.bookImageWidth / 2) + 14);
+            for (int i = 0; i < lines.size(); i++) {
+                this.fontRendererObj.drawString(lines.get(i), posX + textPosX, posY + textPosY + (12 * i), 0);
+            }
         }
     }
 }

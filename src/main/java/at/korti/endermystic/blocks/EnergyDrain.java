@@ -2,6 +2,7 @@ package at.korti.endermystic.blocks;
 
 import at.korti.endermystic.EnderMystic;
 import at.korti.endermystic.ModInfo;
+import at.korti.endermystic.api.crafting.IItemBookCrafting;
 import at.korti.endermystic.tileEntity.TileEntityEnergyDrain;
 import net.minecraft.block.BlockContainer;
 import net.minecraft.block.material.Material;
@@ -13,7 +14,7 @@ import net.minecraft.world.World;
 /**
  * Created by Korti on 13.04.2015.
  */
-public class EnergyDrain extends BlockContainer {
+public class EnergyDrain extends BlockContainer implements IItemBookCrafting {
 
 
     protected EnergyDrain() {

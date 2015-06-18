@@ -13,7 +13,6 @@ import at.korti.endermystic.modintegration.cofh.Cofh;
 import at.korti.endermystic.modintegration.cofh.client.model.MysticDynamoModel;
 import at.korti.endermystic.modintegration.cofh.tileentity.TileEntityMysticDynamo;
 import at.korti.endermystic.tileEntity.*;
-import at.korti.endermystic.util.Logger;
 import cpw.mods.fml.client.registry.ClientRegistry;
 import cpw.mods.fml.client.registry.ISimpleBlockRenderingHandler;
 import cpw.mods.fml.client.registry.RenderingRegistry;
@@ -27,7 +26,6 @@ public class ClientProxy extends CommonProxy {
 
     @Override
     public void initRenderes() {
-        EnderMystic.logger.addMessage(Logger.LoggingLevel.INFO, "Bind renderers to tile entities.");
         ClientRegistry.bindTileEntitySpecialRenderer(TileEntityCrystalCombiner.class, new CrystalCombinerRenderer());
         ClientRegistry.bindTileEntitySpecialRenderer(TileEntityEnergyDrain.class, new EnergyDrainRenderer());
         ClientRegistry.bindTileEntitySpecialRenderer(TileEntityEnergyRelay.class, new TileEntityBlockRenderer(new EnergyRelayModel(), "textures/model/EnergyRelay.png"));
@@ -35,7 +33,6 @@ public class ClientProxy extends CommonProxy {
         ClientRegistry.bindTileEntitySpecialRenderer(TileEntityOrbInfuser.class, new OrbInfuserRenderer());
         ClientRegistry.bindTileEntitySpecialRenderer(TileEntityEnergyCrystalStorage.class, new TileEntityBlockRenderer(new EnergyCrystalStorageModel(), "textures/model/EnergyCrystalStorage.png"));
 
-        EnderMystic.logger.addMessage(Logger.LoggingLevel.INFO, "Register item renderers.");
         MinecraftForgeClient.registerItemRenderer(Item.getItemFromBlock(ModBlocks.energyDrain), new TileEntityItemRenderer(new EnergyDrainRenderer(), new TileEntityEnergyDrain()));
         MinecraftForgeClient.registerItemRenderer(Item.getItemFromBlock(ModBlocks.energyRelay), new TileEntityItemRenderer(new TileEntityBlockRenderer(new EnergyRelayModel(), "textures/model/EnergyRelay.png"), new TileEntityEnergyRelay()));
         MinecraftForgeClient.registerItemRenderer(Item.getItemFromBlock(ModBlocks.crystalCombiner), new TileEntityItemRenderer(new CrystalCombinerRenderer(), new TileEntityCrystalCombiner()));
@@ -48,17 +45,14 @@ public class ClientProxy extends CommonProxy {
 
         //CoFH
         if (Cofh.isLoaded) {
-            EnderMystic.logger.addMessage(Logger.LoggingLevel.INFO, "Bind CoFH renderers to tile entities.");
             ClientRegistry.bindTileEntitySpecialRenderer(TileEntityMysticDynamo.class, new TileEntityBlockRenderer(new MysticDynamoModel(), "textures/model/MysticDynamo.png"));
 
-            EnderMystic.logger.addMessage(Logger.LoggingLevel.INFO, "Register CoFH item renderers.");
             MinecraftForgeClient.registerItemRenderer(Item.getItemFromBlock(Cofh.mysticDynamo), new TileEntityItemRenderer(new TileEntityBlockRenderer(new MysticDynamoModel(), "textures/model/MysticDynamo.png"), new TileEntityMysticDynamo()));
         }
     }
 
     @Override
     public void registerDisplayInfromation() {
-        EnderMystic.logger.addMessage(Logger.LoggingLevel.INFO, "Register Renderers.");
         RenderConfig.CrystelOreRenderId = RenderingRegistry.getNextAvailableRenderId();
         this.registerBlockRendere(new CrystalOreRenderer());
     }
@@ -69,7 +63,6 @@ public class ClientProxy extends CommonProxy {
 
     @Override
     public void initKeys() {
-        EnderMystic.logger.addMessage(Logger.LoggingLevel.INFO, "Init key binding.");
         KeyHandler.init();
     }
 }

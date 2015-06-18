@@ -2,7 +2,6 @@ package at.korti.endermystic.blocks;
 
 import at.korti.endermystic.EnderMystic;
 import at.korti.endermystic.items.blockitems.CrystalOreItemBlock;
-import at.korti.endermystic.util.Logger;
 import cpw.mods.fml.common.registry.GameRegistry;
 
 /**
@@ -19,7 +18,6 @@ public class ModBlocks {
     public static EnergyCrystalStorage energyCrystalStorage;
 
     public static void init(){
-        EnderMystic.logger.addMessage(Logger.LoggingLevel.INFO, "Init mod blocks.");
         crystalOre = new CrystalOre();
         crystalCombiner = new CrystalCombiner();
         energyDrain = new EnergyDrain();
@@ -30,7 +28,6 @@ public class ModBlocks {
     }
 
     public static void load(){
-        EnderMystic.logger.addMessage(Logger.LoggingLevel.INFO, "Load mod blocks.");
         GameRegistry.registerBlock(crystalOre, CrystalOreItemBlock.class, "CrystalOre");
         GameRegistry.registerBlock(crystalCombiner, "CrystalCombiner");
         GameRegistry.registerBlock(energyDrain, "EnergyDrain");

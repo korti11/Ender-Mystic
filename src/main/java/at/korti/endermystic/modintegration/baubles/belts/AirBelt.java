@@ -1,4 +1,4 @@
-package at.korti.endermystic.modintegration.baubles.rings;
+package at.korti.endermystic.modintegration.baubles.belts;
 
 import at.korti.endermystic.api.mysticEnergyNetwork.EnergyNetworkHandler;
 import at.korti.endermystic.items.EnergyItem;
@@ -16,10 +16,10 @@ import net.minecraft.util.ChatComponentText;
 /**
  * Created by Korti on 02.06.2015.
  */
-public class AirBelt extends EnergyItem implements IBauble {
+public class AirBelt extends Belt {
 
     public AirBelt() {
-        super("AirBelt");
+        super("AirBelt", 0x2db895);
     }
 
     @Override
@@ -36,36 +36,10 @@ public class AirBelt extends EnergyItem implements IBauble {
         String playerName = itemStack.stackTagCompound.getString("em_owner");
 
         if (EnergyNetworkHandler.isEnoughEnergy(OrbStats.usageSwiftness, playerName)) {
-            entityLivingBase.addPotionEffect(new PotionEffect(Potion.moveSpeed.getId(), 200));
+            entityLivingBase.addPotionEffect(new PotionEffect(Potion.moveSpeed.getId(), 50));
             if (entityLivingBase.moveForward > 0.01F || entityLivingBase.moveForward < -0.01F || entityLivingBase.moveStrafing > 0.01F || entityLivingBase.moveStrafing < -0.01F) {
                 EnergyNetworkHandler.decEnergy(OrbStats.usageSwiftness, playerName);
             }
         }
-    }
-
-    @Override
-    public void onEquipped(ItemStack itemStack, EntityLivingBase entityLivingBase) {
-        if(itemStack.stackTagCompound == null){
-            itemStack.stackTagCompound = new NBTTagCompound();
-        }
-
-        if(!itemStack.stackTagCompound.hasKey("em_owner")){
-            ((EntityPlayer)entityLivingBase).addChatMessage(new ChatComponentText("The Belt has no owner"));
-        }
-    }
-
-    @Override
-    public void onUnequipped(ItemStack itemStack, EntityLivingBase entityLivingBase) {
-
-    }
-
-    @Override
-    public boolean canEquip(ItemStack itemStack, EntityLivingBase entityLivingBase) {
-        return true;
-    }
-
-    @Override
-    public boolean canUnequip(ItemStack itemStack, EntityLivingBase entityLivingBase) {
-        return true;
     }
 }

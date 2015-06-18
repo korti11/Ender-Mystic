@@ -23,7 +23,7 @@ public class BookEntryItemList extends BookEntry {
     }
 
     public BookEntryItemList(String name, BookPage prevEntry) {
-        super(name, prevEntry);
+        super(name, prevEntry, false);
 
         items = new ArrayList<>();
     }

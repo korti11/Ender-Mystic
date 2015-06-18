@@ -18,13 +18,13 @@ public class BookEntryImage extends BookEntry {
     private boolean renderToolTip;
 
     public BookEntryImage(String name, BookPage prevEntry, boolean renderToolTip) {
-        super(name, prevEntry);
+        super(name, prevEntry, false);
         itemStackImages = new LinkedList<>();
         this.renderToolTip = renderToolTip;
     }
 
     public BookEntryImage(String name, String title, BookPage prevEntry, boolean renderToolTip) {
-        super(name, title, prevEntry);
+        super(name, title, prevEntry, false);
 
         itemStackImages = new LinkedList<>();
         this.renderToolTip = renderToolTip;

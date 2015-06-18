@@ -42,7 +42,6 @@ public class UpdateChecker {
     }
 
     public void checkForUpdate() {
-        EnderMystic.logger.addMessage(Logger.LoggingLevel.INFO, "Check for update.");
         InputStream inStream = null;
         FileOutputStream fileOutStream = null;
         try {

@@ -2,6 +2,7 @@ package at.korti.endermystic.blocks;
 
 import at.korti.endermystic.EnderMystic;
 import at.korti.endermystic.ModInfo;
+import at.korti.endermystic.api.crafting.IItemBookCrafting;
 import at.korti.endermystic.tileEntity.TileEntityEnergyRelay;
 import net.minecraft.block.BlockContainer;
 import net.minecraft.block.material.Material;
@@ -11,7 +12,7 @@ import net.minecraft.world.World;
 /**
  * Created by Korti on 14.04.2015.
  */
-public class EnergyRelay extends BlockContainer {
+public class EnergyRelay extends BlockContainer implements IItemBookCrafting {
 
     public EnergyRelay() {
         super(Material.rock);

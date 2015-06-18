@@ -13,7 +13,6 @@ import at.korti.endermystic.network.PacketPipeline;
 import at.korti.endermystic.potion.PotionHelper;
 import at.korti.endermystic.proxy.CommonProxy;
 import at.korti.endermystic.tileEntity.TileEntities;
-import at.korti.endermystic.util.Logger;
 import at.korti.endermystic.util.UpdateChecker;
 import at.korti.endermystic.world.OreGeneration;
 import cpw.mods.fml.common.Mod;
@@ -32,7 +31,7 @@ import net.minecraftforge.common.config.Configuration;
 /**
  * Created by Korti on 15.10.2014.
  */
-@Mod(modid = ModInfo.MODID, name = ModInfo.NAME, version = ModInfo.VERSION, dependencies = "after:Baubles; after:Waila; after:CoFhCore")
+@Mod(modid = ModInfo.MODID, name = ModInfo.NAME, version = ModInfo.VERSION, dependencies = "after:Baubles; after:Waila; after:CoFhCore; after:ThermalExpansion")
 public class EnderMystic {
 
     @Mod.Instance(ModInfo.MODID)
@@ -50,13 +49,10 @@ public class EnderMystic {
 
     public static PacketPipeline pipeline = new PacketPipeline();
     public static Configuration config;
-    public static Logger logger = Logger.getInstance();
 
     @Mod.EventHandler
     public static void preInit(FMLPreInitializationEvent event) {
-        logger.addMessage(Logger.LoggingLevel.INFO, "Pre Init Mod.");
         config = new Configuration(event.getSuggestedConfigurationFile());
-        logger.addMessage(Logger.LoggingLevel.INFO, "Load config file.");
         config.load();
 
         UpdateChecker.getInstance().checkForUpdate();
@@ -72,16 +68,9 @@ public class EnderMystic {
 
         proxy.initKeys();
 
-        logger.addMessage(Logger.LoggingLevel.INFO, "Register event manager.");
         MinecraftForge.EVENT_BUS.register(new EventManager());
 
-        logger.addMessage(Logger.LoggingLevel.INFO, "Register ore generator.");
         GameRegistry.registerWorldGenerator(new OreGeneration(), 1);
-
-        CraftingManager.registerCrystalCombinerRecipes();
-        CraftingManager.registerOrbInfuserRecipes();
-        CraftingManager.registerVanillaRecipes();
-        CraftingManager.registerBookRecipes();
 
         ToolLevelHandler.getInstance().initToolLevelSystem();
     }
@@ -99,6 +88,11 @@ public class EnderMystic {
         proxy.initRenderes();
         proxy.registerDisplayInfromation();
 
+        CraftingManager.registerCrystalCombinerRecipes();
+        CraftingManager.registerOrbInfuserRecipes();
+        CraftingManager.registerVanillaRecipes();
+        CraftingManager.registerBookRecipes();
+
         new GuiHandler();
     }
 
@@ -110,7 +104,6 @@ public class EnderMystic {
 
         ModIntegration.postInit();
 
-        EnderMystic.logger.addMessage(Logger.LoggingLevel.INFO, "Save config file.");
         config.save();
     }
 

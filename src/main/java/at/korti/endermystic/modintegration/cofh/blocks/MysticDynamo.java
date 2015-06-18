@@ -2,6 +2,7 @@ package at.korti.endermystic.modintegration.cofh.blocks;
 
 import at.korti.endermystic.EnderMystic;
 import at.korti.endermystic.ModInfo;
+import at.korti.endermystic.api.crafting.IItemBookCrafting;
 import at.korti.endermystic.modintegration.cofh.tileentity.TileEntityMysticDynamo;
 import net.minecraft.block.BlockContainer;
 import net.minecraft.block.material.Material;
@@ -11,12 +12,12 @@ import net.minecraft.world.World;
 /**
  * Created by Korti on 05.06.2015.
  */
-public class MysticDynamo extends BlockContainer {
+public class MysticDynamo extends BlockContainer implements IItemBookCrafting{
 
     public MysticDynamo() {
         super(Material.rock);
 
-        setBlockName(ModInfo.MODID + "MysticDynamo");
+        setBlockName(ModInfo.MODID + ".MysticDynamo");
         setStepSound(soundTypeStone);
         setCreativeTab(EnderMystic.tab);
     }

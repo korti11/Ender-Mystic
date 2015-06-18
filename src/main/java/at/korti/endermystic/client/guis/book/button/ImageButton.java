@@ -33,20 +33,28 @@ public class ImageButton extends GuiButton{
         this.itemRender = new RenderItem();
         this.mc = Minecraft.getMinecraft();
         this.fontRendererObj = fontRenderer;
-        if(CraftingRegistry.getInstance().getCraftingRecipe(stack) != null) {
-            this.nextPage = new BookCombiCrafting(stack.getDisplayName(), prevPage, CraftingRegistry.getInstance().getCraftingRecipe(stack));
+
+        BookEntry infoEntry = new BookEntry(stack.getItem().getClass().getSimpleName(), stack.getUnlocalizedName() + ".name", null);
+        if (infoEntry.getText() != "") {
+            ((BookEntry) prevPage).setNextEntry(infoEntry);
+            infoEntry.setPrevEntry(prevPage);
+            this.nextPage = infoEntry;
+            if(CraftingRegistry.getInstance().getCraftingRecipe(stack) != null) {
+                infoEntry.setNextEntry(new BookCombiCrafting(stack.getDisplayName(), infoEntry, CraftingRegistry.getInstance().getCraftingRecipe(stack)));
+            }
+            else if (CraftingManager.findRecipeFor(stack) != null) {
+                infoEntry.setNextEntry(new BookCraftingTable(stack.getDisplayName(), infoEntry, stack));
+            }
         }
-        else if (CraftingManager.findRecipeFor(stack) != null) {
-            this.nextPage = new BookCraftingTable(stack.getDisplayName(), prevPage, stack);
+        else {
+            if (CraftingRegistry.getInstance().getCraftingRecipe(stack) != null) {
+                this.nextPage = new BookCombiCrafting(stack.getDisplayName(), null, CraftingRegistry.getInstance().getCraftingRecipe(stack));
+                ((BookEntry)this.nextPage).setPrevEntry(prevPage);
+            } else if (CraftingManager.findRecipeFor(stack) != null) {
+                this.nextPage = new BookCraftingTable(stack.getDisplayName(), null, stack);
+                ((BookEntry)this.nextPage).setPrevEntry(prevPage);
+            }
         }
-        BookPage prevNext = ((BookEntry)prevPage).getNextEntry();
-        BookEntry bookEntry = new BookEntry(stack.getItem().getClass().getSimpleName(), stack.getUnlocalizedName() + ".name", prevPage);
-        if (bookEntry.getText() != "" && this.nextPage != null) {
-            bookEntry.setNextEntry(this.nextPage);
-            ((BookEntry) this.nextPage).setPrevEntry(bookEntry);
-            this.nextPage = bookEntry;
-        }
-        ((BookEntry) prevPage).setNextEntry(prevNext);
     }
 
     @Override

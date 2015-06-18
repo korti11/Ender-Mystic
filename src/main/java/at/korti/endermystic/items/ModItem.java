@@ -2,16 +2,14 @@ package at.korti.endermystic.items;
 
 import at.korti.endermystic.EnderMystic;
 import at.korti.endermystic.ModInfo;
-import at.korti.endermystic.util.Logger;
+import at.korti.endermystic.api.crafting.IItemBookCrafting;
 import net.minecraft.client.renderer.texture.IIconRegister;
-import net.minecraft.client.renderer.texture.TextureAtlasSprite;
-import net.minecraft.client.renderer.texture.TextureMap;
 import net.minecraft.item.Item;
 
 /**
  * Created by Korti on 15.10.2014.
  */
-public class ModItem extends Item {
+public class ModItem extends Item implements IItemBookCrafting{
 
     private String name;
 

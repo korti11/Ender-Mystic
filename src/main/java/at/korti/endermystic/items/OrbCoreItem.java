@@ -47,7 +47,7 @@ public class OrbCoreItem extends ModItem {
             case 11:
                 return 0x00001F;
             default:
-                return 0;
+                return super.getColorFromItemStack(stack, p_82790_2_);
         }
     }
 

@@ -16,28 +16,39 @@ import java.util.Random;
 public class OreGeneration implements IWorldGenerator{
     @Override
     public void generate(Random random, int chunkX, int chunkZ, World world, IChunkProvider chunkGenerator, IChunkProvider chunkProvider) {
-        //TODO: Fix it.
-        if (world.provider.dimensionId != 1 && world.provider.dimensionId != -1) {
-            generateOverworld(world, random, chunkX, chunkZ);
+        generate(world, random, chunkX, chunkZ);
+    }
+
+    public void generate(World world, Random random, int x, int z) {
+        generateOre(ModBlocks.crystalOre, 0, world, random, x, z, 9);
+        generateOre(ModBlocks.crystalOre, 1, world, random, x, z, 9);
+        generateOre(ModBlocks.crystalOre, 2, world, random, x, z, 9);
+        generateOre(ModBlocks.crystalOre, 3, world, random, x, z, 9);
+    }
+
+    public void generateOre(Block ore, int meta, World world, Random random, int blockXPos, int blockZPos, int maxVeinSize){
+
+        int seaLevel = world.provider.getAverageGroundLevel() + 1;
+
+        if (seaLevel < 20) {
+            int x = (blockXPos << 4) + 8;
+            int z = (blockZPos << 4) + 8;
+            seaLevel = world.getHeightValue(x, z);
         }
-    }
 
-    public void generateOverworld(World world, Random random, int x, int z) {
-        addOreSpawn(ModBlocks.crystalOre, 0, world, random, x, z, 16, 16, 9, 30, 10, 50);
-        addOreSpawn(ModBlocks.crystalOre, 1, world, random, x, z, 16, 16, 9, 30, 10, 50);
-        addOreSpawn(ModBlocks.crystalOre, 2, world, random, x, z, 16, 16, 9, 30, 10, 50);
-        addOreSpawn(ModBlocks.crystalOre, 3, world, random, x, z, 16, 16, 9, 30, 10, 50);
-    }
+        if (ore == null) {
+            return;
+        }
 
-    public void addOreSpawn(Block ore, int meta, World world, Random random, int blockXPos, int blockZPos, int maxX, int maxZ, int maxVeinSize, int chancesToSpawn, int minY, int maxY){
+        double oreDepthMultiplier = maxVeinSize * seaLevel / 64;
+        int scale = (int) Math.round(random.nextGaussian() * Math.sqrt(oreDepthMultiplier) + oreDepthMultiplier);
 
-        int diff = maxY - minY;
-
-        for(int i = 0; i < chancesToSpawn; i++){
-            int posX = blockXPos + random.nextInt(maxX);
-            int posY = minY + random.nextInt(diff);
-            int posZ = blockZPos + random.nextInt(maxZ);
-            (new WorldGenMinable(ore, meta, maxVeinSize, Blocks.stone)).generate(world, random, posX, posY, posZ);
+        for (int x = 0; x < (random.nextBoolean() ? 2 : scale) / 2; ++x) {
+            WorldGenMinable blockOre = new WorldGenMinable(ore, meta, maxVeinSize, Blocks.stone);
+            int cx = blockXPos * 16 + random.nextInt(22);
+            int cy = random.nextInt(40 * seaLevel / 64) + random.nextInt(22 * seaLevel / 64) + 12 * seaLevel / 64;
+            int cz = blockZPos * 16 + random.nextInt(22);
+            blockOre.generate(world, random, cx, cy, cz);
         }
 
     }

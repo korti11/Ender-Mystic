@@ -2,6 +2,7 @@ package at.korti.endermystic.blocks;
 
 import at.korti.endermystic.EnderMystic;
 import at.korti.endermystic.ModInfo;
+import at.korti.endermystic.api.crafting.IItemBookCrafting;
 import at.korti.endermystic.api.util.AbilityHelper;
 import at.korti.endermystic.tileEntity.TileEntityCrystalCombiner;
 import net.minecraft.block.BlockContainer;
@@ -13,7 +14,7 @@ import net.minecraft.world.World;
 /**
  * Created by Korti on 03.04.2015.
  */
-public class CrystalCombiner extends BlockContainer{
+public class CrystalCombiner extends BlockContainer implements IItemBookCrafting{
 
     public CrystalCombiner() {
         super(Material.rock);

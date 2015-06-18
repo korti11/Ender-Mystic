@@ -1,19 +1,20 @@
 package at.korti.endermystic.crafting;
 
-import at.korti.endermystic.EnderMystic;
+import at.korti.endermystic.ModInfo;
 import at.korti.endermystic.api.crafting.CraftingRegistry;
-import at.korti.endermystic.api.tools.IEnderSoulTool;
+import at.korti.endermystic.api.crafting.IItemBookCrafting;
 import at.korti.endermystic.blocks.ModBlocks;
-import at.korti.endermystic.items.ModItem;
 import at.korti.endermystic.items.ModItems;
 import at.korti.endermystic.modintegration.baubles.Baubles;
-import at.korti.endermystic.util.Logger;
+import at.korti.endermystic.modintegration.cofh.Cofh;
+import cpw.mods.fml.common.Loader;
 import cpw.mods.fml.common.registry.GameRegistry;
+import net.minecraft.block.Block;
 import net.minecraft.init.Blocks;
 import net.minecraft.init.Items;
-import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.crafting.IRecipe;
+import cofh.thermalexpansion.item.TEItems;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -26,7 +27,6 @@ public class CraftingManager {
     private static List<IRecipe> loadedRecipes = new ArrayList<>();
 
     public static void registerCrystalCombinerRecipes(){
-        EnderMystic.logger.addMessage(Logger.LoggingLevel.INFO, "Register crystal combiner recipes.");
         CraftingRegistry registry = CraftingRegistry.getInstance();
 
         registry.addCrystalCombinerRecipe(30, 50, new ItemStack(ModItems.crystalItem, 1, 4),  //Life
@@ -92,7 +92,6 @@ public class CraftingManager {
     }
 
     public static void registerOrbInfuserRecipes(){
-        EnderMystic.logger.addMessage(Logger.LoggingLevel.INFO, "Register orb infuser recipes.");
         CraftingRegistry registry = CraftingRegistry.getInstance();
 
         registry.addOrbInfuserRecipe(30, 50, new ItemStack(ModItems.orbCoreItem, 1, 4), //Fire Core
@@ -200,7 +199,6 @@ public class CraftingManager {
     }
 
     public static void registerVanillaRecipes(){
-        EnderMystic.logger.addMessage(Logger.LoggingLevel.INFO, "Register vanilla recipes.");
         GameRegistry.addShapelessRecipe(new ItemStack(ModItems.orbCoreItem, 1, 6), new ItemStack(ModItems.enderSoulFill, 1, 1), new ItemStack(Items.ender_pearl));
         GameRegistry.addShapelessRecipe(new ItemStack(ModItems.enderSoulFill, 4, 0), new ItemStack(ModItems.enderSacrifice), new ItemStack(Items.glass_bottle));
         for(int i = 0; i < 4; i++) {
@@ -310,6 +308,20 @@ public class CraftingManager {
                 "I",
                 "S", 'I', new ItemStack(Items.iron_ingot), 'S', new ItemStack(Items.stick)
         );
+        GameRegistry.addShapedRecipe(new ItemStack(ModItems.enderSoulHelmet),
+                "III",
+                "I I", 'I', new ItemStack(ModItems.enderItem, 0, 1)
+        );
+        GameRegistry.addShapedRecipe(new ItemStack(ModItems.enderSoulBreastplate),
+                "I I",
+                "III",
+                "III",'I', new ItemStack(ModItems.enderItem, 0, 1)
+        );
+        GameRegistry.addShapedRecipe(new ItemStack(ModItems.enderSoulLegs),
+                "III",
+                "I I",
+                "I I", 'I', new ItemStack(ModItems.enderItem, 0, 1)
+        );
 
         //Blocks
         GameRegistry.addShapedRecipe(new ItemStack(ModBlocks.crystalCombiner),
@@ -327,10 +339,29 @@ public class CraftingManager {
                 "HCH",
                 "HHH", 'E', new ItemStack(Items.ender_eye), 'H', new ItemStack(Blocks.hardened_clay), 'C', new ItemStack(ModItems.crystalItem, 1, 7)
         );
+        GameRegistry.addShapedRecipe(new ItemStack(ModBlocks.energyCrystalStorage),
+                "HHH",
+                "AEA",
+                "HHH", 'H', new ItemStack(Blocks.hardened_clay), 'A', new ItemStack(ModItems.apprenticeOrb), 'E', new ItemStack(ModItems.crystalItem, 1, 7)
+        );
+
+        //CoFH
+        if (Loader.isModLoaded(ModInfo.THERMALEXPANSION)) {
+            GameRegistry.addShapedRecipe(new ItemStack(Cofh.mysticDynamo),
+                    "HCH",
+                    "IEI",
+                    "HHH", 'H', new ItemStack(Blocks.hardened_clay), 'C', TEItems.powerCoilGold.copy(), 'I', new ItemStack(Items.iron_ingot), 'E', new ItemStack(ModItems.crystalItem, 1, 7)
+            );
+        } else if(Cofh.isLoaded) {
+            GameRegistry.addShapedRecipe(new ItemStack(Cofh.mysticDynamo),
+                    "HIH",
+                    "IEI",
+                    "HHH", 'H', new ItemStack(Blocks.hardened_clay), 'I', new ItemStack(Items.iron_ingot), 'E', new ItemStack(ModItems.crystalItem, 1, 7)
+            );
+        }
 
         //Baubles
         if(Baubles.isLoaded) {
-            EnderMystic.logger.addMessage(Logger.LoggingLevel.INFO, "Register Baubles recipes.");
             GameRegistry.addShapedRecipe(new ItemStack(Baubles.airBelt),
                     " L ",
                     "L L",
@@ -350,7 +381,6 @@ public class CraftingManager {
     }
 
     public static void registerBookRecipes() {
-        EnderMystic.logger.addMessage(Logger.LoggingLevel.INFO, "Register recipes for the book.");
         CraftingRegistry.getInstance().addCraftingRecipe(new ItemStack(ModItems.crystalItem, 1, 0), new ItemStack(ModBlocks.crystalOre, 1, 0), new ItemStack(Items.iron_pickaxe));
         CraftingRegistry.getInstance().addCraftingRecipe(new ItemStack(ModItems.crystalItem, 1, 1), new ItemStack(ModBlocks.crystalOre, 1, 1), new ItemStack(Items.iron_pickaxe));
         CraftingRegistry.getInstance().addCraftingRecipe(new ItemStack(ModItems.crystalItem, 1, 2), new ItemStack(ModBlocks.crystalOre, 1, 2), new ItemStack(Items.iron_pickaxe));
@@ -358,11 +388,10 @@ public class CraftingManager {
     }
 
     public static void loadRecipes() {
-        EnderMystic.logger.addMessage(Logger.LoggingLevel.INFO, "Load Ender Mystic vanilla recipes.");
         List recipes = net.minecraft.item.crafting.CraftingManager.getInstance().getRecipeList();
         for (int i = 0; i < recipes.size(); i++) {
             IRecipe iRecipe = (IRecipe) recipes.get(i);
-            if (iRecipe != null && iRecipe.getRecipeOutput() != null && (iRecipe.getRecipeOutput().getItem() instanceof ModItem || iRecipe.getRecipeOutput().getItem() instanceof IEnderSoulTool)) {
+            if(iRecipe != null && iRecipe.getRecipeOutput() != null && (iRecipe.getRecipeOutput().getItem() instanceof IItemBookCrafting || Block.getBlockFromItem(iRecipe.getRecipeOutput().getItem()) instanceof IItemBookCrafting)) {
                 loadedRecipes.add(iRecipe);
             }
         }

@@ -6,12 +6,14 @@ import at.korti.endermystic.api.tools.ToolUpgrade;
 import at.korti.endermystic.blocks.ModBlocks;
 import at.korti.endermystic.client.guis.book.button.EntryButton;
 import at.korti.endermystic.client.guis.book.button.NextPageButton;
+import at.korti.endermystic.client.guis.book.entry.BookCraftingTable;
 import at.korti.endermystic.client.guis.book.entry.BookEntry;
 import at.korti.endermystic.client.guis.book.entry.BookEntryImage;
 import at.korti.endermystic.client.guis.book.entry.BookEntryItemList;
 import at.korti.endermystic.items.ModItem;
 import at.korti.endermystic.items.ModItems;
 import at.korti.endermystic.modintegration.baubles.Baubles;
+import at.korti.endermystic.modintegration.cofh.Cofh;
 import cpw.mods.fml.common.Loader;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiScreen;
@@ -43,6 +45,14 @@ public class BookPage extends GuiScreen{
     }
 
     private void generateBookEntries() {
+        //Blocks
+        BookEntryItemList blockList = new BookEntryItemList("Blocks", this);
+        blockList.addItem(new ItemStack(ModBlocks.crystalCombiner));
+        blockList.addItem(new ItemStack(ModBlocks.orbInfuser));
+        blockList.addItem(new ItemStack(ModBlocks.energyDrain));
+        blockList.addItem(new ItemStack(ModBlocks.energyRelay));
+        blockList.addItem(new ItemStack(ModBlocks.energyCrystalStorage));
+
         //Crystals and Crystal Combiner
         BookEntry crystalCombiner = new BookEntry("CrystalCombiner", this);
         BookEntry crystalEntry = new BookEntry("Crystal", crystalCombiner);
@@ -59,7 +69,10 @@ public class BookPage extends GuiScreen{
         energyDrainSub.addStackImage(new ItemStack(ModBlocks.energyDrain), 38, 22);
         energyDrainSub.addStackImage(new ItemStack(ModItems.crystalItem, 1, 7), 130, 18);
 
-        BookEntryImage energyCrystal = new BookEntryImage("EnergyCrystal", energyDrainSub, false);
+        BookEntryImage energyCrystalStorage = new BookEntryImage("EnergyCrystalStorage", energyDrainSub, false);
+        energyCrystalStorage.addStackImage(new ItemStack(ModBlocks.energyCrystalStorage), 38, 22);
+
+        BookEntryImage energyCrystal = new BookEntryImage("EnergyCrystal", energyCrystalStorage, false);
         energyCrystal.addStackImage(new ItemStack(ModItems.crystalItem, 1, 7), 34, 18);
 
         //Player Network
@@ -85,16 +98,6 @@ public class BookPage extends GuiScreen{
         orbList.addItem(new ItemStack(ModItems.enderZarOrb));
         orbList.addItem(new ItemStack(ModItems.fireOrb));
         orbList.addItem(new ItemStack(ModItems.waterOrb));
-
-        //Baubles
-        BookEntry baubles = null;
-        if (Baubles.isLoaded) {
-            baubles = new BookEntry("Baubles", this);
-            BookEntryItemList baublesItems = new BookEntryItemList("BaublesItems", baubles);
-            baublesItems.addItem(new ItemStack(Baubles.airBelt));
-            baublesItems.addItem(new ItemStack(Baubles.airRing));
-            baublesItems.addItem(new ItemStack(Baubles.fireRing));
-        }
 
         //Tools
         BookEntryItemList toolList = new BookEntryItemList("ToolList", this);
@@ -136,20 +139,50 @@ public class BookPage extends GuiScreen{
         ToolLevelHandler.getInstance().addUpgrad(tool, ToolUpgrade.firey.getId(), ToolUpgrade.firey.getMaxLevel());
         fireyEntry.addStackImage(tool, 38, 22);
 
+        //Armor
+        BookEntry enderSoulArmorEntry = new BookEntry("EnderSoulArmorBook", this);
+        BookEntryItemList enderSoulArmorList = new BookEntryItemList("EnderSoulArmorBook", enderSoulArmorEntry);
+        enderSoulArmorList.addItem(new ItemStack(ModItems.enderSoulHelmet));
+        enderSoulArmorList.addItem(new ItemStack(ModItems.enderSoulBreastplate));
+        enderSoulArmorList.addItem(new ItemStack(ModItems.enderSoulLegs));
+
+        //Util
         BookEntryItemList utilEntry = new BookEntryItemList("Util", this);
         utilEntry.addItem(new ItemStack(ModItems.enderSacrifice));
         utilEntry.addItem(new ItemStack(ModItems.enderSoulFill));
 
+        //Baubles
+        BookEntry baubles = null;
+        if (Baubles.isLoaded) {
+            baubles = new BookEntry("Baubles", this);
+            BookEntryItemList baublesItems = new BookEntryItemList("BaublesItems", baubles);
+            baublesItems.addItem(new ItemStack(Baubles.airBelt));
+            baublesItems.addItem(new ItemStack(Baubles.airRing));
+            baublesItems.addItem(new ItemStack(Baubles.fireRing));
+        }
+
+        //CoFH
+        BookEntryItemList cofh = null;
+        if (Cofh.isLoaded) {
+            cofh = new BookEntryItemList("CoFH", this);
+            cofh.addItem(new ItemStack(Cofh.mysticDynamo));
+        }
+
+        entries.add(blockList);
         entries.add(crystalCombiner);
         entries.add(orbInfuser);
         entries.add(energyNetwork);
         entries.add(playerNetwork);
         entries.add(orbEntry);
         entries.add(toolList);
+        entries.add(enderSoulArmorEntry);
         entries.add(utilEntry);
 
         if (Baubles.isLoaded) {
             entries.add(baubles);
+        }
+        if (Cofh.isLoaded) {
+            entries.add(cofh);
         }
     }
 

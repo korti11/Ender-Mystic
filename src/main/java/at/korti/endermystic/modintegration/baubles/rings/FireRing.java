@@ -16,14 +16,10 @@ import net.minecraft.util.ChatComponentText;
 /**
  * Created by Korti on 02.06.2015.
  */
-public class FireRing extends EnergyItem implements IBauble{
-    public FireRing() {
-        super("FireRing");
-    }
+public class FireRing extends Ring{
 
-    @Override
-    public BaubleType getBaubleType(ItemStack itemStack) {
-        return BaubleType.RING;
+    public FireRing() {
+        super("FireRing", 0xd43535);
     }
 
     @Override
@@ -32,35 +28,11 @@ public class FireRing extends EnergyItem implements IBauble{
             itemStack.stackTagCompound = new NBTTagCompound();
         }
 
-        if (EnergyNetworkHandler.isEnoughEnergy(OrbStats.usageFireResistance, itemStack.stackTagCompound.getString("em_owner")) && entityLivingBase.isBurning()) {
-            EnergyNetworkHandler.decEnergy(OrbStats.usageFireResistance, itemStack.stackTagCompound.getString("em_owner"));
-            entityLivingBase.addPotionEffect(new PotionEffect(Potion.fireResistance.getId(), 200));
+        if (EnergyNetworkHandler.isEnoughEnergy(OrbStats.usageFireResistance, itemStack.stackTagCompound.getString("em_owner"))) {
+            entityLivingBase.addPotionEffect(new PotionEffect(Potion.fireResistance.getId(), 50));
+            if(entityLivingBase.isBurning()) {
+                EnergyNetworkHandler.decEnergy(OrbStats.usageFireResistance, itemStack.stackTagCompound.getString("em_owner"));
+            }
         }
-    }
-
-    @Override
-    public void onEquipped(ItemStack itemStack, EntityLivingBase entityLivingBase) {
-        if(itemStack.stackTagCompound == null){
-            itemStack.stackTagCompound = new NBTTagCompound();
-        }
-
-        if(!itemStack.stackTagCompound.hasKey("em_owner")){
-            ((EntityPlayer)entityLivingBase).addChatMessage(new ChatComponentText("The Ring has no owner"));
-        }
-    }
-
-    @Override
-    public void onUnequipped(ItemStack itemStack, EntityLivingBase entityLivingBase) {
-
-    }
-
-    @Override
-    public boolean canEquip(ItemStack itemStack, EntityLivingBase entityLivingBase) {
-        return true;
-    }
-
-    @Override
-    public boolean canUnequip(ItemStack itemStack, EntityLivingBase entityLivingBase) {
-        return true;
     }
 }

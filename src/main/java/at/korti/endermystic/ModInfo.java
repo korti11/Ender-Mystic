@@ -13,5 +13,6 @@ public class ModInfo {
     public static final String BAUBLES = "Baubles";
     public static final String WAILA = "Waila";
     public static final String COFH = "CoFHCore";
+    public static final String THERMALEXPANSION = "ThermalExpansion";
 
 }
