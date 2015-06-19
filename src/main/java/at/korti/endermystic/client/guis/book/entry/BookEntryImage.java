@@ -17,14 +17,14 @@ public class BookEntryImage extends BookEntry {
     protected List<ItemStackImage> itemStackImages;
     private boolean renderToolTip;
 
-    public BookEntryImage(String name, BookPage prevEntry, boolean renderToolTip) {
-        super(name, prevEntry, false);
+    public BookEntryImage(String name, BookPage prevEntry, boolean renderToolTip, boolean showText) {
+        super(name, prevEntry, showText);
         itemStackImages = new LinkedList<>();
         this.renderToolTip = renderToolTip;
     }
 
-    public BookEntryImage(String name, String title, BookPage prevEntry, boolean renderToolTip) {
-        super(name, title, prevEntry, false);
+    public BookEntryImage(String name, String title, BookPage prevEntry, boolean renderToolTip, boolean showText) {
+        super(name, title, prevEntry, showText);
 
         itemStackImages = new LinkedList<>();
         this.renderToolTip = renderToolTip;

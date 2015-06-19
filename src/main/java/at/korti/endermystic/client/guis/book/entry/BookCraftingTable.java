@@ -19,7 +19,7 @@ public class BookCraftingTable extends BookEntryImage{
     private IRecipe recipe;
 
     public BookCraftingTable(String name, BookPage prevEntry, ItemStack stackToCraft) {
-        super(name, prevEntry, true);
+        super(name, prevEntry, true, false);
 
         recipe = CraftingManager.findRecipeFor(stackToCraft);
         this.texture = new ResourceLocation(ModInfo.MODID + ":textures/gui/book/book_craftingtable.png");
