@@ -5,10 +5,9 @@ import at.korti.endermystic.ModInfo;
 import at.korti.endermystic.modintegration.IIntegration;
 import at.korti.endermystic.modintegration.cofh.blocks.MysticDynamo;
 import at.korti.endermystic.modintegration.cofh.tileentity.TileEntities;
-import cofh.CoFHCore;
-import cpw.mods.fml.common.Loader;
-import cpw.mods.fml.common.Mod;
-import cpw.mods.fml.common.registry.GameRegistry;
+import net.minecraftforge.fml.common.Loader;
+import net.minecraftforge.fml.common.Mod;
+import net.minecraftforge.fml.common.registry.GameRegistry;
 
 /**
  * Created by Korti on 05.06.2015.
@@ -16,7 +15,7 @@ import cpw.mods.fml.common.registry.GameRegistry;
 public class Cofh implements IIntegration{
 
     public static boolean isLoaded = false;
-    public static String cofhVersion = CoFHCore.class.getAnnotation(Mod.class).version();
+    //public static String cofhVersion = CoFHCore.class.getAnnotation(Mod.class).version();
 
     public static MysticDynamo mysticDynamo;
 

@@ -1,19 +1,20 @@
 package at.korti.endermystic.world;
 
 import at.korti.endermystic.blocks.ModBlocks;
-import cpw.mods.fml.common.IWorldGenerator;
 import net.minecraft.block.Block;
 import net.minecraft.init.Blocks;
+import net.minecraft.util.BlockPos;
 import net.minecraft.world.World;
 import net.minecraft.world.chunk.IChunkProvider;
 import net.minecraft.world.gen.feature.WorldGenMinable;
+import net.minecraftforge.fml.common.IWorldGenerator;
 
 import java.util.Random;
 
 /**
  * Created by Korti on 26.05.2015.
  */
-public class OreGeneration implements IWorldGenerator{
+public class OreGeneration implements IWorldGenerator {
     @Override
     public void generate(Random random, int chunkX, int chunkZ, World world, IChunkProvider chunkGenerator, IChunkProvider chunkProvider) {
         generate(world, random, chunkX, chunkZ);
@@ -33,7 +34,7 @@ public class OreGeneration implements IWorldGenerator{
         if (seaLevel < 20) {
             int x = (blockXPos << 4) + 8;
             int z = (blockZPos << 4) + 8;
-            seaLevel = world.getHeightValue(x, z);
+            seaLevel = world.getHorizon(new BlockPos(blockXPos, 0,blockZPos)).getY();
         }
 
         if (ore == null) {
@@ -44,11 +45,11 @@ public class OreGeneration implements IWorldGenerator{
         int scale = (int) Math.round(random.nextGaussian() * Math.sqrt(oreDepthMultiplier) + oreDepthMultiplier);
 
         for (int x = 0; x < (random.nextBoolean() ? 2 : scale) / 2; ++x) {
-            WorldGenMinable blockOre = new WorldGenMinable(ore, meta, maxVeinSize, Blocks.stone);
+            WorldGenMinable blockOre = new WorldGenMinable(ore.getStateFromMeta(meta), maxVeinSize);
             int cx = blockXPos * 16 + random.nextInt(22);
             int cy = random.nextInt(40 * seaLevel / 64) + random.nextInt(22 * seaLevel / 64) + 12 * seaLevel / 64;
             int cz = blockZPos * 16 + random.nextInt(22);
-            blockOre.generate(world, random, cx, cy, cz);
+            blockOre.generate(world, random, new BlockPos(cx, cy, cz));
         }
 
     }

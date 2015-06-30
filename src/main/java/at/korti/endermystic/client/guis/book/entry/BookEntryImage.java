@@ -30,6 +30,14 @@ public class BookEntryImage extends BookEntry {
         this.renderToolTip = renderToolTip;
     }
 
+    public BookEntryImage(String name, BookPage prevEntry, boolean renderToolTip) {
+        this(name, prevEntry, renderToolTip, true);
+    }
+
+    public BookEntryImage(String name, String title, BookPage prevEntry, boolean renderToolTip) {
+        this(name, title, prevEntry, renderToolTip, true);
+    }
+
     public void addStackImage(ItemStack stack, int posX, int posY) {
         this.itemStackImages.add(new ItemStackImage(stack, posX, posY));
     }
@@ -69,8 +77,8 @@ public class BookEntryImage extends BookEntry {
         FontRenderer font = null;
         if (stack != null) font = stack.getItem().getFontRenderer(stack);
         if (font == null) font = fontRendererObj;
-        itemRender.renderItemAndEffectIntoGUI(font, this.mc.getTextureManager(), stack, posX, posY);
-        itemRender.renderItemOverlayIntoGUI(font, this.mc.getTextureManager(), stack, posX, posY, p_146982_4_);
+        itemRender.renderItemAndEffectIntoGUI(stack, posX, posY);
+        itemRender.renderItemOverlayIntoGUI(font, stack, posX, posY, p_146982_4_);
         this.zLevel = 0.0F;
         itemRender.zLevel = 0.0F;
     }

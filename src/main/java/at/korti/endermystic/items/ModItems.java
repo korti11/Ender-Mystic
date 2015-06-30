@@ -1,11 +1,10 @@
 package at.korti.endermystic.items;
 
-import at.korti.endermystic.EnderMystic;
 import at.korti.endermystic.ModInfo;
 import at.korti.endermystic.items.armor.EnderSoulArmor;
 import at.korti.endermystic.items.orbs.*;
 import at.korti.endermystic.items.tools.*;
-import cpw.mods.fml.common.registry.GameRegistry;
+import net.minecraftforge.fml.common.registry.GameRegistry;
 
 /**
  * Created by Korti on 15.10.2014.
@@ -44,10 +43,6 @@ public class ModItems {
     public static CrystalItem crystalItem;
     public static OrbCoreItem orbCoreItem;
     public static BookItem bookItem;
-
-    //Baubles integration
-//    public static AirRing airRing;
-//    public static BaublesBackPack baublesBackPack;
 
     public static void init(){
         enderOrb = new CapacityOrb("BasicEnderOrb", 0x258474, 10000);
@@ -122,9 +117,6 @@ public class ModItems {
         GameRegistry.registerItem(enderSoulFill, enderSoulFill.getName(), ModInfo.MODID);
         GameRegistry.registerItem(crystalItem, crystalItem.getName(), ModInfo.MODID);
         GameRegistry.registerItem(orbCoreItem, orbCoreItem.getName(), ModInfo.MODID);
-
-//        GameRegistry.registerItem(airRing, airRing.getName(), ModInfo.MODID);
-//        GameRegistry.registerItem(baublesBackPack, baublesBackPack.getName(), ModInfo.MODID);
 
     }
 

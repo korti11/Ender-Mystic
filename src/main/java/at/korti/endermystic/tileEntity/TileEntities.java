@@ -1,7 +1,6 @@
 package at.korti.endermystic.tileEntity;
 
-import at.korti.endermystic.EnderMystic;
-import cpw.mods.fml.common.registry.GameRegistry;
+import net.minecraftforge.fml.common.registry.GameRegistry;
 
 /**
  * Created by Korti on 30.10.2014.

@@ -1,15 +1,14 @@
 package at.korti.endermystic.modintegration.waila;
 
-import at.korti.endermystic.EnderMystic;
 import at.korti.endermystic.ModInfo;
 import at.korti.endermystic.modintegration.IIntegration;
 import at.korti.endermystic.modintegration.cofh.Cofh;
 import at.korti.endermystic.modintegration.cofh.tileentity.TileEntityMysticDynamo;
 import at.korti.endermystic.tileEntity.*;
-import cpw.mods.fml.common.Loader;
-import cpw.mods.fml.common.Mod;
-import cpw.mods.fml.common.event.FMLInterModComms;
 import mcp.mobius.waila.api.IWailaRegistrar;
+import net.minecraftforge.fml.common.Loader;
+import net.minecraftforge.fml.common.Mod;
+import net.minecraftforge.fml.common.event.FMLInterModComms;
 
 /**
  * Created by Korti on 02.06.2015.

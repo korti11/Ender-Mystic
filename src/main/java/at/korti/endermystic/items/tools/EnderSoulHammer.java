@@ -5,17 +5,15 @@ import at.korti.endermystic.ModInfo;
 import at.korti.endermystic.api.tools.IEnderSoulTool;
 import at.korti.endermystic.api.tools.ToolLevelHandler;
 import at.korti.endermystic.api.util.AbilityHelper;
-import cpw.mods.fml.relauncher.Side;
-import cpw.mods.fml.relauncher.SideOnly;
 import net.minecraft.block.Block;
-import net.minecraft.client.renderer.texture.IIconRegister;
+import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemPickaxe;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
-import net.minecraft.util.IIcon;
+import net.minecraft.util.BlockPos;
 import net.minecraft.util.MovingObjectPosition;
 import net.minecraft.world.World;
 
@@ -34,33 +32,22 @@ public class EnderSoulHammer extends ItemPickaxe implements IEnderSoulTool{
         setUnlocalizedName(ModInfo.MODID + ".EnderSoulHammer");
     }
 
-    @SideOnly(Side.CLIENT)
-    IIcon active;
-    @SideOnly(Side.CLIENT)
-    IIcon deactive;
-
-    @Override
-    public void registerIcons(IIconRegister register) {
-        itemIcon = active = register.registerIcon(ModInfo.MODID + ":EnderSoulHammer");
-        deactive = register.registerIcon(ModInfo.MODID + ":EnderSoulTool");
-    }
-
     @Override
     public void addInformation(ItemStack stack, EntityPlayer player, List info, boolean p_77624_4_) {
 
-        if(stack.stackTagCompound == null){
-            stack.stackTagCompound = new NBTTagCompound();
+        if(stack.getTagCompound() == null){
+            stack.setTagCompound(new NBTTagCompound());
         }
 
         if (!ToolLevelHandler.getInstance().isItemInited(stack)) {
             ToolLevelHandler.getInstance().initItem(stack);
         }
 
-        if(stack.stackTagCompound.hasKey("em_owner")){
-            info.add("Owner: " + stack.stackTagCompound.getString("em_owner"));
+        if(stack.getTagCompound().hasKey("em_owner")){
+            info.add("Owner: " + stack.getTagCompound().getString("em_owner"));
         }
 
-        if(stack.stackTagCompound.getBoolean("em_active")){
+        if(stack.getTagCompound().getBoolean("em_active")){
             info.add("Activated");
         }
         else{
@@ -75,20 +62,20 @@ public class EnderSoulHammer extends ItemPickaxe implements IEnderSoulTool{
     @Override
     public ItemStack onItemRightClick(ItemStack stack, World world, EntityPlayer player) {
 
-        if(stack.stackTagCompound == null){
-            stack.stackTagCompound = new NBTTagCompound();
+        if(stack.getTagCompound() == null){
+            stack.setTagCompound(new NBTTagCompound());
         }
 
-        if(!stack.stackTagCompound.hasKey("em_owner")){
-            stack.stackTagCompound.setString("em_owner", player.getDisplayName());
+        if(!stack.getTagCompound().hasKey("em_owner")){
+            stack.getTagCompound().setString("em_owner", player.getDisplayNameString());
         }
 
         if(player.isSneaking()){
-            if(stack.stackTagCompound.getBoolean("em_active")){
-                stack.stackTagCompound.setBoolean("em_active", false);
+            if(stack.getTagCompound().getBoolean("em_active")){
+                stack.getTagCompound().setBoolean("em_active", false);
             }
             else{
-                stack.stackTagCompound.setBoolean("em_active", true);
+                stack.getTagCompound().setBoolean("em_active", true);
             }
         }
 
@@ -103,32 +90,22 @@ public class EnderSoulHammer extends ItemPickaxe implements IEnderSoulTool{
     }
 
     @Override
-    public float getDigSpeed(ItemStack stack, Block block, int meta) {
-        if(!stack.stackTagCompound.hasKey("em_owner") || !stack.stackTagCompound.getBoolean("em_active")){
+    public float getDigSpeed(ItemStack stack, IBlockState state) {
+        if(!stack.getTagCompound().hasKey("em_owner") || !stack.getTagCompound().getBoolean("em_active")){
             return 0.0F;
         }
 
-        return super.getDigSpeed(stack, block, meta) + ToolLevelHandler.getInstance().handleHasteUpgrade(stack);
+        return super.getDigSpeed(stack, state) +  + ToolLevelHandler.getInstance().handleHasteUpgrade(stack);
     }
 
     @Override
-    public IIcon getIcon(ItemStack stack, int pass) {
-        if(stack.stackTagCompound.getBoolean("em_active")){
-            return active;
-        }
-        else {
-            return deactive;
-        }
-    }
-
-    @Override
-    public boolean onBlockDestroyed(ItemStack stack, World world, Block block, int x, int y, int z, EntityLivingBase player) {
-        if(!world.isRemote) {
-            MovingObjectPosition mop = AbilityHelper.raytraceFromEntity(world, player, false, 4.5D);
+    public boolean onBlockDestroyed(ItemStack stack, World worldIn, Block blockIn, BlockPos pos, EntityLivingBase playerIn) {
+        if(!worldIn.isRemote) {
+            MovingObjectPosition mop = AbilityHelper.raytraceFromEntity(worldIn, playerIn, false, 4.5D);
             if (mop != null) {
-                AbilityHelper.BreakMultiBlocks((EntityPlayer) player, stack, world, x, y, z, mop.sideHit, 3);
+                AbilityHelper.BreakMultiBlocks((EntityPlayer) playerIn, stack, worldIn, pos.getX(), pos.getY(), pos.getZ(), mop.sideHit.getIndex(), 3);
             }
         }
-        return super.onBlockDestroyed(stack, world, block, x, y, z, player);
+        return super.onBlockDestroyed(stack, worldIn, blockIn, pos, playerIn);
     }
 }

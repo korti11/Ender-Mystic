@@ -1,8 +1,8 @@
 package at.korti.endermystic.client.guis.book.entry;
 
 import at.korti.endermystic.client.guis.book.BookPage;
-import cpw.mods.fml.common.registry.LanguageRegistry;
 import net.minecraft.client.Minecraft;
+import net.minecraftforge.fml.common.registry.LanguageRegistry;
 
 import java.util.List;
 

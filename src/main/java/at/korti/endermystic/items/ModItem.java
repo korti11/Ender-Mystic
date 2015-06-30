@@ -3,7 +3,6 @@ package at.korti.endermystic.items;
 import at.korti.endermystic.EnderMystic;
 import at.korti.endermystic.ModInfo;
 import at.korti.endermystic.api.crafting.IItemBookCrafting;
-import net.minecraft.client.renderer.texture.IIconRegister;
 import net.minecraft.item.Item;
 
 /**
@@ -29,10 +28,5 @@ public class ModItem extends Item implements IItemBookCrafting{
 
     public String getName() {
         return name;
-    }
-
-    @Override
-    public void registerIcons(IIconRegister register) {
-        itemIcon = register.registerIcon(ModInfo.MODID + ":" + name);
     }
 }

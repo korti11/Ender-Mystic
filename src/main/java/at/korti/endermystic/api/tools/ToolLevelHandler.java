@@ -2,7 +2,6 @@ package at.korti.endermystic.api.tools;
 
 import at.korti.endermystic.EnderMystic;
 import at.korti.endermystic.items.tools.ToolMaterials;
-import cpw.mods.fml.common.eventhandler.Event;
 import net.minecraft.block.Block;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.item.EntityItem;
@@ -11,6 +10,7 @@ import net.minecraft.item.*;
 import net.minecraft.item.crafting.FurnaceRecipes;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.nbt.NBTTagList;
+import net.minecraft.util.BlockPos;
 import net.minecraft.util.ChatComponentText;
 import net.minecraft.util.DamageSource;
 import net.minecraft.util.EnumChatFormatting;
@@ -85,53 +85,53 @@ public class ToolLevelHandler {
 
     //region Item Init
     public void initItem(ItemStack stack) {
-        if (stack.stackTagCompound == null) {
-            stack.stackTagCompound = new NBTTagCompound();
+        if (stack.getTagCompound() == null) {
+            stack.setTagCompound(new NBTTagCompound());
         }
 
-        stack.stackTagCompound.setString(LEVEL_NAME_TAG, levelNames[0]);
-        stack.stackTagCompound.setInteger(LEVEL_TAG, 0);
-        stack.stackTagCompound.setInteger(XP_TAG, 0);
-        stack.stackTagCompound.setInteger(MAX_XP_TAG, maxXpForLevels[0]);
+        stack.getTagCompound().setString(LEVEL_NAME_TAG, levelNames[0]);
+        stack.getTagCompound().setInteger(LEVEL_TAG, 0);
+        stack.getTagCompound().setInteger(XP_TAG, 0);
+        stack.getTagCompound().setInteger(MAX_XP_TAG, maxXpForLevels[0]);
     }
 
     public boolean isItemInited(ItemStack stack) {
-        return stack.stackTagCompound.hasKey(LEVEL_TAG);
+        return stack.getTagCompound().hasKey(LEVEL_TAG);
     }
     //endregion
 
     //region Xp Handeling
     public void addXP(ItemStack stack, int xp, EntityPlayer player) {
         if(stack != null && stack.getItem() instanceof IEnderSoulTool) {
-            if (stack.stackTagCompound.getInteger(XP_TAG) + xp >= stack.stackTagCompound.getInteger(MAX_XP_TAG)) {
-                if(stack.stackTagCompound.getInteger(LEVEL_TAG) < levelNames.length) {
-                    stack.stackTagCompound.setInteger(XP_TAG, 0);
-                    stack.stackTagCompound.setInteger(LEVEL_TAG, stack.stackTagCompound.getInteger(LEVEL_TAG) + 1);
-                    stack.stackTagCompound.setInteger(MAX_XP_TAG, maxXpForLevels[stack.stackTagCompound.getInteger(LEVEL_TAG)]);
-                    stack.stackTagCompound.setString(LEVEL_NAME_TAG, levelNames[stack.stackTagCompound.getInteger(LEVEL_TAG)]);
+            if (stack.getTagCompound().getInteger(XP_TAG) + xp >= stack.getTagCompound().getInteger(MAX_XP_TAG)) {
+                if(stack.getTagCompound().getInteger(LEVEL_TAG) < levelNames.length) {
+                    stack.getTagCompound().setInteger(XP_TAG, 0);
+                    stack.getTagCompound().setInteger(LEVEL_TAG, stack.getTagCompound().getInteger(LEVEL_TAG) + 1);
+                    stack.getTagCompound().setInteger(MAX_XP_TAG, maxXpForLevels[stack.getTagCompound().getInteger(LEVEL_TAG)]);
+                    stack.getTagCompound().setString(LEVEL_NAME_TAG, levelNames[stack.getTagCompound().getInteger(LEVEL_TAG)]);
                     addRandomUpgrade(stack, player);
                 }
-                else if (stack.stackTagCompound.getInteger(LEVEL_TAG) == levelNames.length) {
-                    stack.stackTagCompound.setInteger(XP_TAG, maxXpForLevels[levelNames.length - 1]);
-                    stack.stackTagCompound.setInteger(LEVEL_TAG, stack.stackTagCompound.getInteger(LEVEL_TAG) + 1);
+                else if (stack.getTagCompound().getInteger(LEVEL_TAG) == levelNames.length) {
+                    stack.getTagCompound().setInteger(XP_TAG, maxXpForLevels[levelNames.length - 1]);
+                    stack.getTagCompound().setInteger(LEVEL_TAG, stack.getTagCompound().getInteger(LEVEL_TAG) + 1);
                     addRandomUpgrade(stack, player);
                 }
             } else {
-                stack.stackTagCompound.setInteger(XP_TAG, stack.stackTagCompound.getInteger(XP_TAG) + xp);
+                stack.getTagCompound().setInteger(XP_TAG, stack.getTagCompound().getInteger(XP_TAG) + xp);
             }
         }
     }
 
     public String getLevelName(ItemStack stack) {
-        return stack.stackTagCompound.getString(LEVEL_NAME_TAG);
+        return stack.getTagCompound().getString(LEVEL_NAME_TAG);
     }
 
     public int getXp(ItemStack stack) {
-        return stack.stackTagCompound.getInteger(XP_TAG);
+        return stack.getTagCompound().getInteger(XP_TAG);
     }
 
     public int getMaxXp(ItemStack stack) {
-        return stack.stackTagCompound.getInteger(MAX_XP_TAG);
+        return stack.getTagCompound().getInteger(MAX_XP_TAG);
     }
     //endregion
 
@@ -139,17 +139,17 @@ public class ToolLevelHandler {
     //region Upgrade Handeling
     public boolean addUpgrad(ItemStack stack, String upgradeId, String level, EntityPlayer player, boolean showChatMessage) {
         if (stack.getItem() instanceof IEnderSoulTool) {
-            if (stack.stackTagCompound == null) {
-                stack.stackTagCompound = new NBTTagCompound();
+            if (stack.getTagCompound() == null) {
+                stack.setTagCompound(new NBTTagCompound());
             }
-            NBTTagList tagList = stack.stackTagCompound.getTagList("Upgrades", 10);
+            NBTTagList tagList = stack.getTagCompound().getTagList("Upgrades", 10);
             ToolUpgrade toolUpgrade = getUpgradeById(Integer.parseInt(upgradeId));
             if (hasUpgrade(stack, toolUpgrade) && canAddLevel(stack, toolUpgrade, Integer.parseInt(level))) {
                 for (int i = 0; i < tagList.tagCount(); i++) {
                     NBTTagCompound tagCompound = tagList.getCompoundTagAt(i);
                     if (tagCompound.getInteger("Upgrade") == toolUpgrade.getId()) {
                         tagCompound.setInteger("Level", tagCompound.getInteger("Level") + Integer.parseInt(level));
-                        stack.stackTagCompound.setTag("Upgrades", tagList);
+                        stack.getTagCompound().setTag("Upgrades", tagList);
                         if (showChatMessage) {
                             player.addChatMessage(new ChatComponentText("Added " + level + " level(s) to " + toolUpgrade.getColor() + toolUpgrade.getName() + EnumChatFormatting.RESET.toString() + " on " + stack.getDisplayName()));
                         }
@@ -161,7 +161,7 @@ public class ToolLevelHandler {
                 tagCompound.setInteger("Upgrade", toolUpgrade.getId());
                 tagCompound.setInteger("Level", Integer.parseInt(level));
                 tagList.appendTag(tagCompound);
-                stack.stackTagCompound.setTag("Upgrades", tagList);
+                stack.getTagCompound().setTag("Upgrades", tagList);
                 if (showChatMessage) {
                     player.addChatMessage(new ChatComponentText("Added " + level + " level(s) to " + toolUpgrade.getColor() + toolUpgrade.getName() + EnumChatFormatting.RESET.toString() + " on " + stack.getDisplayName()));
                 }
@@ -213,7 +213,7 @@ public class ToolLevelHandler {
     }
 
     private boolean canAddLevel(ItemStack stack, ToolUpgrade upgrade, int levels) {
-        NBTTagList tagList = stack.stackTagCompound.getTagList("Upgrades", 10);
+        NBTTagList tagList = stack.getTagCompound().getTagList("Upgrades", 10);
         if(hasUpgrade(stack, upgrade)){
             for (int i = 0; i < tagList.tagCount(); i++) {
                 NBTTagCompound tagCompound = tagList.getCompoundTagAt(i);
@@ -231,7 +231,7 @@ public class ToolLevelHandler {
     public boolean hasUpgrade(ItemStack stack, ToolUpgrade upgrade) {
         boolean check = false;
         if(stack != null && stack.getItem() instanceof IEnderSoulTool) {
-            NBTTagList tagList = stack.stackTagCompound.getTagList("Upgrades", 10);
+            NBTTagList tagList = stack.getTagCompound().getTagList("Upgrades", 10);
             for (int i = 0; i < tagList.tagCount() && !check && stack.getItem() instanceof IEnderSoulTool; i++) {
                 NBTTagCompound tagCompound = tagList.getCompoundTagAt(i);
                 check = tagCompound.getInteger("Upgrade") == upgrade.getId();
@@ -267,7 +267,7 @@ public class ToolLevelHandler {
     }
 
     public void writeInfo(ItemStack stack, List info) {
-        NBTTagList nbtTagList = stack.stackTagCompound.getTagList("Upgrades", 10);
+        NBTTagList nbtTagList = stack.getTagCompound().getTagList("Upgrades", 10);
         if (nbtTagList.tagCount() > 0) {
             info.add("");
         }
@@ -282,7 +282,7 @@ public class ToolLevelHandler {
     }
 
     private int getLevelOfUpgrade(ItemStack stack, ToolUpgrade upgrade) {
-        NBTTagList tagList = stack.stackTagCompound.getTagList("Upgrades", 10);
+        NBTTagList tagList = stack.getTagCompound().getTagList("Upgrades", 10);
         int level = 0;
         for (int i = 0; i < tagList.tagCount(); i++) {
             NBTTagCompound tagCompound = tagList.getCompoundTagAt(i);
@@ -307,12 +307,8 @@ public class ToolLevelHandler {
         double d1 = (double) (random.nextFloat() * f) + (double) (1.0F - f) * 0.5D;
         double d2 = (double) (random.nextFloat() * f) + (double) (1.0F - f) * 0.5D;
         EntityItem entityItem = new EntityItem(world, x + d0, y + d1, z + d2, stack);
-        entityItem.delayBeforeCanPickup = 10;
+        entityItem.setPickupDelay(10);
         world.spawnEntityInWorld(entityItem);
-    }
-
-    public void cancleEvent(Event event) {
-        event.setCanceled(true);
     }
 
     public float handleHasteUpgrade(ItemStack stack) {
@@ -340,37 +336,37 @@ public class ToolLevelHandler {
         return false;
     }
 
-    public boolean handleLuckUpgrade(ItemStack stack, World world, Block block, int x, int y, int z) {
+    public boolean handleLuckUpgrade(ItemStack stack, World world, Block block, BlockPos pos) {
         if (hasUpgrade(stack, ToolUpgrade.luck)) {
-            Item item = block.getDrops(world, x, y, z, block.getDamageValue(world, x, y, z), 0).get(0).getItem();
+            Item item = block.getDrops(world, pos, block.getStateFromMeta(block.getDamageValue(world, pos)), 0).get(0).getItem();
             if (!(item instanceof ItemBlock)) {
-                block.dropBlockAsItemWithChance(world, x, y, z, block.getDamageValue(world, x, y, z), random.nextFloat(), getLevelOfUpgrade(stack, ToolUpgrade.luck) * (random.nextInt(1) + 1));
+                block.dropBlockAsItemWithChance(world, pos, block.getStateFromMeta(block.getDamageValue(world, pos)), random.nextFloat(), getLevelOfUpgrade(stack, ToolUpgrade.luck) * (random.nextInt(1) + 1));
             }
         }
         return false;
     }
 
-    public boolean handleSilkTouchUpgrade(ItemStack stack, World world, Block block, int x, int y, int z) {
+    public boolean handleSilkTouchUpgrade(ItemStack stack, World world, Block block, BlockPos pos) {
         if (hasUpgrade(stack, ToolUpgrade.silkTouch)) {
-            world.setBlockToAir(x, y, z);
-            spawnItem(world, new ItemStack(block, 1, block.getDamageValue(world, x, y, z)), x, y, z);
+            world.setBlockToAir(pos);
+            spawnItem(world, new ItemStack(block, 1, block.getDamageValue(world, pos)), pos.getX(), pos.getY(), pos.getZ());
             return true;
         }
         return false;
     }
 
-    public boolean handleAutoSmeltUpgrade(ItemStack stack, World world, Block block, int x, int y, int z) {
+    public boolean handleAutoSmeltUpgrade(ItemStack stack, World world, Block block, BlockPos pos) {
         if (hasUpgrade(stack, ToolUpgrade.autoSmelt)) {
-            List<ItemStack> drops = block.getDrops(world, x, y, z, block.getDamageValue(world, x, y, z), 0);
-            ItemStack result = FurnaceRecipes.smelting().getSmeltingResult(drops.get(0));
+            List<ItemStack> drops = block.getDrops(world, pos, block.getStateFromMeta(block.getDamageValue(world, pos)), 0);
+            ItemStack result = FurnaceRecipes.instance().getSmeltingResult(drops.get(0));
             int dropAmount = drops.size();
             if (result != null) {
-                world.setBlockToAir(x, y, z);
+                world.setBlockToAir(pos);
                 if (hasUpgrade(stack, ToolUpgrade.luck) && random.nextInt(5) == 2 && !(result.getItem() instanceof ItemBlock)) {
                     dropAmount += getLevelOfUpgrade(stack, ToolUpgrade.luck) * (random.nextInt(1) + 1);
                 }
                 for (int i = 0; i < dropAmount; i++) {
-                    spawnItem(world, result.copy(), x, y, z);
+                    spawnItem(world, result.copy(), pos.getX(), pos.getY(), pos.getZ());
                 }
                 return true;
             }

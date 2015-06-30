@@ -26,12 +26,12 @@ public class CrystalItem extends ModItem {
     @Override
     public void addInformation(ItemStack stack, EntityPlayer player, List list, boolean p_77624_4_) {
         if (stack.getItemDamage() == 7) {
-            if(stack.stackTagCompound == null){
-                stack.stackTagCompound = new NBTTagCompound();
+            if(stack.getTagCompound() == null){
+                stack.setTagCompound(new NBTTagCompound());
             }
 
-            if (stack.stackTagCompound.hasKey("em_owner")) {
-                list.add("Owner: " + stack.stackTagCompound.getString("em_owner"));
+            if (stack.getTagCompound().hasKey("em_owner")) {
+                list.add("Owner: " + stack.getTagCompound().getString("em_owner"));
             }
         }
     }
@@ -39,12 +39,12 @@ public class CrystalItem extends ModItem {
     @Override
     public ItemStack onItemRightClick(ItemStack stack, World world, EntityPlayer player) {
         if (stack.getItemDamage() == 7) {
-            if(stack.stackTagCompound == null){
-                stack.stackTagCompound = new NBTTagCompound();
+            if(stack.getTagCompound() == null){
+                stack.setTagCompound(new NBTTagCompound());
             }
 
-            if (!stack.stackTagCompound.hasKey("em_owner")) {
-                stack.stackTagCompound.setString("em_owner", player.getDisplayName());
+            if (!stack.getTagCompound().hasKey("em_owner")) {
+                stack.getTagCompound().setString("em_owner", player.getDisplayNameString());
             }
         }
 

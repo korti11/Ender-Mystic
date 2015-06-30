@@ -1,9 +1,7 @@
 package at.korti.endermystic.modintegration.waila;
 
 import at.korti.endermystic.tileEntity.TileEntityCrystalCombiner;
-import mcp.mobius.waila.api.IWailaConfigHandler;
-import mcp.mobius.waila.api.IWailaDataAccessor;
-import mcp.mobius.waila.api.IWailaDataProvider;
+import mcp.mobius.waila.api.*;
 import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
@@ -23,26 +21,26 @@ public class WailaCrystalCombinerHandler implements IWailaDataProvider {
     }
 
     @Override
-    public List<String> getWailaHead(ItemStack itemStack, List<String> list, IWailaDataAccessor iWailaDataAccessor, IWailaConfigHandler iWailaConfigHandler) {
-        return list;
+    public ITaggedList.ITipList getWailaHead(ItemStack itemStack, ITaggedList.ITipList iTipList, IWailaDataAccessor iWailaDataAccessor, IWailaConfigHandler iWailaConfigHandler) {
+        return iTipList;
     }
 
     @Override
-    public List<String> getWailaBody(ItemStack itemStack, List<String> list, IWailaDataAccessor iWailaDataAccessor, IWailaConfigHandler iWailaConfigHandler) {
+    public ITaggedList.ITipList getWailaBody(ItemStack itemStack, ITaggedList.ITipList iTipList, IWailaDataAccessor iWailaDataAccessor, IWailaConfigHandler iWailaConfigHandler) {
         NBTTagCompound tagCompound = iWailaDataAccessor.getNBTData();
-        list.add("Has network enough energy: " + tagCompound.getBoolean("Connected"));
-        list.add("Rest time to craft: " + tagCompound.getFloat("TimeToCraft") + "s");
-        list.add("Result Item: " + tagCompound.getString("ResultItem"));
-        return list;
+        iTipList.add("Has network enough energy: " + tagCompound.getBoolean("Connected"));
+        iTipList.add("Rest time to craft: " + tagCompound.getFloat("TimeToCraft") + "s");
+        iTipList.add("Result Item: " + tagCompound.getString("ResultItem"));
+        return iTipList;
     }
 
     @Override
-    public List<String> getWailaTail(ItemStack itemStack, List<String> list, IWailaDataAccessor iWailaDataAccessor, IWailaConfigHandler iWailaConfigHandler) {
-        return list;
+    public ITaggedList.ITipList getWailaTail(ItemStack itemStack, ITaggedList.ITipList iTipList, IWailaDataAccessor iWailaDataAccessor, IWailaConfigHandler iWailaConfigHandler) {
+        return iTipList;
     }
 
     @Override
-    public NBTTagCompound getNBTData(EntityPlayerMP entityPlayerMP, TileEntity tileEntity, NBTTagCompound nbtTagCompound, World world, int i, int i1, int i2) {
+    public NBTTagCompound getNBTData(TileEntity tileEntity, NBTTagCompound nbtTagCompound, IWailaDataAccessorServer iWailaDataAccessorServer) {
         if (tileEntity instanceof TileEntityCrystalCombiner) {
             TileEntityCrystalCombiner combiner = (TileEntityCrystalCombiner) tileEntity;
             nbtTagCompound.setBoolean("Connected", combiner.isConnected());

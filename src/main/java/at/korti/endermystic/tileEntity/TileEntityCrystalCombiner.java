@@ -13,6 +13,8 @@ import net.minecraft.network.NetworkManager;
 import net.minecraft.network.Packet;
 import net.minecraft.network.play.server.S35PacketUpdateTileEntity;
 import net.minecraft.tileentity.TileEntity;
+import net.minecraft.util.EnumParticleTypes;
+import net.minecraft.util.IChatComponent;
 
 /**
  * Created by Korti on 11.04.2015.
@@ -68,32 +70,22 @@ public class TileEntityCrystalCombiner extends TileEntity implements IInventory{
     }
 
     @Override
-    public String getInventoryName() {
-        return "CrystelCombiner";
-    }
-
-    @Override
-    public boolean hasCustomInventoryName() {
-        return false;
-    }
-
-    @Override
     public int getInventoryStackLimit() {
         return 1;
     }
 
     @Override
     public boolean isUseableByPlayer(EntityPlayer player) {
-        return player.getDistanceSq(xCoord + 0.5, yCoord + 0.5, zCoord + 0.5) <= 64;
+        return player.getDistanceSq(pos.getX() + 0.5, pos.getY() + 0.5, pos.getZ() + 0.5) <= 64;
     }
 
     @Override
-    public void openInventory() {
+    public void openInventory(EntityPlayer player) {
 
     }
 
     @Override
-    public void closeInventory() {
+    public void closeInventory(EntityPlayer player) {
 
     }
 
@@ -103,12 +95,32 @@ public class TileEntityCrystalCombiner extends TileEntity implements IInventory{
     }
 
     @Override
+    public int getField(int id) {
+        return 0;
+    }
+
+    @Override
+    public void setField(int id, int value) {
+
+    }
+
+    @Override
+    public int getFieldCount() {
+        return 0;
+    }
+
+    @Override
+    public void clear() {
+
+    }
+
+    @Override
     public void updateEntity() {
         if(isInventoryEmpty()){
             return;
         }
 
-        IEnergyProvider provider = EnergyNetworkHandler.getProvider(worldObj, xCoord, yCoord, zCoord, range);
+        IEnergyProvider provider = EnergyNetworkHandler.getProvider(worldObj, pos.getX(), pos.getY(), pos.getZ(), range);
 
         if(provider != null && provider.canProvideEnergy()) {
             if (timeToCraft == 0 && recipe == null && timeStartToCraft == 0) {
@@ -142,7 +154,7 @@ public class TileEntityCrystalCombiner extends TileEntity implements IInventory{
                         float f = (worldObj.rand.nextFloat() - 0.5F) * 0.2F;
                         float f1 = (worldObj.rand.nextFloat() - 0.5F) * 0.2F;
                         float f2 = (worldObj.rand.nextFloat() - 0.5F) * 0.2F;
-                        this.worldObj.spawnParticle("portal", xCoord + 0.5, yCoord + 0.75, zCoord + 0.5, (double) f, (double) f1, (double) f2);
+                        this.worldObj.spawnParticle(EnumParticleTypes.PORTAL, pos.getX() + 0.5, pos.getY() + 0.75, pos.getZ() + 0.5, (double) f, (double) f1, (double) f2);
                     }
                 } else {
                     recipe = null;
@@ -169,7 +181,7 @@ public class TileEntityCrystalCombiner extends TileEntity implements IInventory{
                         float f = (worldObj.rand.nextFloat() - 0.5F) * 0.2F;
                         float f1 = (worldObj.rand.nextFloat() - 0.5F) * 0.2F;
                         float f2 = (worldObj.rand.nextFloat() - 0.5F) * 0.2F;
-                        this.worldObj.spawnParticle("portal", xCoord + 0.5, yCoord + 0.75, zCoord + 0.5, (double) f, (double) f1, (double) f2);
+                        this.worldObj.spawnParticle(EnumParticleTypes.PORTAL, pos.getX() + 0.5, pos.getY() + 0.75, pos.getZ() + 0.5, (double) f, (double) f1, (double) f2);
                     }
                 }
             } else if (timeStartToCraft > 0) {
@@ -180,7 +192,7 @@ public class TileEntityCrystalCombiner extends TileEntity implements IInventory{
         }
 
         if(worldObj.isRemote){
-            worldObj.markBlockForUpdate(xCoord, yCoord, zCoord);
+            worldObj.markBlockForUpdate(pos);
         }
 
     }
@@ -225,12 +237,12 @@ public class TileEntityCrystalCombiner extends TileEntity implements IInventory{
     public Packet getDescriptionPacket() {
         NBTTagCompound tag = new NBTTagCompound();
         this.writeToNBT(tag);
-        return new S35PacketUpdateTileEntity(xCoord, yCoord, zCoord, 1, tag);
+        return new S35PacketUpdateTileEntity(pos, 1, tag);
     }
 
     @Override
     public void onDataPacket(NetworkManager net, S35PacketUpdateTileEntity pkt) {
-        readFromNBT(pkt.func_148857_g());
+        readFromNBT(pkt.getNbtCompound());
     }
 
     private boolean isInventoryEmpty() {
@@ -260,7 +272,7 @@ public class TileEntityCrystalCombiner extends TileEntity implements IInventory{
     }
 
     public boolean isConnected(){
-        return EnergyNetworkHandler.getProvider(worldObj, xCoord, yCoord, zCoord, range) != null;
+        return EnergyNetworkHandler.getProvider(worldObj, pos.getX(), pos.getY(), pos.getZ(), range) != null;
     }
 
     /**
@@ -276,5 +288,20 @@ public class TileEntityCrystalCombiner extends TileEntity implements IInventory{
             return recipe.getResult().getDisplayName();
         }
         return "";
+    }
+
+    @Override
+    public String getName() {
+        return null;
+    }
+
+    @Override
+    public boolean hasCustomName() {
+        return false;
+    }
+
+    @Override
+    public IChatComponent getDisplayName() {
+        return null;
     }
 }

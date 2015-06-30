@@ -7,14 +7,13 @@ import at.korti.endermystic.blocks.ModBlocks;
 import at.korti.endermystic.items.ModItems;
 import at.korti.endermystic.modintegration.baubles.Baubles;
 import at.korti.endermystic.modintegration.cofh.Cofh;
-import cpw.mods.fml.common.Loader;
-import cpw.mods.fml.common.registry.GameRegistry;
 import net.minecraft.block.Block;
 import net.minecraft.init.Blocks;
 import net.minecraft.init.Items;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.crafting.IRecipe;
-import cofh.thermalexpansion.item.TEItems;
+import net.minecraftforge.fml.common.Loader;
+import net.minecraftforge.fml.common.registry.GameRegistry;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -347,11 +346,11 @@ public class CraftingManager {
 
         //CoFH
         if (Loader.isModLoaded(ModInfo.THERMALEXPANSION)) {
-            GameRegistry.addShapedRecipe(new ItemStack(Cofh.mysticDynamo),
-                    "HCH",
-                    "IEI",
-                    "HHH", 'H', new ItemStack(Blocks.hardened_clay), 'C', TEItems.powerCoilGold.copy(), 'I', new ItemStack(Items.iron_ingot), 'E', new ItemStack(ModItems.crystalItem, 1, 7)
-            );
+//            GameRegistry.addShapedRecipe(new ItemStack(Cofh.mysticDynamo),
+//                    "HCH",
+//                    "IEI",
+//                    "HHH", 'H', new ItemStack(Blocks.hardened_clay), 'C', TEItems.powerCoilGold.copy(), 'I', new ItemStack(Items.iron_ingot), 'E', new ItemStack(ModItems.crystalItem, 1, 7)
+//            );
         } else if(Cofh.isLoaded) {
             GameRegistry.addShapedRecipe(new ItemStack(Cofh.mysticDynamo),
                     "HIH",
