@@ -1,13 +1,8 @@
 package at.korti.endermystic.items.blockitems;
 
-import at.korti.endermystic.blocks.ModBlocks;
 import net.minecraft.block.Block;
-import net.minecraft.creativetab.CreativeTabs;
-import net.minecraft.item.Item;
 import net.minecraft.item.ItemBlock;
 import net.minecraft.item.ItemStack;
-
-import java.util.List;
 
 /**
  * Created by Korti on 04.04.2015.

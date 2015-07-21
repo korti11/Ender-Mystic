@@ -1,6 +1,5 @@
 package at.korti.endermystic.items;
 
-import at.korti.endermystic.EnderMystic;
 import at.korti.endermystic.ModInfo;
 import at.korti.endermystic.items.armor.EnderSoulArmor;
 import at.korti.endermystic.items.orbs.*;
@@ -45,9 +44,10 @@ public class ModItems {
     public static OrbCoreItem orbCoreItem;
     public static BookItem bookItem;
 
-    //Baubles integration
-//    public static AirRing airRing;
-//    public static BaublesBackPack baublesBackPack;
+    public static WorldStorage worldStorageLevelOne;
+    public static WorldStorage worldStorageLevelTwo;
+    public static WorldStorage worldStorageLevelThree;
+    public static WorldStorage worldStorageLevelFour;
 
     public static void init(){
         enderOrb = new CapacityOrb("BasicEnderOrb", 0x258474, 10000);
@@ -83,8 +83,10 @@ public class ModItems {
         orbCoreItem = new OrbCoreItem();
         bookItem = new BookItem();
 
-//        airRing = new AirRing();
-//        baublesBackPack = new BaublesBackPack("Baubles Back Pack");
+        worldStorageLevelOne = new WorldStorage(9);
+        worldStorageLevelTwo = new WorldStorage(18);
+        worldStorageLevelThree = new WorldStorage(32);
+        worldStorageLevelFour = new WorldStorage(64);
 
     }
 
@@ -123,8 +125,10 @@ public class ModItems {
         GameRegistry.registerItem(crystalItem, crystalItem.getName(), ModInfo.MODID);
         GameRegistry.registerItem(orbCoreItem, orbCoreItem.getName(), ModInfo.MODID);
 
-//        GameRegistry.registerItem(airRing, airRing.getName(), ModInfo.MODID);
-//        GameRegistry.registerItem(baublesBackPack, baublesBackPack.getName(), ModInfo.MODID);
+        GameRegistry.registerItem(worldStorageLevelOne, worldStorageLevelOne.getName() + "LevelOne");
+        GameRegistry.registerItem(worldStorageLevelTwo, worldStorageLevelTwo.getName() + "LevelTwo");
+        GameRegistry.registerItem(worldStorageLevelThree, worldStorageLevelThree.getName() + "LevelThree");
+        GameRegistry.registerItem(worldStorageLevelFour, worldStorageLevelFour.getName() + "LevelFour");
 
     }
 

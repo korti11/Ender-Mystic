@@ -1,6 +1,5 @@
 package at.korti.endermystic.api.crafting;
 
-import at.korti.endermystic.EnderMystic;
 import net.minecraft.item.ItemStack;
 
 /**

@@ -6,7 +6,6 @@ import at.korti.endermystic.client.guis.book.BookPage;
 import at.korti.endermystic.client.guis.book.button.ImageButton;
 import cpw.mods.fml.common.registry.LanguageRegistry;
 import net.minecraft.client.Minecraft;
-import net.minecraft.item.ItemStack;
 import net.minecraft.util.ResourceLocation;
 
 /**

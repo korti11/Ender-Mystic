@@ -1,6 +1,5 @@
 package at.korti.endermystic.modintegration.cofh.tileentity;
 
-import at.korti.endermystic.EnderMystic;
 import cpw.mods.fml.common.registry.GameRegistry;
 
 /**

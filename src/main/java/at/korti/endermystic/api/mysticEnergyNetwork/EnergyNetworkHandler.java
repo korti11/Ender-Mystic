@@ -10,16 +10,22 @@ import net.minecraft.world.World;
  */
 public class EnergyNetworkHandler {
 
-    public static boolean addCapacity(int capacity, String itemName){
+    /**
+     * Add capacity to player energy network. If the player has no energy network, a new EnergyNetwork would create.
+     * @param capacity
+     * @param playerName
+     * @return If the capacity was added.
+     */
+    public static boolean addCapacity(int capacity, String playerName){
         World world = getWorld();
-        EnergyNetwork network = getNetwork(itemName);
+        EnergyNetwork network = getNetwork(playerName);
 
         if(network == null){
-            network = new EnergyNetwork("em_" + itemName);
+            network = new EnergyNetwork("em_" + playerName);
             network.mysticEnergy = 0;
             network.mysticCapacity = capacity;
             network.markDirty();
-            world.setItemData("em_" + itemName, network);
+            world.setItemData("em_" + playerName, network);
             return true;
         }
         else{
@@ -33,8 +39,14 @@ public class EnergyNetworkHandler {
         return false;
     }
 
-    public static boolean addEnergy(int energy, String itemName){
-        EnergyNetwork network = getNetwork(itemName);
+    /**
+     * Add energy to the player network.
+     * @param energy
+     * @param playerName
+     * @return If the energy was added.
+     */
+    public static boolean addEnergy(int energy, String playerName){
+        EnergyNetwork network = getNetwork(playerName);
         if(network != null) {
             network.mysticEnergy = Math.min(network.mysticCapacity, network.mysticEnergy + energy);
             network.markDirty();
@@ -43,8 +55,14 @@ public class EnergyNetworkHandler {
         return false;
     }
 
-    public static boolean isEnoughEnergy(int usage, String itemName){
-        EnergyNetwork energyNetwork = getNetwork(itemName);
+    /**
+     * Check if the player has enough energy.
+     * @param usage
+     * @param playerName
+     * @return If there is enough energy.
+     */
+    public static boolean isEnoughEnergy(int usage, String playerName){
+        EnergyNetwork energyNetwork = getNetwork(playerName);
         return energyNetwork != null ? usage <= energyNetwork.mysticCapacity : false;
     }
 
@@ -52,8 +70,14 @@ public class EnergyNetworkHandler {
         return usage <= energy;
     }
 
-    public static boolean decEnergy(int usage, String itemName){
-        EnergyNetwork energyNetwork = getNetwork(itemName);
+    /**
+     * Decrease the energy of the energy network.
+     * @param usage
+     * @param playerName
+     * @return If the energy has been decreased.
+     */
+    public static boolean decEnergy(int usage, String playerName){
+        EnergyNetwork energyNetwork = getNetwork(playerName);
         if(energyNetwork != null){
             if(isEnoughEnergy(usage, energyNetwork.mysticEnergy)){
                 energyNetwork.mysticEnergy -= usage;
@@ -64,14 +88,33 @@ public class EnergyNetworkHandler {
         return false;
     }
 
-    public static int getEnergy(String itemName){
-        return getNetwork(itemName).mysticEnergy;
+    /**
+     * Get the current energy amount.
+     * @param playerName
+     * @return Energy amount.
+     */
+    public static int getEnergy(String playerName){
+        return getNetwork(playerName).mysticEnergy;
     }
 
+    /**
+     * Get the current capacity amount.
+     * @param itemName
+     * @return Capacity amount.
+     */
     public static int getCapacity(String itemName){
         return getNetwork(itemName).mysticCapacity;
     }
 
+    /**
+     * Get the connection to the nearest energy provider.
+     * @param worldObj
+     * @param xCoord
+     * @param yCoord
+     * @param zCoord
+     * @param range
+     * @return Nearest energy provider.
+     */
     public static IEnergyProvider getProvider(World worldObj,int xCoord, int yCoord, int zCoord, int range){
         boolean isStorage = worldObj.getTileEntity(xCoord,yCoord,zCoord) instanceof TileEntityEnergyCrystalStorage;
         for (int x = xCoord - (range / 2); x < xCoord + (range / 2); x++) {
@@ -116,8 +159,8 @@ public class EnergyNetworkHandler {
         return MinecraftServer.getServer().worldServers[0];
     }
 
-    private static EnergyNetwork getNetwork(String itemName){
+    private static EnergyNetwork getNetwork(String playerName){
         World world = getWorld();
-        return (EnergyNetwork)world.loadItemData(EnergyNetwork.class, "em_" + itemName);
+        return (EnergyNetwork)world.loadItemData(EnergyNetwork.class, "em_" + playerName);
     }
 }

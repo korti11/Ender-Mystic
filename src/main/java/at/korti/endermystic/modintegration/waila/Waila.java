@@ -1,6 +1,5 @@
 package at.korti.endermystic.modintegration.waila;
 
-import at.korti.endermystic.EnderMystic;
 import at.korti.endermystic.ModInfo;
 import at.korti.endermystic.modintegration.IIntegration;
 import at.korti.endermystic.modintegration.cofh.Cofh;
@@ -32,6 +31,16 @@ public class Waila implements IIntegration {
 
     @Override
     public void posInit() {
+
+    }
+
+    @Override
+    public void clientPostInit() {
+
+    }
+
+    @Override
+    public void constructCraftingRecipes() {
 
     }
 

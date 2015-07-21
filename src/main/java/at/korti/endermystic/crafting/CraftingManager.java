@@ -1,20 +1,16 @@
 package at.korti.endermystic.crafting;
 
-import at.korti.endermystic.ModInfo;
 import at.korti.endermystic.api.crafting.CraftingRegistry;
 import at.korti.endermystic.api.crafting.IItemBookCrafting;
 import at.korti.endermystic.blocks.ModBlocks;
 import at.korti.endermystic.items.ModItems;
-import at.korti.endermystic.modintegration.baubles.Baubles;
-import at.korti.endermystic.modintegration.cofh.Cofh;
-import cpw.mods.fml.common.Loader;
+import at.korti.endermystic.modintegration.ModIntegrationManager;
 import cpw.mods.fml.common.registry.GameRegistry;
 import net.minecraft.block.Block;
 import net.minecraft.init.Blocks;
 import net.minecraft.init.Items;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.crafting.IRecipe;
-import cofh.thermalexpansion.item.TEItems;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -29,63 +25,63 @@ public class CraftingManager {
     public static void registerCrystalCombinerRecipes(){
         CraftingRegistry registry = CraftingRegistry.getInstance();
 
-        registry.addCrystalCombinerRecipe(30, 50, new ItemStack(ModItems.crystalItem, 1, 4),  //Life
+        registry.registerCrystalCombinerRecipe(30, 50, new ItemStack(ModItems.crystalItem, 1, 4),  //Life
                 new ItemStack(ModItems.crystalItem, 1, 0),      //Water
                 new ItemStack(ModItems.crystalItem, 1, 2)       //Earth
         );
 
-        registry.addCrystalCombinerRecipe(35, 60, new ItemStack(ModItems.crystalItem, 1, 5),   //Grain
+        registry.registerCrystalCombinerRecipe(35, 60, new ItemStack(ModItems.crystalItem, 1, 5),   //Grain
                 new ItemStack(ModItems.crystalItem, 1, 0),      //Water
                 new ItemStack(ModItems.crystalItem, 1, 2),      //Earth
                 new ItemStack(ModItems.crystalItem, 1, 4)       //Life
         );
 
-        registry.addCrystalCombinerRecipe(35, 60, new ItemStack(ModItems.crystalItem, 1, 6),   //Human
+        registry.registerCrystalCombinerRecipe(35, 60, new ItemStack(ModItems.crystalItem, 1, 6),   //Human
                 new ItemStack(ModItems.crystalItem, 1, 0),      //Water
                 new ItemStack(ModItems.crystalItem, 1, 4),      //Life
                 new ItemStack(ModItems.crystalItem, 1, 5)       //Grain
         );
 
-        registry.addCrystalCombinerRecipe(20, 40, new ItemStack(ModItems.crystalItem, 1, 9),
+        registry.registerCrystalCombinerRecipe(20, 40, new ItemStack(ModItems.crystalItem, 1, 9),
                 new ItemStack(ModItems.crystalItem, 1, 0),
                 new ItemStack(ModItems.crystalItem, 1, 1),
                 new ItemStack(ModItems.crystalItem, 1, 2)
         );
 
-        registry.addCrystalCombinerRecipe(25, 40, new ItemStack(ModItems.crystalItem, 1, 10),
+        registry.registerCrystalCombinerRecipe(25, 40, new ItemStack(ModItems.crystalItem, 1, 10),
                 new ItemStack(ModItems.crystalItem, 1, 9),
                 new ItemStack(ModItems.crystalItem, 1, 1)
         );
 
-        registry.addCrystalCombinerRecipe(30, 50, new ItemStack(ModItems.crystalItem, 1, 8),
+        registry.registerCrystalCombinerRecipe(30, 50, new ItemStack(ModItems.crystalItem, 1, 8),
                 new ItemStack(ModItems.crystalItem, 1, 10),
                 new ItemStack(ModItems.crystalItem, 1, 6),
                 new ItemStack(ModItems.crystalItem, 1, 1)
         );
 
-        registry.addCrystalCombinerRecipe(20, 50, new ItemStack(ModItems.crystalItem, 1, 12),
+        registry.registerCrystalCombinerRecipe(20, 50, new ItemStack(ModItems.crystalItem, 1, 12),
                 new ItemStack(ModItems.crystalItem, 1, 1),
                 new ItemStack(ModItems.crystalItem, 1, 3)
         );
 
-        registry.addCrystalCombinerRecipe(30, 60, new ItemStack(ModItems.crystalItem, 1, 11),
+        registry.registerCrystalCombinerRecipe(30, 60, new ItemStack(ModItems.crystalItem, 1, 11),
                 new ItemStack(ModItems.crystalItem, 1, 0),
                 new ItemStack(ModItems.crystalItem, 1, 1),
                 new ItemStack(ModItems.crystalItem, 1, 2),
                 new ItemStack(ModItems.crystalItem, 1, 3)
         );
 
-        registry.addCrystalCombinerRecipe(35, 60, new ItemStack(ModItems.crystalItem, 1, 13),
+        registry.registerCrystalCombinerRecipe(35, 60, new ItemStack(ModItems.crystalItem, 1, 13),
                 new ItemStack(ModItems.crystalItem, 1, 12),
                 new ItemStack(ModItems.crystalItem, 1, 11)
         );
 
-        registry.addCrystalCombinerRecipe(25, 30, new ItemStack(ModItems.crystalItem, 1, 14),
+        registry.registerCrystalCombinerRecipe(25, 30, new ItemStack(ModItems.crystalItem, 1, 14),
                 new ItemStack(ModItems.crystalItem, 1, 11),
                 new ItemStack(Items.emerald)
         );
 
-        registry.addCrystalCombinerRecipe(60, 10, new ItemStack(ModItems.enderItem, 1, 1),
+        registry.registerCrystalCombinerRecipe(60, 10, new ItemStack(ModItems.enderItem, 1, 1),
                 new ItemStack(ModItems.enderItem, 1, 0),
                 new ItemStack(Items.iron_ingot)
         );
@@ -94,7 +90,7 @@ public class CraftingManager {
     public static void registerOrbInfuserRecipes(){
         CraftingRegistry registry = CraftingRegistry.getInstance();
 
-        registry.addOrbInfuserRecipe(30, 50, new ItemStack(ModItems.orbCoreItem, 1, 4), //Fire Core
+        registry.registerOrbInfuserRecipe(30, 50, new ItemStack(ModItems.orbCoreItem, 1, 4), //Fire Core
                 new ItemStack(ModItems.crystalItem, 1, 1),  //Fire Crystal
                 new ItemStack(ModItems.crystalItem, 1, 1),  //Fire Crystal
                 new ItemStack(ModItems.crystalItem, 1, 1),  //Fire Crystal
@@ -102,7 +98,7 @@ public class CraftingManager {
                 new ItemStack(Items.ender_pearl)
         );
 
-        registry.addOrbInfuserRecipe(30, 50, new ItemStack(ModItems.orbCoreItem, 1, 5), //Water Core
+        registry.registerOrbInfuserRecipe(30, 50, new ItemStack(ModItems.orbCoreItem, 1, 5), //Water Core
                 new ItemStack(ModItems.crystalItem, 1, 0),  //Water Crystal
                 new ItemStack(ModItems.crystalItem, 1, 0),  //Water Crystal
                 new ItemStack(ModItems.crystalItem, 1, 0),  //Water Crystal
@@ -110,7 +106,7 @@ public class CraftingManager {
                 new ItemStack(Items.ender_pearl)
         );
 
-        registry.addOrbInfuserRecipe(30, 50, new ItemStack(ModItems.orbCoreItem, 1, 1), //Earth Core
+        registry.registerOrbInfuserRecipe(30, 50, new ItemStack(ModItems.orbCoreItem, 1, 1), //Earth Core
                 new ItemStack(ModItems.crystalItem, 1, 2),  //Earth Crystal
                 new ItemStack(ModItems.crystalItem, 1, 2),  //Earth Crystal
                 new ItemStack(ModItems.crystalItem, 1, 2),  //Earth Crystal
@@ -118,7 +114,7 @@ public class CraftingManager {
                 new ItemStack(Items.ender_pearl)
         );
 
-        registry.addOrbInfuserRecipe(30, 50, new ItemStack(ModItems.orbCoreItem, 1, 0), //Air Core
+        registry.registerOrbInfuserRecipe(30, 50, new ItemStack(ModItems.orbCoreItem, 1, 0), //Air Core
                 new ItemStack(ModItems.crystalItem, 1, 3),  //Air Crystal
                 new ItemStack(ModItems.crystalItem, 1, 3),  //Air Crystal
                 new ItemStack(ModItems.crystalItem, 1, 3),  //Air Crystal
@@ -126,7 +122,7 @@ public class CraftingManager {
                 new ItemStack(Items.ender_pearl)
         );
 
-        registry.addOrbInfuserRecipe(40, 250, new ItemStack(ModItems.orbCoreItem, 1, 7),
+        registry.registerOrbInfuserRecipe(40, 250, new ItemStack(ModItems.orbCoreItem, 1, 7),
                 new ItemStack(ModItems.crystalItem, 1, 0),
                 new ItemStack(ModItems.crystalItem, 1, 1),
                 new ItemStack(ModItems.crystalItem, 1, 2),
@@ -134,7 +130,7 @@ public class CraftingManager {
                 new ItemStack(Items.ender_pearl)
         );
 
-        registry.addOrbInfuserRecipe(60, 416, new ItemStack(ModItems.orbCoreItem, 1, 8),
+        registry.registerOrbInfuserRecipe(60, 416, new ItemStack(ModItems.orbCoreItem, 1, 8),
                 new ItemStack(ModItems.crystalItem, 1, 8),
                 new ItemStack(ModItems.crystalItem, 1, 8),
                 new ItemStack(ModItems.crystalItem, 1, 8),
@@ -145,7 +141,7 @@ public class CraftingManager {
                 new ItemStack(Items.ender_pearl)
         );
 
-        registry.addOrbInfuserRecipe(80, 500, new ItemStack(ModItems.orbCoreItem, 1, 9),
+        registry.registerOrbInfuserRecipe(80, 500, new ItemStack(ModItems.orbCoreItem, 1, 9),
                 new ItemStack(ModItems.crystalItem, 1, 0),
                 new ItemStack(ModItems.crystalItem, 1, 1),
                 new ItemStack(ModItems.crystalItem, 1, 2),
@@ -157,19 +153,7 @@ public class CraftingManager {
                 new ItemStack(Items.ender_pearl)
         );
 
-        registry.addOrbInfuserRecipe(90, 611, new ItemStack(ModItems.orbCoreItem, 1, 10),
-                new ItemStack(ModItems.crystalItem, 1, 13),
-                new ItemStack(ModItems.crystalItem, 1, 13),
-                new ItemStack(ModItems.crystalItem, 1, 0),
-                new ItemStack(ModItems.crystalItem, 1, 1),
-                new ItemStack(ModItems.crystalItem, 1, 2),
-                new ItemStack(ModItems.crystalItem, 1, 3),
-                new ItemStack(Items.ender_pearl)
-        );
-
-        registry.addOrbInfuserRecipe(100, 700, new ItemStack(ModItems.orbCoreItem, 1, 11),
-                new ItemStack(ModItems.crystalItem, 1, 13),
-                new ItemStack(ModItems.crystalItem, 1, 13),
+        registry.registerOrbInfuserRecipe(90, 611, new ItemStack(ModItems.orbCoreItem, 1, 10),
                 new ItemStack(ModItems.crystalItem, 1, 13),
                 new ItemStack(ModItems.crystalItem, 1, 13),
                 new ItemStack(ModItems.crystalItem, 1, 0),
@@ -179,7 +163,19 @@ public class CraftingManager {
                 new ItemStack(Items.ender_pearl)
         );
 
-        registry.addOrbInfuserRecipe(50, 40, new ItemStack(ModItems.orbCoreItem, 1, 2),
+        registry.registerOrbInfuserRecipe(100, 700, new ItemStack(ModItems.orbCoreItem, 1, 11),
+                new ItemStack(ModItems.crystalItem, 1, 13),
+                new ItemStack(ModItems.crystalItem, 1, 13),
+                new ItemStack(ModItems.crystalItem, 1, 13),
+                new ItemStack(ModItems.crystalItem, 1, 13),
+                new ItemStack(ModItems.crystalItem, 1, 0),
+                new ItemStack(ModItems.crystalItem, 1, 1),
+                new ItemStack(ModItems.crystalItem, 1, 2),
+                new ItemStack(ModItems.crystalItem, 1, 3),
+                new ItemStack(Items.ender_pearl)
+        );
+
+        registry.registerOrbInfuserRecipe(50, 40, new ItemStack(ModItems.orbCoreItem, 1, 2),
                 new ItemStack(ModItems.crystalItem, 1, 14),
                 new ItemStack(ModItems.crystalItem, 1, 14),
                 new ItemStack(ModItems.crystalItem, 1, 11),
@@ -187,7 +183,7 @@ public class CraftingManager {
                 new ItemStack(Items.ender_pearl)
         );
 
-        registry.addOrbInfuserRecipe(60, 80, new ItemStack(ModItems.orbCoreItem, 1, 3),
+        registry.registerOrbInfuserRecipe(60, 80, new ItemStack(ModItems.orbCoreItem, 1, 3),
                 new ItemStack(ModItems.crystalItem, 1, 11),
                 new ItemStack(ModItems.crystalItem, 1, 10),
                 new ItemStack(ModItems.crystalItem, 1, 13),
@@ -344,47 +340,17 @@ public class CraftingManager {
                 "AEA",
                 "HHH", 'H', new ItemStack(Blocks.hardened_clay), 'A', new ItemStack(ModItems.apprenticeOrb), 'E', new ItemStack(ModItems.crystalItem, 1, 7)
         );
-
-        //CoFH
-        if (Loader.isModLoaded(ModInfo.THERMALEXPANSION)) {
-            GameRegistry.addShapedRecipe(new ItemStack(Cofh.mysticDynamo),
-                    "HCH",
-                    "IEI",
-                    "HHH", 'H', new ItemStack(Blocks.hardened_clay), 'C', TEItems.powerCoilGold.copy(), 'I', new ItemStack(Items.iron_ingot), 'E', new ItemStack(ModItems.crystalItem, 1, 7)
-            );
-        } else if(Cofh.isLoaded) {
-            GameRegistry.addShapedRecipe(new ItemStack(Cofh.mysticDynamo),
-                    "HIH",
-                    "IEI",
-                    "HHH", 'H', new ItemStack(Blocks.hardened_clay), 'I', new ItemStack(Items.iron_ingot), 'E', new ItemStack(ModItems.crystalItem, 1, 7)
-            );
-        }
-
-        //Baubles
-        if(Baubles.isLoaded) {
-            GameRegistry.addShapedRecipe(new ItemStack(Baubles.airBelt),
-                    " L ",
-                    "L L",
-                    "OL ", 'L', new ItemStack(Items.leather), 'O', new ItemStack(ModItems.airOrb)
-            );
-            GameRegistry.addShapedRecipe(new ItemStack(Baubles.airRing),
-                    "OG ",
-                    "G G",
-                    " G ", 'G', new ItemStack(Items.gold_ingot), 'O', new ItemStack(ModItems.airOrb)
-            );
-            GameRegistry.addShapedRecipe(new ItemStack(Baubles.fireRing),
-                    "OG ",
-                    "G G",
-                    " G ", 'G', new ItemStack(Items.gold_ingot), 'O', new ItemStack(ModItems.fireOrb)
-            );
-        }
     }
 
     public static void registerBookRecipes() {
-        CraftingRegistry.getInstance().addCraftingRecipe(new ItemStack(ModItems.crystalItem, 1, 0), new ItemStack(ModBlocks.crystalOre, 1, 0), new ItemStack(Items.iron_pickaxe));
-        CraftingRegistry.getInstance().addCraftingRecipe(new ItemStack(ModItems.crystalItem, 1, 1), new ItemStack(ModBlocks.crystalOre, 1, 1), new ItemStack(Items.iron_pickaxe));
-        CraftingRegistry.getInstance().addCraftingRecipe(new ItemStack(ModItems.crystalItem, 1, 2), new ItemStack(ModBlocks.crystalOre, 1, 2), new ItemStack(Items.iron_pickaxe));
-        CraftingRegistry.getInstance().addCraftingRecipe(new ItemStack(ModItems.crystalItem, 1, 3), new ItemStack(ModBlocks.crystalOre, 1, 3), new ItemStack(Items.iron_pickaxe));
+        CraftingRegistry.getInstance().registerCraftingRecipe(new ItemStack(ModItems.crystalItem, 1, 0), new ItemStack(ModBlocks.crystalOre, 1, 0), new ItemStack(Items.iron_pickaxe));
+        CraftingRegistry.getInstance().registerCraftingRecipe(new ItemStack(ModItems.crystalItem, 1, 1), new ItemStack(ModBlocks.crystalOre, 1, 1), new ItemStack(Items.iron_pickaxe));
+        CraftingRegistry.getInstance().registerCraftingRecipe(new ItemStack(ModItems.crystalItem, 1, 2), new ItemStack(ModBlocks.crystalOre, 1, 2), new ItemStack(Items.iron_pickaxe));
+        CraftingRegistry.getInstance().registerCraftingRecipe(new ItemStack(ModItems.crystalItem, 1, 3), new ItemStack(ModBlocks.crystalOre, 1, 3), new ItemStack(Items.iron_pickaxe));
+    }
+
+    public static void registerIntegrationRecipes() {
+        ModIntegrationManager.constructCraftingRecipes();
     }
 
     public static void loadRecipes() {

@@ -1,6 +1,5 @@
 package at.korti.endermystic.tileEntity;
 
-import at.korti.endermystic.EnderMystic;
 import cpw.mods.fml.common.registry.GameRegistry;
 
 /**
@@ -15,6 +14,7 @@ public class TileEntities {
         GameRegistry.registerTileEntity(TileEntityEnderZar.class, "tileEntityEnderZar");
         GameRegistry.registerTileEntity(TileEntityOrbInfuser.class, "tileEntityOrbInfuser");
         GameRegistry.registerTileEntity(TileEntityEnergyCrystalStorage.class, "tileEntityEnergyCrystalStorage");
+        GameRegistry.registerTileEntity(TileEntityEnderTranfer.class, "tileEntityEnderTransfer");
     }
 
 }

@@ -1,11 +1,7 @@
 package at.korti.endermystic.event;
 
 import at.korti.endermystic.ModInfo;
-import at.korti.endermystic.api.tools.ToolLevelHandler;
-import at.korti.endermystic.api.util.AbilityHelper;
 import at.korti.endermystic.items.ModItems;
-import at.korti.endermystic.items.tools.EnderSoulExcavator;
-import at.korti.endermystic.items.tools.EnderSoulHammer;
 import at.korti.endermystic.potion.PotionHelper;
 import at.korti.endermystic.util.UpdateChecker;
 import cpw.mods.fml.common.eventhandler.SubscribeEvent;
@@ -16,13 +12,8 @@ import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.ChatComponentText;
 import net.minecraft.util.EnumChatFormatting;
-import net.minecraft.util.MovingObjectPosition;
-import net.minecraft.world.World;
 import net.minecraftforge.event.entity.EntityJoinWorldEvent;
-import net.minecraftforge.event.entity.living.LivingAttackEvent;
 import net.minecraftforge.event.entity.living.LivingDeathEvent;
-import net.minecraftforge.event.entity.living.LivingDropsEvent;
-import net.minecraftforge.event.world.BlockEvent;
 
 /**
  * Created by Korti on 27.10.2014.

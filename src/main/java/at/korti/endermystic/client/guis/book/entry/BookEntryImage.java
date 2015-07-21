@@ -30,6 +30,14 @@ public class BookEntryImage extends BookEntry {
         this.renderToolTip = renderToolTip;
     }
 
+    public BookEntryImage(String name, BookPage prevEntry, boolean renderToolTip) {
+        this(name, prevEntry, renderToolTip, true);
+    }
+
+    public BookEntryImage(String name, String title, BookPage prevEntry, boolean renderToolTip) {
+        this(name, title, prevEntry, renderToolTip, true);
+    }
+
     public void addStackImage(ItemStack stack, int posX, int posY) {
         this.itemStackImages.add(new ItemStackImage(stack, posX, posY));
     }

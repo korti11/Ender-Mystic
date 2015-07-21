@@ -8,7 +8,7 @@ import at.korti.endermystic.command.AddXpCommand;
 import at.korti.endermystic.crafting.CraftingManager;
 import at.korti.endermystic.event.EventManager;
 import at.korti.endermystic.items.ModItems;
-import at.korti.endermystic.modintegration.ModIntegration;
+import at.korti.endermystic.modintegration.ModIntegrationManager;
 import at.korti.endermystic.network.PacketPipeline;
 import at.korti.endermystic.potion.PotionHelper;
 import at.korti.endermystic.proxy.CommonProxy;
@@ -31,7 +31,7 @@ import net.minecraftforge.common.config.Configuration;
 /**
  * Created by Korti on 15.10.2014.
  */
-@Mod(modid = ModInfo.MODID, name = ModInfo.NAME, version = ModInfo.VERSION, dependencies = "after:Baubles; after:Waila; after:CoFhCore; after:ThermalExpansion")
+@Mod(modid = ModInfo.MODID, name = ModInfo.NAME, version = ModInfo.VERSION, dependencies = "after:Baubles@[1.0.1.10,); after:Waila@[1.5.10,); after:CoFhCore@[1.7.10R3.0.2,); after:ThermalExpansion@[1.7.10R4.0.1,)")
 public class EnderMystic {
 
     @Mod.Instance(ModInfo.MODID)
@@ -64,7 +64,7 @@ public class EnderMystic {
         ModItems.load();
 
         PotionHelper.preInit();
-        ModIntegration.preInit();
+        ModIntegrationManager.preInit();
 
         proxy.initKeys();
 
@@ -83,7 +83,7 @@ public class EnderMystic {
         PotionHelper.init();
 
         TileEntities.init();
-        ModIntegration.inti();
+        ModIntegrationManager.inti();
 
         proxy.initRenderes();
         proxy.registerDisplayInfromation();
@@ -92,6 +92,7 @@ public class EnderMystic {
         CraftingManager.registerOrbInfuserRecipes();
         CraftingManager.registerVanillaRecipes();
         CraftingManager.registerBookRecipes();
+        CraftingManager.registerIntegrationRecipes();
 
         new GuiHandler();
     }
@@ -102,7 +103,8 @@ public class EnderMystic {
 
         CraftingManager.loadRecipes();
 
-        ModIntegration.postInit();
+        ModIntegrationManager.postInit();
+        proxy.postInitIntegration();
 
         config.save();
     }

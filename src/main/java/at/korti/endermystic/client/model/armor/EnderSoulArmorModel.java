@@ -1,10 +1,8 @@
 package at.korti.endermystic.client.model.armor;
 
-import at.korti.endermystic.items.ModItems;
 import net.minecraft.client.model.ModelBiped;
 import net.minecraft.client.model.ModelRenderer;
 import net.minecraft.entity.Entity;
-import net.minecraft.entity.player.EntityPlayer;
 
 /**
  * EnderSoulArmor - Korti

@@ -53,7 +53,7 @@ public class FireOrb extends Orb {
 
             if (!player.isSneaking()) {
                 if (EnergyNetworkHandler.decEnergy(OrbStats.usageFireOrb, stack.stackTagCompound.getString("em_owner"))) {
-                    AbilityHelper.SetBlock(x, y, z, side, Blocks.lava, world);
+                    AbilityHelper.setBlock(x, y, z, side, Blocks.lava, world);
                 }
             }
         }

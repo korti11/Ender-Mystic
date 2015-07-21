@@ -1,6 +1,5 @@
 package at.korti.endermystic.proxy;
 
-import at.korti.endermystic.EnderMystic;
 import at.korti.endermystic.blocks.ModBlocks;
 import at.korti.endermystic.client.keybinding.KeyHandler;
 import at.korti.endermystic.client.model.blocks.EnderZarModel;
@@ -9,9 +8,7 @@ import at.korti.endermystic.client.model.blocks.EnergyRelayModel;
 import at.korti.endermystic.client.render.RenderConfig;
 import at.korti.endermystic.client.render.blocks.*;
 import at.korti.endermystic.client.render.items.TileEntityItemRenderer;
-import at.korti.endermystic.modintegration.cofh.Cofh;
-import at.korti.endermystic.modintegration.cofh.client.model.MysticDynamoModel;
-import at.korti.endermystic.modintegration.cofh.tileentity.TileEntityMysticDynamo;
+import at.korti.endermystic.modintegration.ModIntegrationManager;
 import at.korti.endermystic.tileEntity.*;
 import cpw.mods.fml.client.registry.ClientRegistry;
 import cpw.mods.fml.client.registry.ISimpleBlockRenderingHandler;
@@ -43,12 +40,6 @@ public class ClientProxy extends CommonProxy {
 //        MinecraftForgeClient.registerItemRenderer(ModItems.enderSoulBreastplate, new ItemEnderSoulArmorRenderer());
 //        MinecraftForgeClient.registerItemRenderer(ModItems.enderSoulLegs, new ItemEnderSoulArmorRenderer());
 
-        //CoFH
-        if (Cofh.isLoaded) {
-            ClientRegistry.bindTileEntitySpecialRenderer(TileEntityMysticDynamo.class, new TileEntityBlockRenderer(new MysticDynamoModel(), "textures/model/MysticDynamo.png"));
-
-            MinecraftForgeClient.registerItemRenderer(Item.getItemFromBlock(Cofh.mysticDynamo), new TileEntityItemRenderer(new TileEntityBlockRenderer(new MysticDynamoModel(), "textures/model/MysticDynamo.png"), new TileEntityMysticDynamo()));
-        }
     }
 
     @Override
@@ -64,5 +55,15 @@ public class ClientProxy extends CommonProxy {
     @Override
     public void initKeys() {
         KeyHandler.init();
+    }
+
+    @Override
+    public void postInitIntegration() {
+        ModIntegrationManager.clientInit();
+    }
+
+    @Override
+    public void initBook() {
+
     }
 }

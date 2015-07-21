@@ -6,11 +6,9 @@ import at.korti.endermystic.api.tools.ToolUpgrade;
 import at.korti.endermystic.blocks.ModBlocks;
 import at.korti.endermystic.client.guis.book.button.EntryButton;
 import at.korti.endermystic.client.guis.book.button.NextPageButton;
-import at.korti.endermystic.client.guis.book.entry.BookCraftingTable;
 import at.korti.endermystic.client.guis.book.entry.BookEntry;
 import at.korti.endermystic.client.guis.book.entry.BookEntryImage;
 import at.korti.endermystic.client.guis.book.entry.BookEntryItemList;
-import at.korti.endermystic.items.ModItem;
 import at.korti.endermystic.items.ModItems;
 import at.korti.endermystic.modintegration.baubles.Baubles;
 import at.korti.endermystic.modintegration.cofh.Cofh;
@@ -27,7 +25,7 @@ import java.util.List;
 /**
  * Created by Korti on 16.04.2015.
  */
-public class BookPage extends GuiScreen{
+public class BookPage extends GuiScreen implements Cloneable {
 
     public static ResourceLocation defaultTexture = new ResourceLocation(ModInfo.MODID + ":textures/gui/book/book.png");
     public ResourceLocation texture = defaultTexture;
@@ -40,11 +38,10 @@ public class BookPage extends GuiScreen{
         this.mainPage = mainPage;
         if(mainPage) {
             entries = new ArrayList<>();
-            generateBookEntries();
         }
     }
 
-    private void generateBookEntries() {
+    public void generateEntries() {
         //Blocks
         BookEntryItemList blockList = new BookEntryItemList("Blocks", this);
         blockList.addItem(new ItemStack(ModBlocks.crystalCombiner));
@@ -151,23 +148,6 @@ public class BookPage extends GuiScreen{
         utilEntry.addItem(new ItemStack(ModItems.enderSacrifice));
         utilEntry.addItem(new ItemStack(ModItems.enderSoulFill));
 
-        //Baubles
-        BookEntry baubles = null;
-        if (Baubles.isLoaded) {
-            baubles = new BookEntry("Baubles", this);
-            BookEntryItemList baublesItems = new BookEntryItemList("BaublesItems", baubles);
-            baublesItems.addItem(new ItemStack(Baubles.airBelt));
-            baublesItems.addItem(new ItemStack(Baubles.airRing));
-            baublesItems.addItem(new ItemStack(Baubles.fireRing));
-        }
-
-        //CoFH
-        BookEntryItemList cofh = null;
-        if (Cofh.isLoaded) {
-            cofh = new BookEntryItemList("CoFH", this);
-            cofh.addItem(new ItemStack(Cofh.mysticDynamo));
-        }
-
         entries.add(blockList);
         entries.add(crystalCombiner);
         entries.add(orbInfuser);
@@ -178,11 +158,11 @@ public class BookPage extends GuiScreen{
         entries.add(enderSoulArmorEntry);
         entries.add(utilEntry);
 
-        if (Baubles.isLoaded) {
-            entries.add(baubles);
+        if (Loader.isModLoaded(ModInfo.BAUBLES)) {
+            entries.add(Baubles.addBookEntry(this));
         }
-        if (Cofh.isLoaded) {
-            entries.add(cofh);
+        if (Loader.isModLoaded(ModInfo.COFH)) {
+            entries.add(Cofh.addBookEntrys(this));
         }
     }
 
@@ -229,5 +209,18 @@ public class BookPage extends GuiScreen{
     @Override
     public boolean doesGuiPauseGame() {
         return false;
+    }
+
+    public BookPage clone() {
+        try {
+            return (BookPage) super.clone();
+        } catch (CloneNotSupportedException e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
+
+    public void setEntries(List<BookEntry> entries) {
+        this.entries = entries;
     }
 }

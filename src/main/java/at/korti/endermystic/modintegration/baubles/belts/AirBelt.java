@@ -1,17 +1,13 @@
 package at.korti.endermystic.modintegration.baubles.belts;
 
 import at.korti.endermystic.api.mysticEnergyNetwork.EnergyNetworkHandler;
-import at.korti.endermystic.items.EnergyItem;
 import at.korti.endermystic.items.orbs.OrbStats;
 import baubles.api.BaubleType;
-import baubles.api.IBauble;
 import net.minecraft.entity.EntityLivingBase;
-import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.potion.Potion;
 import net.minecraft.potion.PotionEffect;
-import net.minecraft.util.ChatComponentText;
 
 /**
  * Created by Korti on 02.06.2015.

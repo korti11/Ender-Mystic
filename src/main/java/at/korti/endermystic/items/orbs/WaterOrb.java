@@ -38,7 +38,7 @@ public class WaterOrb extends Orb{
             }
 
             if (EnergyNetworkHandler.decEnergy(OrbStats.usageWaterOrb, stack.stackTagCompound.getString("em_owner"))) {
-                AbilityHelper.SetBlock(x, y, z, side, Blocks.water, world);
+                AbilityHelper.setBlock(x, y, z, side, Blocks.water, world);
             }
 
         }

@@ -60,7 +60,7 @@ public class EarthOrb extends Orb {
         if(!world.isRemote) {
 
             if (!player.isSneaking()) {
-                AbilityHelper.BreakMultiBlocks(player, stack, world, x, y, z, side, stack.stackTagCompound.getInteger("em_radius"));
+                AbilityHelper.breakMultiBlocks(player, stack, world, x, y, z, side, stack.stackTagCompound.getInteger("em_radius"));
             }
         }
 

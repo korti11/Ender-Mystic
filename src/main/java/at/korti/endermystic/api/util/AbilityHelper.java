@@ -29,7 +29,7 @@ import net.minecraft.world.World;
  */
 public class AbilityHelper {
 
-    public static void BreakMultiBlocks(EntityPlayer player, ItemStack stack, World world, int x, int y, int z, int side, int radius){
+    public static void breakMultiBlocks(EntityPlayer player, ItemStack stack, World world, int x, int y, int z, int side, int radius){
         String itemName = stack.stackTagCompound.getString("em_owner");
         boolean isOrb = stack.getItem() instanceof EarthOrb;
         String toolClass = !isOrb ? stack.getItem() instanceof ItemPickaxe ? "pickaxe" : "shovel" : "";
@@ -137,7 +137,7 @@ public class AbilityHelper {
         return world.func_147447_a(vec3, vec31, par3, !par3, par3);
     }
 
-    public static void SetBlock(int x, int y, int z, int side, Block block, World world) {
+    public static void setBlock(int x, int y, int z, int side, Block block, World world) {
 
         switch (side){
             case 1:

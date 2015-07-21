@@ -46,7 +46,7 @@ public class EnergyStorage {
     }
 
     public void setCurrentEnergy(int energy) {
-
+        this.currentEnergy = energy;
     }
 
     public int transferEnergyIn(int energy) {

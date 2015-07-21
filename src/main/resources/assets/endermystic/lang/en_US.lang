@@ -38,6 +38,7 @@ item.endermystic.EnderItem.EnderRod.name=Ender Rod
 item.endermystic.EnderSoulFillEmpty.name=Ender Soul Fill (Empty)
 item.endermystic.EnderSoulFillFilled.name=Ender Soul Fill (Filled)
 item.endermystic.Book.name=Knowledge of Ender 89th Edition
+item.endermystic.WorldStorage.name=World Storage
 
 #Crystals
 item.endermystic.Crystal.Water.name=Water Crystal

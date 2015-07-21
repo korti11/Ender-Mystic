@@ -13,7 +13,7 @@ public class ToolUpgrade {
     private int upgradeID;
     private int maxLevel;
 
-    private static String locKey = "upgrade.endermystic.";
+    private static final String locKey = "upgrade.endermystic.";
     public static ToolUpgrade luck = new ToolUpgrade(0, EnumChatFormatting.BLUE.toString(), locKey + "luck", 3);
     public static ToolUpgrade haste = new ToolUpgrade(1, EnumChatFormatting.RED.toString(), locKey + "haste", 5);
     public static ToolUpgrade silkTouch = new ToolUpgrade(2, EnumChatFormatting.GREEN.toString(), locKey + "silktouch", 1);

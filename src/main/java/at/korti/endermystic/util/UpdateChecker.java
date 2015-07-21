@@ -1,6 +1,5 @@
 package at.korti.endermystic.util;
 
-import at.korti.endermystic.EnderMystic;
 import at.korti.endermystic.ModInfo;
 
 import java.io.FileOutputStream;

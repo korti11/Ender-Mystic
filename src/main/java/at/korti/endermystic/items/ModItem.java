@@ -17,8 +17,8 @@ public class ModItem extends Item implements IItemBookCrafting{
 
         this.name = name;
 
-        setCreativeTab(EnderMystic.tab);
-        setUnlocalizedName(ModInfo.MODID + "." + name);
+        this.setCreativeTab(EnderMystic.tab);
+        this.setUnlocalizedName(ModInfo.MODID + "." + name);
     }
 
     public ModItem(String name, int maxStackSize){
