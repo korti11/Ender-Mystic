@@ -29,6 +29,8 @@ public class ClientProxy extends CommonProxy {
         ClientRegistry.bindTileEntitySpecialRenderer(TileEntityEnderZar.class, new TileEntityBlockRenderer(new EnderZarModel(), "textures/model/Ender Zar.png"));
         ClientRegistry.bindTileEntitySpecialRenderer(TileEntityOrbInfuser.class, new OrbInfuserRenderer());
         ClientRegistry.bindTileEntitySpecialRenderer(TileEntityEnergyCrystalStorage.class, new TileEntityBlockRenderer(new EnergyCrystalStorageModel(), "textures/model/EnergyCrystalStorage.png"));
+        ClientRegistry.bindTileEntitySpecialRenderer(TileEntityEnderTranfer.class, new EnderTransferRenderer());
+        ClientRegistry.bindTileEntitySpecialRenderer(TileEntityEnderTranfer.class, new EnderTransferRenderer());
 
         MinecraftForgeClient.registerItemRenderer(Item.getItemFromBlock(ModBlocks.energyDrain), new TileEntityItemRenderer(new EnergyDrainRenderer(), new TileEntityEnergyDrain()));
         MinecraftForgeClient.registerItemRenderer(Item.getItemFromBlock(ModBlocks.energyRelay), new TileEntityItemRenderer(new TileEntityBlockRenderer(new EnergyRelayModel(), "textures/model/EnergyRelay.png"), new TileEntityEnergyRelay()));
@@ -36,6 +38,8 @@ public class ClientProxy extends CommonProxy {
         MinecraftForgeClient.registerItemRenderer(Item.getItemFromBlock(ModBlocks.enderZar), new TileEntityItemRenderer(new TileEntityBlockRenderer(new EnderZarModel(), "textures/model/Ender Zar.png"), new TileEntityEnderZar()));
         MinecraftForgeClient.registerItemRenderer(Item.getItemFromBlock(ModBlocks.orbInfuser), new TileEntityItemRenderer(new OrbInfuserRenderer(), new TileEntityOrbInfuser()));
         MinecraftForgeClient.registerItemRenderer(Item.getItemFromBlock(ModBlocks.energyCrystalStorage), new TileEntityItemRenderer(new TileEntityBlockRenderer(new EnergyCrystalStorageModel(), "textures/model/EnergyCrystalStorage.png"), new TileEntityEnergyCrystalStorage()));
+        MinecraftForgeClient.registerItemRenderer(Item.getItemFromBlock(ModBlocks.enderPicker), new TileEntityItemRenderer(new EnderTransferRenderer(), new TileEntityEnderTranfer()));
+        MinecraftForgeClient.registerItemRenderer(Item.getItemFromBlock(ModBlocks.enderInjector), new TileEntityItemRenderer(new EnderTransferRenderer(), new TileEntityEnderTranfer()));
 //        MinecraftForgeClient.registerItemRenderer(ModItems.enderSoulHelmet, new ItemEnderSoulArmorRenderer());
 //        MinecraftForgeClient.registerItemRenderer(ModItems.enderSoulBreastplate, new ItemEnderSoulArmorRenderer());
 //        MinecraftForgeClient.registerItemRenderer(ModItems.enderSoulLegs, new ItemEnderSoulArmorRenderer());

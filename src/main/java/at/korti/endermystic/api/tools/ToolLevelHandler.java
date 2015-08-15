@@ -311,10 +311,6 @@ public class ToolLevelHandler {
         world.spawnEntityInWorld(entityItem);
     }
 
-    public void cancleEvent(Event event) {
-        event.setCanceled(true);
-    }
-
     public float handleHasteUpgrade(ItemStack stack) {
         if (hasUpgrade(stack, ToolUpgrade.haste)) {
             return getLevelOfUpgrade(stack, ToolUpgrade.haste) * 3.0F;
@@ -396,7 +392,5 @@ public class ToolLevelHandler {
             }
         return false;
     }
-
-
     //endregion
 }

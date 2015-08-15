@@ -2,6 +2,7 @@ package at.korti.endermystic.items.tools;
 
 import at.korti.endermystic.EnderMystic;
 import at.korti.endermystic.ModInfo;
+import at.korti.endermystic.api.mysticEnergyNetwork.EnergyNetworkHandler;
 import at.korti.endermystic.api.tools.IEnderSoulTool;
 import at.korti.endermystic.api.tools.ToolLevelHandler;
 import at.korti.endermystic.api.util.AbilityHelper;
@@ -129,7 +130,7 @@ public class EnderSoulSword extends ItemSword implements IEnderSoulTool{
 
     @Override
     public void onUpdate(ItemStack stack, World p_77663_2_, Entity p_77663_3_, int p_77663_4_, boolean p_77663_5_) {
-        if(stack.isItemDamaged()){
+        if(stack.isItemDamaged() && EnergyNetworkHandler.isEnoughEnergy(ToolStats.enderSoulSwordUsage, stack.stackTagCompound.getString("em_owner"))){
             stack.setItemDamage(0);
         }
     }

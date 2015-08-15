@@ -29,6 +29,8 @@ import net.minecraft.world.World;
  */
 public class AbilityHelper {
 
+
+    //region Tools
     public static void breakMultiBlocks(EntityPlayer player, ItemStack stack, World world, int x, int y, int z, int side, int radius){
         String itemName = stack.stackTagCompound.getString("em_owner");
         boolean isOrb = stack.getItem() instanceof EarthOrb;
@@ -111,6 +113,7 @@ public class AbilityHelper {
         return ToolLevelHandler.getInstance().handleLuckUpgrade(stack, world, block, x, y, z) || ToolLevelHandler.getInstance().handleSilkTouchUpgrade(stack, world, block, x, y, z) || ToolLevelHandler.getInstance().handleAutoSmeltUpgrade(stack, world, block, x, y, z);
     }
 
+
     public static MovingObjectPosition raytraceFromEntity (World world, Entity player, boolean par3, double range)
     {
         float f = 1.0F;
@@ -136,6 +139,7 @@ public class AbilityHelper {
         Vec3 vec31 = vec3.addVector((double) f7 * d3, (double) f6 * d3, (double) f8 * d3);
         return world.func_147447_a(vec3, vec31, par3, !par3, par3);
     }
+    //endregion
 
     public static void setBlock(int x, int y, int z, int side, Block block, World world) {
 

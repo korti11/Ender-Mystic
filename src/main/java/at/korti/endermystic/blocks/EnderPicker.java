@@ -2,6 +2,7 @@ package at.korti.endermystic.blocks;
 
 import at.korti.endermystic.EnderMystic;
 import at.korti.endermystic.ModInfo;
+import at.korti.endermystic.api.util.AbilityHelper;
 import at.korti.endermystic.tileEntity.TileEntityEnderTranfer;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockContainer;
@@ -30,7 +31,9 @@ public class EnderPicker extends BlockContainer {
 
     @Override
     public boolean onBlockActivated(World world, int x, int y, int z, EntityPlayer player, int side, float hitX, float hitY, float hitZ) {
-        player.openGui(EnderMystic.instance, 2, world, x, y, z);
+        if(!player.isSneaking()) {
+            AbilityHelper.setStackInSlot(0, player, (TileEntityEnderTranfer) world.getTileEntity(x, y, z));
+        }
         return super.onBlockActivated(world, x, y, z, player, side, hitX, hitY, hitZ);
     }
 
@@ -42,5 +45,20 @@ public class EnderPicker extends BlockContainer {
                 tileEnderTransfer.copyWorld();
             }
         }
+    }
+
+    @Override
+    public boolean renderAsNormalBlock() {
+        return false;
+    }
+
+    @Override
+    public boolean isOpaqueCube() {
+        return false;
+    }
+
+    @Override
+    public int getRenderType() {
+        return -1;
     }
 }

@@ -2,10 +2,8 @@ package at.korti.endermystic.client.guis;
 
 import at.korti.endermystic.EnderMystic;
 import at.korti.endermystic.client.containers.BookContainer;
-import at.korti.endermystic.client.containers.EnderTransferContainer;
 import at.korti.endermystic.client.guis.book.BookPage;
 import at.korti.endermystic.items.ModItems;
-import at.korti.endermystic.tileEntity.TileEntityEnderTranfer;
 import cpw.mods.fml.common.network.IGuiHandler;
 import cpw.mods.fml.common.network.NetworkRegistry;
 import net.minecraft.entity.player.EntityPlayer;
@@ -30,8 +28,6 @@ public class GuiHandler implements IGuiHandler {
                     return new BookContainer(stack);
                 }
                 break;
-            case 2:
-                return new EnderTransferContainer(player.inventory, (TileEntityEnderTranfer) world.getTileEntity(x, y, z));
         }
 
         return null;
@@ -46,8 +42,6 @@ public class GuiHandler implements IGuiHandler {
                     return new BookPage(true);
                 }
                 break;
-            case 2:
-                return new GuiEnderTransfer(player.inventory, (TileEntityEnderTranfer) world.getTileEntity(x, y, z));
         }
         return null;
     }

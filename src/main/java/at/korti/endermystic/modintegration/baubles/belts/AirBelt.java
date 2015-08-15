@@ -19,11 +19,6 @@ public class AirBelt extends Belt {
     }
 
     @Override
-    public BaubleType getBaubleType(ItemStack itemStack) {
-        return BaubleType.BELT;
-    }
-
-    @Override
     public void onWornTick(ItemStack itemStack, EntityLivingBase entityLivingBase) {
         if (itemStack.stackTagCompound == null) {
             itemStack.stackTagCompound = new NBTTagCompound();
