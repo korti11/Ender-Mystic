@@ -3,6 +3,7 @@ package at.korti.endermystic.modintegration;
 import at.korti.endermystic.ModInfo;
 import at.korti.endermystic.modintegration.baubles.Baubles;
 import at.korti.endermystic.modintegration.cofh.Cofh;
+import at.korti.endermystic.modintegration.ee3.EquivalentExchange;
 import at.korti.endermystic.modintegration.waila.Waila;
 import cpw.mods.fml.common.Loader;
 
@@ -18,12 +19,13 @@ public class ModIntegrationManager {
 
     private static final List<IIntegration> integtrationMods = new ArrayList<>();
 
-    public static void preInit() {
+    public static void initManager() {
         Map<String, Class<? extends IIntegration>> integrationClasses = new HashMap<>();
         try {
             integrationClasses.put(ModInfo.BAUBLES, Baubles.class);
             integrationClasses.put(ModInfo.COFH, Cofh.class);
             integrationClasses.put(ModInfo.WAILA, Waila.class);
+            integrationClasses.put(ModInfo.EQUIVALENTEXCHANGE, EquivalentExchange.class);
         } catch (Throwable e) {
             e.printStackTrace();
         }
@@ -37,7 +39,9 @@ public class ModIntegrationManager {
                 }
             }
         }
+    }
 
+    public static void preInit() {
         for (IIntegration mod : integtrationMods) {
             mod.preInit();
         }
@@ -57,7 +61,7 @@ public class ModIntegrationManager {
 
     public static void clientInit() {
         for (IIntegration mod : integtrationMods) {
-            mod.clientPostInit();
+            mod.clientInit();
         }
     }
 

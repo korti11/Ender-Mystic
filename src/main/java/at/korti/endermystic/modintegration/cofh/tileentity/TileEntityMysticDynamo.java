@@ -5,6 +5,9 @@ import at.korti.endermystic.api.mysticEnergyNetwork.IEnergyProvider;
 import cofh.api.energy.IEnergyHandler;
 import cofh.api.tileentity.IEnergyInfo;
 import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.network.NetworkManager;
+import net.minecraft.network.Packet;
+import net.minecraft.network.play.server.S35PacketUpdateTileEntity;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraftforge.common.util.ForgeDirection;
 
@@ -21,6 +24,7 @@ public class TileEntityMysticDynamo extends TileEntity implements IEnergyHandler
 
     @Override
     public int receiveEnergy(ForgeDirection forgeDirection, int receiveEnergy, boolean simulate) {
+        worldObj.markBlockForUpdate(xCoord, yCoord, zCoord);
         markDirty();
         return energyStorage.transferEnergyIn(receiveEnergy / 2);
     }
@@ -52,6 +56,8 @@ public class TileEntityMysticDynamo extends TileEntity implements IEnergyHandler
 
     @Override
     public int decrEnergy(int energyUse) {
+        worldObj.markBlockForUpdate(xCoord, yCoord, zCoord);
+        markDirty();
         return energyStorage.transferEnergyOut(energyUse);
     }
 
@@ -95,5 +101,17 @@ public class TileEntityMysticDynamo extends TileEntity implements IEnergyHandler
     public void readFromNBT(NBTTagCompound tagCompound) {
         super.readFromNBT(tagCompound);
         energyStorage.setCurrentEnergy(tagCompound.getInteger("Energy"));
+    }
+
+    @Override
+    public Packet getDescriptionPacket() {
+        NBTTagCompound tagCompound = new NBTTagCompound();
+        writeToNBT(tagCompound);
+        return new S35PacketUpdateTileEntity(xCoord, yCoord, zCoord, 1, tagCompound);
+    }
+
+    @Override
+    public void onDataPacket(NetworkManager net, S35PacketUpdateTileEntity pkt) {
+        readFromNBT(pkt.func_148857_g());
     }
 }

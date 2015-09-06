@@ -56,6 +56,7 @@ public class EnderMystic {
         config.load();
 
         UpdateChecker.getInstance().checkForUpdate();
+        ModIntegrationManager.initManager();
 
         ModBlocks.init();
         ModBlocks.load();

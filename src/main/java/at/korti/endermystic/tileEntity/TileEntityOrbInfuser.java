@@ -193,7 +193,7 @@ public class TileEntityOrbInfuser extends TileEntity implements IInventory{
             }
         }
 
-        if(worldObj.isRemote){
+        if(worldObj.isRemote) {
             worldObj.markBlockForUpdate(xCoord, yCoord, zCoord);
         }
     }

@@ -21,6 +21,7 @@ public class CrystalCombinerRenderer extends TileEntityBlockRenderer{
     public void renderTileEntityAt(TileEntity tileEntity, double x, double y, double z, float scale) {
 
         TileEntityCrystalCombiner combiner = (TileEntityCrystalCombiner)tileEntity;
+        CrystalCombinerModel model = (CrystalCombinerModel) this.model;
 
         super.renderTileEntityAt(tileEntity, x, y, z, scale);
 

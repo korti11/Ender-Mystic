@@ -96,10 +96,7 @@ public class TileEntityEnergyDrain extends TileEntity implements IInventory, IEn
             if(worldObj.rand.nextFloat() < 0.1F)
             this.worldObj.spawnParticle("portal", xCoord + 0.5, yCoord + 0.75, zCoord + 0.5, 0, -0.5, 0);
         }
-
-        if(!worldObj.isRemote) {
-            worldObj.markBlockForUpdate(xCoord, yCoord, zCoord);
-        }
+        worldObj.markBlockForUpdate(xCoord, yCoord, zCoord);
     }
 
     @Override

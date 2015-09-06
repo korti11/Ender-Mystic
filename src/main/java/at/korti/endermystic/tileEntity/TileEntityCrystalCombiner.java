@@ -178,11 +178,7 @@ public class TileEntityCrystalCombiner extends TileEntity implements IInventory{
                 recipe = null;
             }
         }
-
-        if(worldObj.isRemote){
-            worldObj.markBlockForUpdate(xCoord, yCoord, zCoord);
-        }
-
+        worldObj.markBlockForUpdate(xCoord, yCoord, zCoord);
     }
 
     @Override

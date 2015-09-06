@@ -38,6 +38,7 @@ public class BookPage extends GuiScreen implements Cloneable {
         this.mainPage = mainPage;
         if(mainPage) {
             entries = new ArrayList<>();
+            generateEntries();
         }
     }
 
@@ -49,6 +50,8 @@ public class BookPage extends GuiScreen implements Cloneable {
         blockList.addItem(new ItemStack(ModBlocks.energyDrain));
         blockList.addItem(new ItemStack(ModBlocks.energyRelay));
         blockList.addItem(new ItemStack(ModBlocks.energyCrystalStorage));
+        blockList.addItem(new ItemStack(ModBlocks.enderPicker));
+        blockList.addItem(new ItemStack(ModBlocks.enderInjector));
 
         //Crystals and Crystal Combiner
         BookEntry crystalCombiner = new BookEntry("CrystalCombiner", this);
@@ -147,6 +150,10 @@ public class BookPage extends GuiScreen implements Cloneable {
         BookEntryItemList utilEntry = new BookEntryItemList("Util", this);
         utilEntry.addItem(new ItemStack(ModItems.enderSacrifice));
         utilEntry.addItem(new ItemStack(ModItems.enderSoulFill));
+        utilEntry.addItem(new ItemStack(ModItems.worldStorageLevelOne));
+        utilEntry.addItem(new ItemStack(ModItems.worldStorageLevelTwo));
+        utilEntry.addItem(new ItemStack(ModItems.worldStorageLevelThree));
+        utilEntry.addItem(new ItemStack(ModItems.worldStorageLevelFour));
 
         entries.add(blockList);
         entries.add(crystalCombiner);

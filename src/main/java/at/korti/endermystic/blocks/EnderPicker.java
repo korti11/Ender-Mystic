@@ -2,6 +2,7 @@ package at.korti.endermystic.blocks;
 
 import at.korti.endermystic.EnderMystic;
 import at.korti.endermystic.ModInfo;
+import at.korti.endermystic.api.crafting.IItemBookCrafting;
 import at.korti.endermystic.api.util.AbilityHelper;
 import at.korti.endermystic.tileEntity.TileEntityEnderTranfer;
 import net.minecraft.block.Block;
@@ -14,7 +15,7 @@ import net.minecraft.world.World;
 /**
  * Created by Korti on 21.06.2015.
  */
-public class EnderPicker extends BlockContainer {
+public class EnderPicker extends BlockContainer implements IItemBookCrafting{
 
     public EnderPicker() {
         super(Material.iron);

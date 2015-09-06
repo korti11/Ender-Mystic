@@ -11,7 +11,7 @@ public interface IIntegration {
 
     void posInit();
 
-    void clientPostInit();
+    void clientInit();
 
     void constructCraftingRecipes();
 

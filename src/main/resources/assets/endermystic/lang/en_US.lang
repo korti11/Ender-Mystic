@@ -37,7 +37,7 @@ item.endermystic.EnderItem.EnderRod.name=Ender Rod
 
 item.endermystic.EnderSoulFillEmpty.name=Ender Soul Fill (Empty)
 item.endermystic.EnderSoulFillFilled.name=Ender Soul Fill (Filled)
-item.endermystic.Book.name=Knowledge of Ender 89th Edition
+item.endermystic.Book.name=Knowledge of Ender 90th Edition
 item.endermystic.WorldStorage.name=World Storage
 
 #Crystals
@@ -87,6 +87,8 @@ tile.endermystic.CrystalCombiner.name=Crystal Combiner
 tile.endermystic.EnderZar.name=Ender Zar
 tile.endermystic.OrbInfuser.name=Orb Infuser
 tile.endermystic.EnergyCrystalStorage.name=Energy Crystal Storage
+tile.endermystic.EnderPicker.name=Ender Picker
+tile.endermystic.EnderInjector.name=Ender Injector
 
 #CoFH
 tile.endermystic.MysticDynamo.name=Mystic Dynamo
@@ -105,6 +107,10 @@ upgrade.endermystic.firey=Firey
 
 #Book Entries
 book.entry.Blocks.title=Blocks
+
+book.entry.EnderPicker.text=With the Ender Picker you can store structures in the World Storage and rebuild as many times as you want. THe Ender Picker must be on the north-west corner.
+
+book.entry.EnderInjector.text=With the Ender Injector you can build structures from the World Storage. The Ender Injector must be on the north-west corner.
 
 book.entry.CrystalCombiner.title=Crystal Combiner
 book.entry.CrystalCombiner.text=With the Crystal Combiner you can craft different types of crystals and some other stuff. It's very easy to use the Crystal Combiner, simply right click on the container.

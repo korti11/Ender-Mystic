@@ -16,7 +16,7 @@ public class BookCombiCrafting extends BookEntryImage{
     private CraftingRecipe recipe;
 
     public BookCombiCrafting(String name, BookPage prevEntry, CraftingRecipe recipe) {
-        super(name, prevEntry, true, false);
+        super(name, prevEntry, true, true);
 
         this.recipe = recipe;
         this.texture = new ResourceLocation(ModInfo.MODID + ":textures/gui/book/book_combi_crafting.png");

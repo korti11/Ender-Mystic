@@ -6,10 +6,12 @@ import at.korti.endermystic.client.guis.book.entry.BookCombiCrafting;
 import at.korti.endermystic.client.guis.book.entry.BookCraftingTable;
 import at.korti.endermystic.client.guis.book.entry.BookEntry;
 import at.korti.endermystic.crafting.CraftingManager;
+import net.minecraft.block.Block;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.FontRenderer;
 import net.minecraft.client.gui.GuiButton;
 import net.minecraft.client.renderer.entity.RenderItem;
+import net.minecraft.init.Blocks;
 import net.minecraft.item.ItemStack;
 import org.lwjgl.opengl.GL11;
 
@@ -31,8 +33,17 @@ public class ImageButton extends GuiButton{
         this.itemRender = new RenderItem();
         this.mc = Minecraft.getMinecraft();
         this.fontRendererObj = fontRenderer;
+        Block block = Block.getBlockFromItem(stack.getItem());
+        String name;
 
-        BookEntry infoEntry = new BookEntry(stack.getItem().getClass().getSimpleName(), stack.getUnlocalizedName() + ".name", null);
+        if (block != Blocks.air) {
+            name = block.getClass().getSimpleName();
+        }
+        else {
+            name = stack.getItem().getClass().getSimpleName();
+        }
+
+        BookEntry infoEntry = new BookEntry(name, stack.getUnlocalizedName() + ".name", null);
         if (infoEntry.getText() != "") {
             ((BookEntry) prevPage).setNextEntry(infoEntry);
             infoEntry.setPrevEntry(prevPage);

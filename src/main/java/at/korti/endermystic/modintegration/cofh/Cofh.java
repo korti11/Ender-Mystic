@@ -62,7 +62,7 @@ public class Cofh implements IIntegration {
     }
 
     @Override
-    public void clientPostInit() {
+    public void clientInit() {
         ClientRegistry.bindTileEntitySpecialRenderer(TileEntityMysticDynamo.class, new TileEntityBlockRenderer(new MysticDynamoModel(), "textures/model/MysticDynamo.png"));
 
         MinecraftForgeClient.registerItemRenderer(Item.getItemFromBlock(Cofh.mysticDynamo), new TileEntityItemRenderer(new TileEntityBlockRenderer(new MysticDynamoModel(), "textures/model/MysticDynamo.png"), new TileEntityMysticDynamo()));

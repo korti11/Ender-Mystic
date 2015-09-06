@@ -7,7 +7,7 @@ public class ModInfo {
 
     public static final String MODID = "endermystic";
     public static final String NAME = "Ender Mystic";
-    public static final String VERSION = "1.0.1.1-Beta";
+    public static final String VERSION = "1.0.2.1-Beta";
 
     //Dependencies
     public static final String BAUBLES = "Baubles";
@@ -16,5 +16,6 @@ public class ModInfo {
     public static final String THERMALEXPANSION = "ThermalExpansion";
     public static final String FORGEMULTIPART = "ForgeMultipart";
     public static final String CARPENTERSBLOCKS = "CarpentersBlocks";
+    public static final String EQUIVALENTEXCHANGE = "EE3";
 
 }

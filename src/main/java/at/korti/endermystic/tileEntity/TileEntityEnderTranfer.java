@@ -1,6 +1,8 @@
 package at.korti.endermystic.tileEntity;
 
 import at.korti.endermystic.ModInfo;
+import at.korti.endermystic.api.mysticEnergyNetwork.EnergyNetworkHandler;
+import at.korti.endermystic.api.mysticEnergyNetwork.IEnergyProvider;
 import at.korti.endermystic.items.WorldStorage;
 import at.korti.endermystic.modintegration.carpentersblock.CarpentersBlockHelper;
 import at.korti.endermystic.modintegration.forgemultipart.ForgeMultipartHelper;
@@ -26,6 +28,7 @@ import net.minecraftforge.common.util.FakePlayer;
 public class TileEntityEnderTranfer extends TileEntity implements IInventory{
 
     private ItemStack inventory;
+    private final int range = 10;
 
     @Override
     public int getSizeInventory() {
@@ -189,53 +192,67 @@ public class TileEntityEnderTranfer extends TileEntity implements IInventory{
             int storageSize = worldStorage.getStorageSize();
             NBTTagList blockList = inventory.stackTagCompound.getTagList("World", 10);
             ItemStack[][][] worldPart = new ItemStack[storageSize][storageSize][storageSize];
-            for (int i = 0; i < blockList.tagCount(); i++) {
-                NBTTagCompound block = blockList.getCompoundTagAt(i);
-                int x = block.getInteger("XCoord");
-                int y = block.getInteger("YCoord");
-                int z = block.getInteger("ZCoord");
-                ItemStack stackBlock = ItemStack.loadItemStackFromNBT(block);
-                worldPart[x][y][z] = stackBlock;
-            }
+            IEnergyProvider energyProvider = EnergyNetworkHandler.getProvider(worldObj, xCoord, yCoord, zCoord, 10);
+            if(energyProvider != null) {
+                for (int i = 0; i < blockList.tagCount(); i++) {
+                    NBTTagCompound block = blockList.getCompoundTagAt(i);
+                    int x = block.getInteger("XCoord");
+                    int y = block.getInteger("YCoord");
+                    int z = block.getInteger("ZCoord");
+                    ItemStack stackBlock = ItemStack.loadItemStackFromNBT(block);
+                    worldPart[x][y][z] = stackBlock;
+                }
 
-            for (int x = xCoord + 1; x < storageSize + xCoord + 1; x++) {
-                for (int y = yCoord; y < storageSize + yCoord; y++) {
-                    for (int z = zCoord + 1; z < storageSize + zCoord + 1; z++) {
-                        ItemStack stack = worldPart[x - (xCoord + 1)][y - yCoord][z - (zCoord + 1)];
-                        if(stack != null) {
-                            Block block = Block.getBlockFromItem(stack.getItem());
-                            if (block.equals(Blocks.air) || block.getUnlocalizedName().contains("Carpenter")) {
-                                Item item = stack.getItem();
-                                EntityPlayer fakePlayer = new FakePlayer(MinecraftServer.getServer().worldServers[0], MinecraftServer.getServer().func_152357_F()[0]);
-                                if (item.getUnlocalizedName().contains("microblock")) {
-                                    if (Loader.isModLoaded(ModInfo.FORGEMULTIPART)) {
-                                        ForgeMultipartHelper.addMultiBlockToWorld(worldObj, x, y, z, stack.stackTagCompound.getCompoundTag("MultiTile"));
+                for (int x = xCoord + 1; x < storageSize + xCoord + 1; x++) {
+                    for (int y = yCoord; y < storageSize + yCoord; y++) {
+                        for (int z = zCoord + 1; z < storageSize + zCoord + 1; z++) {
+                            ItemStack stack = worldPart[x - (xCoord + 1)][y - yCoord][z - (zCoord + 1)];
+                            if (stack != null) {
+                                Block block = Block.getBlockFromItem(stack.getItem());
+                                if (block.equals(Blocks.air) || block.getUnlocalizedName().contains("Carpenter")) {
+                                    Item item = stack.getItem();
+                                    EntityPlayer fakePlayer = new FakePlayer(MinecraftServer.getServer().worldServers[0], MinecraftServer.getServer().func_152357_F()[0]);
+                                    if (item.getUnlocalizedName().contains("microblock")) {
+                                        if (Loader.isModLoaded(ModInfo.FORGEMULTIPART)) {
+                                            ForgeMultipartHelper.addMultiBlockToWorld(worldObj, x, y, z, energyProvider, stack.stackTagCompound.getCompoundTag("MultiTile"));
+                                        }
+                                    } else if (item.getUnlocalizedName().contains("Carpenter") && Loader.isModLoaded(ModInfo.CARPENTERSBLOCKS)) {
+                                        if (energyProvider.hasEnoughEnergy(120)) {
+                                            item.onItemUse(stack, fakePlayer, worldObj, x, y - 1, z, 1, 0F, 0F, 0F);
+                                            TileEntity carpenter = worldObj.getTileEntity(x, y, z);
+                                            CarpentersBlockHelper.setTileEntityData(carpenter, stack.stackTagCompound);
+                                            energyProvider.decrEnergy(120);
+                                        }
+                                    } else {
+                                        if(energyProvider.hasEnoughEnergy(150)) {
+                                            fakePlayer.rotationYaw = (stack.getItemDamage() - 8) * 90;
+                                            item.onItemUse(stack, fakePlayer, worldObj, x, y - 1, z, 1, 0F, 0F, 0F);
+                                            energyProvider.decrEnergy(150);
+                                        }
                                     }
-                                }
-                                else if (item.getUnlocalizedName().contains("Carpenter") && Loader.isModLoaded(ModInfo.CARPENTERSBLOCKS)) {
-                                    item.onItemUse(stack, fakePlayer, worldObj, x, y - 1, z, 1, 0F, 0F, 0F);
-                                    TileEntity carpenter = worldObj.getTileEntity(x, y, z);
-                                    CarpentersBlockHelper.setTileEntityData(carpenter, stack.stackTagCompound);
                                 } else {
-                                    fakePlayer.rotationYaw = (stack.getItemDamage() - 8) * 90;
-                                    item.onItemUse(stack, fakePlayer, worldObj, x, y - 1, z, 1, 0F, 0F, 0F);
-                                }
-                            } else {
-                                boolean isHelperBlockPlaced = false;
-                                if (block instanceof BlockLever) {
-                                    if (worldObj.isAirBlock(x, y + 1, z)) {
-                                        worldObj.setBlock(x, y + 1, z, Blocks.cobblestone);
-                                        isHelperBlockPlaced = true;
+                                    int harvestLevel = block.getHarvestLevel(stack.getItemDamage());
+                                    int defaulEnergy = 100;
+                                    int energy = harvestLevel > 0 ? defaulEnergy * harvestLevel : defaulEnergy;
+                                    if(energyProvider.hasEnoughEnergy(energy)) {
+                                        energyProvider.decrEnergy(energy);
+                                        boolean isHelperBlockPlaced = false;
+                                        if (block instanceof BlockLever) {
+                                            if (worldObj.isAirBlock(x, y + 1, z)) {
+                                                worldObj.setBlock(x, y + 1, z, Blocks.cobblestone);
+                                                isHelperBlockPlaced = true;
+                                            }
+                                        }
+                                        worldObj.setBlock(x, y, z, block);
+                                        worldObj.setBlockMetadataWithNotify(x, y, z, stack.getItemDamage(), 2);
+                                        if (block instanceof BlockLever) {
+                                            if (!worldObj.isAirBlock(x, y + 1, z) && isHelperBlockPlaced) {
+                                                worldObj.setBlockToAir(x, y + 1, z);
+                                            }
+                                        } else if (block instanceof BlockPistonBase) {
+                                            block.onNeighborBlockChange(worldObj, x, y, z, null);
+                                        }
                                     }
-                                }
-                                worldObj.setBlock(x, y, z, block);
-                                worldObj.setBlockMetadataWithNotify(x, y, z, stack.getItemDamage(), 2);
-                                if (block instanceof BlockLever) {
-                                    if (!worldObj.isAirBlock(x, y + 1, z) && isHelperBlockPlaced) {
-                                        worldObj.setBlockToAir(x, y + 1, z);
-                                    }
-                                } else if (block instanceof BlockPistonBase) {
-                                    block.onNeighborBlockChange(worldObj, x, y, z, null);
                                 }
                             }
                         }

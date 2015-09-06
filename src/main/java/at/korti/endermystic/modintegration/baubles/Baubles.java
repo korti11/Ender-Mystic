@@ -59,7 +59,7 @@ public class Baubles implements IIntegration{
     }
 
     @Override
-    public void clientPostInit() {
+    public void clientInit() {
 
     }
 

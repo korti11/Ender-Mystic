@@ -35,7 +35,7 @@ public class Waila implements IIntegration {
     }
 
     @Override
-    public void clientPostInit() {
+    public void clientInit() {
 
     }
 

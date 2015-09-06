@@ -28,8 +28,8 @@ public class TileEntityEnergyCrystalStorage extends TileEntity implements IEnerg
             if (provider != null && storage.getMaxTransferIn() <= provider.getEnergyToProvide()) {
                 storage.transferEnergyIn(provider.decrEnergy(storage.getMaxTransferIn()));
             }
-            worldObj.markBlockForUpdate(xCoord, yCoord, zCoord);
         }
+        worldObj.markBlockForUpdate(xCoord, yCoord, zCoord);
     }
 
     @Override

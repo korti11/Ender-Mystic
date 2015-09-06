@@ -318,6 +318,26 @@ public class CraftingManager {
                 "I I",
                 "I I", 'I', new ItemStack(ModItems.enderItem, 0, 1)
         );
+        GameRegistry.addShapedRecipe(new ItemStack(ModItems.worldStorageLevelOne),
+                " P ",
+                "PEP",
+                " P ", 'P', new ItemStack(Items.paper), 'E', new ItemStack(Items.ender_pearl)
+        );
+        GameRegistry.addShapedRecipe(new ItemStack(ModItems.worldStorageLevelTwo),
+                " P ",
+                "PWP",
+                " P ", 'P', new ItemStack(Items.paper), 'W', new ItemStack(ModItems.worldStorageLevelOne)
+        );
+        GameRegistry.addShapedRecipe(new ItemStack(ModItems.worldStorageLevelThree),
+                " P ",
+                "PWP",
+                " P ", 'P', new ItemStack(Items.paper), 'W', new ItemStack(ModItems.worldStorageLevelTwo)
+        );
+        GameRegistry.addShapedRecipe(new ItemStack(ModItems.worldStorageLevelFour),
+                " P ",
+                "PWP",
+                " P ", 'P', new ItemStack(Items.paper), 'W', new ItemStack(ModItems.worldStorageLevelThree)
+        );
 
         //Blocks
         GameRegistry.addShapedRecipe(new ItemStack(ModBlocks.crystalCombiner),
@@ -339,6 +359,16 @@ public class CraftingManager {
                 "HHH",
                 "AEA",
                 "HHH", 'H', new ItemStack(Blocks.hardened_clay), 'A', new ItemStack(ModItems.apprenticeOrb), 'E', new ItemStack(ModItems.crystalItem, 1, 7)
+        );
+        GameRegistry.addShapedRecipe(new ItemStack(ModBlocks.enderPicker),
+                "HSH",
+                "QEQ",
+                "HPH", 'H', new ItemStack(Blocks.hardened_clay), 'S', new ItemStack(Blocks.sticky_piston), 'E', new ItemStack(ModItems.crystalItem, 1, 7), 'Q', new ItemStack(Blocks.quartz_block), 'P', new ItemStack(Items.ender_pearl)
+        );
+        GameRegistry.addShapedRecipe(new ItemStack(ModBlocks.enderInjector),
+                "HSH",
+                "QEQ",
+                "HPH", 'H', new ItemStack(Blocks.hardened_clay), 'S', new ItemStack(Blocks.piston), 'E', new ItemStack(ModItems.crystalItem, 1, 7), 'Q', new ItemStack(Blocks.quartz_block), 'P', new ItemStack(Items.ender_pearl)
         );
     }
 
