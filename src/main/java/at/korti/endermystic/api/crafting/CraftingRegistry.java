@@ -127,6 +127,15 @@ public class CraftingRegistry {
     }
 
     /**
+     * Get the simple crafting recipe of the index.
+     * @param index
+     * @return Simple crafting recipe of the index.
+     */
+    public CraftingRecipe getCraftingRecipe(int index) {
+        return recipes.get(index);
+    }
+
+    /**
      * Get the amount of all recipes.
      * @return Amount of all recipes.
      */

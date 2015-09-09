@@ -134,7 +134,7 @@ public class TileEntityOrbInfuser extends TileEntity implements IInventory{
                                     continue;
                                 }
 
-                                if (getStackInSlot(l).getItem() == recipe.getRequirements(j).getItem() && getStackInSlot(l).getItemDamage() == recipe.getRequirements(j).getItemDamage() && !usedSlots.contains(l)) {
+                                if (getStackInSlot(l).getItem() == recipe.getRequirement(j).getItem() && getStackInSlot(l).getItemDamage() == recipe.getRequirement(j).getItemDamage() && !usedSlots.contains(l)) {
                                     checkRequirementCount++;
                                     usedSlots.add(l);
                                     break;

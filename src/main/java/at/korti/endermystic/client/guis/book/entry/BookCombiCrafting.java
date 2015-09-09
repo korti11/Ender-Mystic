@@ -62,8 +62,8 @@ public class BookCombiCrafting extends BookEntryImage{
                 if (i % stackPerLine == 0 && i != 0) {
                     y += 20;
                 }
-                //this.addStackImage(recipe.getRequirements(i), x + (16 * (i % stackPerLine)), y);
-                this.buttonList.add(new ImageButton(2, this.posX + x + (16 * (i % stackPerLine)), y, recipe.getRequirements(i), fontRendererObj, this));
+                //this.addStackImage(recipe.getRequirement(i), x + (16 * (i % stackPerLine)), y);
+                this.buttonList.add(new ImageButton(2, this.posX + x + (16 * (i % stackPerLine)), y, recipe.getRequirement(i), fontRendererObj, this));
             }
             this.addStackImage(recipe.getResult(), (this.bookImageWidth / 2) - 13, this.posY + 95);
         }

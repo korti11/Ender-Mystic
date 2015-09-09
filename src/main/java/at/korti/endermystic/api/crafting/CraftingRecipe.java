@@ -34,8 +34,12 @@ public class CraftingRecipe {
         return result;
     }
 
-    public ItemStack getRequirements(int slot) {
+    public ItemStack getRequirement(int slot) {
         return requirements[slot];
+    }
+
+    public ItemStack[] getRequirements() {
+        return requirements;
     }
 
     public int requirementsCount(){
