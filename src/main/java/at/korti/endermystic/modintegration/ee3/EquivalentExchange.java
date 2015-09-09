@@ -14,6 +14,10 @@ public class EquivalentExchange implements IIntegration {
 
     public boolean isLoaded = false;
 
+    public static float getEMCValue(ItemStack stack) {
+        return EnergyValueRegistryProxy.getEnergyValueForStack(stack).getValue();
+    }
+
     @Override
     public void preInit() {
         isLoaded = Loader.isModLoaded(ModInfo.EQUIVALENTEXCHANGE);

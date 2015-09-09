@@ -9,4 +9,8 @@ public interface IEnergyRelay extends IEnergy {
 
     IEnergyProvider getConnectionToProvider();
 
+    IEnergyRelay getLastReleay();
+
+    void findNewConnection(int energy);
+
 }

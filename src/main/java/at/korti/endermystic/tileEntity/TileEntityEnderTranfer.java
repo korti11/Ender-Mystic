@@ -5,6 +5,7 @@ import at.korti.endermystic.api.mysticEnergyNetwork.EnergyNetworkHandler;
 import at.korti.endermystic.api.mysticEnergyNetwork.IEnergyProvider;
 import at.korti.endermystic.items.WorldStorage;
 import at.korti.endermystic.modintegration.carpentersblock.CarpentersBlockHelper;
+import at.korti.endermystic.modintegration.ee3.EquivalentExchange;
 import at.korti.endermystic.modintegration.forgemultipart.ForgeMultipartHelper;
 import cpw.mods.fml.common.Loader;
 import net.minecraft.block.*;
@@ -209,6 +210,16 @@ public class TileEntityEnderTranfer extends TileEntity implements IInventory{
                             ItemStack stack = worldPart[x - (xCoord + 1)][y - yCoord][z - (zCoord + 1)];
                             if (stack != null) {
                                 Block block = Block.getBlockFromItem(stack.getItem());
+                                float energy = 0;
+                                if (Loader.isModLoaded(ModInfo.EQUIVALENTEXCHANGE)) {
+                                    energy = EquivalentExchange.getEMCValue(stack);
+                                    if(energy != 0) {
+                                        energyProvider = EnergyNetworkHandler.getProvider(worldObj, xCoord, yCoord, zCoord, 10, (int) energy);
+                                        if (energyProvider == null) {
+                                            continue;
+                                        }
+                                    }
+                                }
                                 if (block.equals(Blocks.air) || block.getUnlocalizedName().contains("Carpenter")) {
                                     Item item = stack.getItem();
                                     EntityPlayer fakePlayer = new FakePlayer(MinecraftServer.getServer().worldServers[0], MinecraftServer.getServer().func_152357_F()[0]);
@@ -217,25 +228,29 @@ public class TileEntityEnderTranfer extends TileEntity implements IInventory{
                                             ForgeMultipartHelper.addMultiBlockToWorld(worldObj, x, y, z, energyProvider, stack.stackTagCompound.getCompoundTag("MultiTile"));
                                         }
                                     } else if (item.getUnlocalizedName().contains("Carpenter") && Loader.isModLoaded(ModInfo.CARPENTERSBLOCKS)) {
-                                        if (energyProvider.hasEnoughEnergy(120)) {
+                                        energy = energy == 0 ? 120 : energy;
+                                        if (energyProvider.hasEnoughEnergy((int) energy)) {
                                             item.onItemUse(stack, fakePlayer, worldObj, x, y - 1, z, 1, 0F, 0F, 0F);
                                             TileEntity carpenter = worldObj.getTileEntity(x, y, z);
                                             CarpentersBlockHelper.setTileEntityData(carpenter, stack.stackTagCompound);
-                                            energyProvider.decrEnergy(120);
+                                            energyProvider.decrEnergy((int) energy);
                                         }
                                     } else {
-                                        if(energyProvider.hasEnoughEnergy(150)) {
+                                        energy = energy == 0 ? 150 : energy;
+                                        if (energyProvider.hasEnoughEnergy((int) energy)) {
                                             fakePlayer.rotationYaw = (stack.getItemDamage() - 8) * 90;
                                             item.onItemUse(stack, fakePlayer, worldObj, x, y - 1, z, 1, 0F, 0F, 0F);
-                                            energyProvider.decrEnergy(150);
+                                            energyProvider.decrEnergy((int) energy);
                                         }
                                     }
                                 } else {
                                     int harvestLevel = block.getHarvestLevel(stack.getItemDamage());
                                     int defaulEnergy = 100;
-                                    int energy = harvestLevel > 0 ? defaulEnergy * harvestLevel : defaulEnergy;
-                                    if(energyProvider.hasEnoughEnergy(energy)) {
-                                        energyProvider.decrEnergy(energy);
+                                    if(energy == 0) {
+                                        energy = harvestLevel > 0 ? defaulEnergy * harvestLevel : defaulEnergy;
+                                    }
+                                    if(energyProvider.hasEnoughEnergy((int)energy)) {
+                                        energyProvider.decrEnergy((int)energy);
                                         boolean isHelperBlockPlaced = false;
                                         if (block instanceof BlockLever) {
                                             if (worldObj.isAirBlock(x, y + 1, z)) {

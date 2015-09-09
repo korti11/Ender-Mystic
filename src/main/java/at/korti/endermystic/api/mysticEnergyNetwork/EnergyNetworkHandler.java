@@ -113,9 +113,10 @@ public class EnergyNetworkHandler {
      * @param yCoord
      * @param zCoord
      * @param range
-     * @return Nearest energy provider.
+     * @param energy
+     * @return Nearest energy provider with specific energy use.
      */
-    public static IEnergyProvider getProvider(World worldObj,int xCoord, int yCoord, int zCoord, int range){
+    public static IEnergyProvider getProvider(World worldObj,int xCoord, int yCoord, int zCoord, int range, int energy){
         boolean isStorage = worldObj.getTileEntity(xCoord,yCoord,zCoord) instanceof TileEntityEnergyCrystalStorage;
         for (int x = xCoord - (range / 2); x < xCoord + (range / 2); x++) {
             for (int y = yCoord - (range / 2); y < yCoord + (range / 2); y++) {
@@ -124,27 +125,33 @@ public class EnergyNetworkHandler {
                     if(tileEntity instanceof IEnergyProvider){
                         if(isStorage && !(tileEntity instanceof TileEntityEnergyCrystalStorage)) {
                             IEnergyProvider provider = (IEnergyProvider) tileEntity;
-                            if(provider != null && provider.hasEnoughEnergy(1)){
+                            if(provider != null && provider.hasEnoughEnergy(energy)){
                                 return provider;
                             }
                         }
                         else if(!isStorage) {
                             IEnergyProvider provider = (IEnergyProvider) tileEntity;
-                            if(provider != null && provider.hasEnoughEnergy(1)) {
+                            if(provider != null && provider.hasEnoughEnergy(energy)) {
                                 return provider;
                             }
                         }
                     }
-                    else if(tileEntity instanceof IEnergyRelay){
-                        IEnergyProvider provider = ((IEnergyRelay)tileEntity).getConnectionToProvider();
-                        if(isStorage && !(provider instanceof TileEntityEnergyCrystalStorage)) {
-                            if (provider != null && provider.hasEnoughEnergy(1)) {
+                    else if(tileEntity instanceof IEnergyRelay) {
+                        IEnergyRelay relay = (IEnergyRelay) tileEntity;
+                        IEnergyProvider provider = relay.getConnectionToProvider();
+                        if (isStorage && !(provider instanceof TileEntityEnergyCrystalStorage)) {
+                            if (provider != null && provider.hasEnoughEnergy(energy)) {
                                 return provider;
+                            } else if(provider != null){
+                                relay.getLastReleay().findNewConnection(energy);
+                                return relay.getConnectionToProvider();
                             }
-                        }
-                        else if(!isStorage){
-                            if (provider != null && provider.hasEnoughEnergy(1)) {
+                        } else if (!isStorage) {
+                            if (provider != null && provider.hasEnoughEnergy(energy)) {
                                 return provider;
+                            } else if (provider != null) {
+                                relay.getLastReleay().findNewConnection(energy);
+                                return relay.getConnectionToProvider();
                             }
                         }
                     }
@@ -153,6 +160,19 @@ public class EnergyNetworkHandler {
         }
 
         return null;
+    }
+
+    /**
+     * Get the connection to the nearest energy provider.
+     * @param worldObj
+     * @param xCoord
+     * @param yCoord
+     * @param zCoord
+     * @param range
+     * @return Nearest energy provider.
+     */
+    public static IEnergyProvider getProvider(World worldObj, int xCoord, int zCoord, int yCoord, int range) {
+        return getProvider(worldObj, xCoord, zCoord, yCoord, range, 1);
     }
 
     private static World getWorld(){

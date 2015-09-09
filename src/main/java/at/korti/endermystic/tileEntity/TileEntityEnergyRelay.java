@@ -20,6 +20,18 @@ public class TileEntityEnergyRelay extends TileEntity implements IEnergyRelay{
 
     @Override
     public void updateEntity() {
+        findConnection(0);
+    }
+
+    public boolean isConnected(){
+        if(connection != null) {
+            TileEntity tileEntity = (TileEntity) connection;
+            return worldObj.getTileEntity(tileEntity.xCoord, tileEntity.yCoord, tileEntity.zCoord) instanceof IEnergy;
+        }
+        return false;
+    }
+
+    public void findConnection(int energy) {
         if(!isConnected()) {
             for (int x = xCoord - (range / 2); x < xCoord + (range / 2); x++) {
                 for (int y = Math.max(0, yCoord - (range / 2)); y < yCoord + (range / 2); y++) {
@@ -34,7 +46,7 @@ public class TileEntityEnergyRelay extends TileEntity implements IEnergyRelay{
                                     continue;
                                 }
                                 connection = (IEnergy) tileEntity;
-                            } else if (tileEntity instanceof IEnergyProvider && connectionsToProvider > 0) {
+                            } else if (tileEntity instanceof IEnergyProvider && connectionsToProvider > 0 && ((IEnergyProvider)tileEntity).hasEnoughEnergy(energy)) {
                                 connectionsToProvider = 0;
                                 connection = (IEnergy) tileEntity;
                                 return;
@@ -46,12 +58,9 @@ public class TileEntityEnergyRelay extends TileEntity implements IEnergyRelay{
         }
     }
 
-    public boolean isConnected(){
-        if(connection != null) {
-            TileEntity tileEntity = (TileEntity) connection;
-            return worldObj.getTileEntity(tileEntity.xCoord, tileEntity.yCoord, tileEntity.zCoord) instanceof IEnergy;
-        }
-        return false;
+    private void resetConnection() {
+        connection = null;
+        connectionsToProvider = Integer.MAX_VALUE;
     }
 
     @Override
@@ -69,5 +78,22 @@ public class TileEntityEnergyRelay extends TileEntity implements IEnergyRelay{
         }
 
         return null;
+    }
+
+    @Override
+    public IEnergyRelay getLastReleay() {
+        if (connection instanceof IEnergyRelay) {
+            return ((IEnergyRelay) connection).getLastReleay();
+        }
+        else if (connection instanceof IEnergyProvider) {
+            return this;
+        }
+        return null;
+    }
+
+    @Override
+    public void findNewConnection(int energy) {
+        resetConnection();
+        findConnection(energy);
     }
 }
