@@ -66,15 +66,15 @@ public class ToolLevelHandler {
     }
 
     private void generateMaxXpValues() {
-        int[] newMaxXpForLavels = new int[levelNames.length];
+        int[] newMaxXpForLevels = new int[levelNames.length];
         for (int i = 0; i < maxXpForLevels.length; i++) {
-            newMaxXpForLavels[i] = maxXpForLevels[i];
+            newMaxXpForLevels[i] = maxXpForLevels[i];
         }
         int pos = maxXpForLevels.length - 1;
         for (int i = maxXpForLevels.length; i < levelNames.length; i++) {
-            newMaxXpForLavels[i] = ((newMaxXpForLavels[pos++] / 100) * 100) + 100 + random.nextInt(100);
+            newMaxXpForLevels[i] = ((newMaxXpForLevels[pos++] / 100) * 100) + 100 + random.nextInt(100);
         }
-        maxXpForLevels = newMaxXpForLavels;
+        maxXpForLevels = newMaxXpForLevels;
         maxXpProperty.set(maxXpForLevels);
     }
 

@@ -167,26 +167,6 @@ public class EnderSoulArmor extends ItemArmor implements IItemBookCrafting{
     }
 
     @Override
-    public void onUpdate(ItemStack stack, World world, Entity entity, int p_77663_4_, boolean p_77663_5_) {
-        super.onUpdate(stack, world, entity, p_77663_4_, p_77663_5_);
-
-        if (entity instanceof EntityPlayer) {
-            EntityPlayer player = (EntityPlayer) entity;
-            for (int i = 0; i < player.inventory.armorInventory.length; i++) {
-                if (player.inventory.armorInventory[i] != null && player.inventory.armorInventory[i].equals(stack))  {
-                    if(stack.stackTagCompound == null || !stack.stackTagCompound.hasKey("em_owner")){
-                        player.addChatMessage(new ChatComponentText(stack.getDisplayName() + " is not bound to a player"));
-                    }
-                    else if (stack.stackTagCompound != null && EnergyNetworkHandler.isEnoughEnergy(energyUse, stack.stackTagCompound.getString("em_owner"))) {
-                        EnergyNetworkHandler.decEnergy(energyUse, stack.stackTagCompound.getString("em_owner"));
-                        stack.setItemDamage(0);
-                    }
-                }
-            }
-        }
-    }
-
-    @Override
     public void onArmorTick(World world, EntityPlayer player, ItemStack itemStack) {
         super.onArmorTick(world, player, itemStack);
 

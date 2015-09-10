@@ -14,6 +14,7 @@ import net.minecraft.util.ChatComponentText;
 import net.minecraft.util.EnumChatFormatting;
 import net.minecraftforge.event.entity.EntityJoinWorldEvent;
 import net.minecraftforge.event.entity.living.LivingDeathEvent;
+import net.minecraftforge.event.entity.living.LivingHurtEvent;
 
 /**
  * Created by Korti on 27.10.2014.
@@ -52,5 +53,9 @@ public class EventManager {
                 }
             }
         }
+    }
+
+    public void onPlayerDamage(LivingHurtEvent event) {
+
     }
 }
