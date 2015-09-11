@@ -28,10 +28,10 @@ public class AirOrb extends Orb {
         if(stack.stackTagCompound != null){
 
             if(stack.stackTagCompound.getBoolean("em_active")){
-                list.add("Air under water: Activated");
+                list.add("Breathing: Activated");
             }
             else{
-                list.add("Air under water: Deactivated");
+                list.add("Breathing: Deactivated");
             }
 
         }

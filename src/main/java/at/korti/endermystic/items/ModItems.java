@@ -24,6 +24,7 @@ public class ModItems {
     public static EarthOrb earthOrb;
     public static AirOrb airOrb;
     public static EnderZarOrb enderZarOrb;
+    public static ActivationOrb activationOrb;
 
     public static TestOrb testOrb;
 
@@ -63,6 +64,7 @@ public class ModItems {
         earthOrb = new EarthOrb();
         airOrb = new AirOrb();
         enderZarOrb = new EnderZarOrb();
+        activationOrb = new ActivationOrb();
 
         testOrb = new TestOrb();
 
@@ -106,6 +108,7 @@ public class ModItems {
         GameRegistry.registerItem(enderZarOrb, enderZarOrb.getName(), ModInfo.MODID);
         GameRegistry.registerItem(waterOrb, waterOrb.getName(), ModInfo.MODID);
         GameRegistry.registerItem(fireOrb, fireOrb.getName(), ModInfo.MODID);
+        GameRegistry.registerItem(activationOrb, activationOrb.getName(), ModInfo.MODID);
 
         GameRegistry.registerItem(testOrb, testOrb.getName(), ModInfo.MODID);
 

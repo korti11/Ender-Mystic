@@ -4,6 +4,7 @@ import at.korti.endermystic.api.crafting.CraftingRegistry;
 import at.korti.endermystic.api.crafting.CrystalCombinerRecipe;
 import at.korti.endermystic.api.mysticEnergyNetwork.EnergyNetworkHandler;
 import at.korti.endermystic.api.mysticEnergyNetwork.IEnergyProvider;
+import at.korti.endermystic.api.util.IActivation;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.inventory.IInventory;
 import net.minecraft.item.ItemStack;
@@ -17,144 +18,77 @@ import net.minecraft.tileentity.TileEntity;
 /**
  * Created by Korti on 11.04.2015.
  */
-public class TileEntityCrystalCombiner extends TileEntity implements IInventory{
+public class TileEntityCrystalCombiner extends TileEntityInventory implements IActivation{
 
-    private ItemStack[] inventory = new ItemStack[5];
     private int timeToCraft = 0;
-    private int timeStartToCraft = 0;
     private CrystalCombinerRecipe recipe = null;
     private int checkRequirementCount = 0;
     private final int range = 10;
 
-    @Override
-    public int getSizeInventory() {
-        return inventory.length;
+    public TileEntityCrystalCombiner() {
+        super("CrystalCombiner", 5, 1, true);
     }
 
     @Override
-    public ItemStack getStackInSlot(int slot) {
-        return inventory[slot];
-    }
+    public void activate(Object obj) {
+        if(recipe == null) {
+            for (int i = 0; i < CraftingRegistry.getInstance().recipeCount(); i++) {
+                recipe = CraftingRegistry.getInstance().getCrystalCombinerRecipe(i);
+                checkRequirementCount = 0;
 
-    @Override
-    public ItemStack decrStackSize(int slot, int amount) {
-        ItemStack itemStack = getStackInSlot(slot);
+                if (recipe != null) {
+                    for (int j = 0; j < recipe.requirementsCount(); j++) {
+                        for (int l = 0; l < getSizeInventory() - 1; l++) {
+                            if (getStackInSlot(l) == null) {
+                                continue;
+                            }
 
-        if(itemStack != null){
-            if(itemStack.stackSize <= amount){
-                setInventorySlotContents(slot, null);
+                            if (getStackInSlot(l).getItem() == recipe.getRequirement(j).getItem() && getStackInSlot(l).getItemDamage() == recipe.getRequirement(j).getItemDamage()) {
+                                checkRequirementCount++;
+                                break;
+                            }
+                        }
+                    }
+
+                    if (recipe.requirementsCount() == checkRequirementCount && countSlotsUsed() == recipe.requirementsCount()) {
+                        break;
+                    }
+                }
             }
-            else {
-                itemStack = itemStack.splitStack(amount);
+
+            if (recipe != null && recipe.requirementsCount() == checkRequirementCount && getStackInSlot(4) == null) {
+                timeToCraft = recipe.getTimeToCraft();
+                for (int l = 0; l < 128; ++l) {
+                    float f = (worldObj.rand.nextFloat() - 0.5F) * 0.2F;
+                    float f1 = (worldObj.rand.nextFloat() - 0.5F) * 0.2F;
+                    float f2 = (worldObj.rand.nextFloat() - 0.5F) * 0.2F;
+                    this.worldObj.spawnParticle("portal", xCoord + 0.5, yCoord + 0.75, zCoord + 0.5, (double) f, (double) f1, (double) f2);
+                }
+            } else {
+                recipe = null;
             }
         }
-        return itemStack;
-    }
-
-    @Override
-    public ItemStack getStackInSlotOnClosing(int slot) {
-        ItemStack stack = getStackInSlot(slot);
-        setInventorySlotContents(slot, null);
-        return stack;
-    }
-
-    @Override
-    public void setInventorySlotContents(int slot, ItemStack stack) {
-        inventory[slot] = stack;
-        if(stack != null && stack.stackSize > getInventoryStackLimit()){
-            stack.stackSize = getInventoryStackLimit();
+        else {
+            timeToCraft = 0;
+            recipe = null;
         }
-        timeStartToCraft = 80;
-    }
-
-    @Override
-    public String getInventoryName() {
-        return "CrystelCombiner";
-    }
-
-    @Override
-    public boolean hasCustomInventoryName() {
-        return false;
-    }
-
-    @Override
-    public int getInventoryStackLimit() {
-        return 1;
-    }
-
-    @Override
-    public boolean isUseableByPlayer(EntityPlayer player) {
-        return player.getDistanceSq(xCoord + 0.5, yCoord + 0.5, zCoord + 0.5) <= 64;
-    }
-
-    @Override
-    public void openInventory() {
-
-    }
-
-    @Override
-    public void closeInventory() {
-
-    }
-
-    @Override
-    public boolean isItemValidForSlot(int slot, ItemStack stack) {
-        return true;
     }
 
     @Override
     public void updateEntity() {
-        if(isInventoryEmpty()){
+        if(isInventoryEmpty() || worldObj.isRemote){
             return;
         }
 
         IEnergyProvider provider = EnergyNetworkHandler.getProvider(worldObj, xCoord, yCoord, zCoord, range);
 
-        if(provider != null && provider.canProvideEnergy()) {
-            if (timeToCraft == 0 && recipe == null && timeStartToCraft == 0) {
-                for (int i = 0; i < CraftingRegistry.getInstance().recipeCount(); i++) {
-                    recipe = CraftingRegistry.getInstance().getCrystalCombinerRecipe(i);
-                    checkRequirementCount = 0;
-
-                    if (recipe != null) {
-                        for (int j = 0; j < recipe.requirementsCount(); j++) {
-                            for (int l = 0; l < getSizeInventory() - 1; l++) {
-                                if (getStackInSlot(l) == null) {
-                                    continue;
-                                }
-
-                                if (getStackInSlot(l).getItem() == recipe.getRequirement(j).getItem() && getStackInSlot(l).getItemDamage() == recipe.getRequirement(j).getItemDamage()) {
-                                    checkRequirementCount++;
-                                    break;
-                                }
-                            }
-                        }
-
-                        if (recipe.requirementsCount() == checkRequirementCount && countSlotsUsed() == recipe.requirementsCount()) {
-                            break;
-                        }
-                    }
-                }
-
-                if (recipe != null && recipe.requirementsCount() == checkRequirementCount && getStackInSlot(4) == null) {
-                    timeToCraft = recipe.getTimeToCraft();
-                    for (int l = 0; l < 128; ++l) {
-                        float f = (worldObj.rand.nextFloat() - 0.5F) * 0.2F;
-                        float f1 = (worldObj.rand.nextFloat() - 0.5F) * 0.2F;
-                        float f2 = (worldObj.rand.nextFloat() - 0.5F) * 0.2F;
-                        this.worldObj.spawnParticle("portal", xCoord + 0.5, yCoord + 0.75, zCoord + 0.5, (double) f, (double) f1, (double) f2);
-                    }
-                } else {
-                    recipe = null;
-                }
-            }
-
-            if (timeToCraft == 0 && recipe != null && checkRequirementCount == recipe.requirementsCount() && timeStartToCraft == 0) {
+        if(provider != null && provider.canProvideEnergy() && recipe != null) {
+            if (timeToCraft == 0 && checkRequirementCount == recipe.requirementsCount()) {
                 clearRequirementsSlots();
                 setInventorySlotContents(4, new ItemStack(recipe.getResult().getItem(), 1, recipe.getResult().getItemDamage()));
                 recipe = null;
                 markDirty();
-            } else if (timeToCraft > 0 && timeStartToCraft == 0 && recipe != null && provider.hasEnoughEnergy(recipe.getEnergyUsePerTick())) {
+            } else if (timeToCraft > 0 && provider.hasEnoughEnergy(recipe.getEnergyUsePerTick())) {
                 timeToCraft--;
                 if (provider instanceof TileEntityEnergyDrain) {
                     if (timeToCraft % 2 == 0) {
@@ -172,10 +106,6 @@ public class TileEntityCrystalCombiner extends TileEntity implements IInventory{
                         this.worldObj.spawnParticle("portal", xCoord + 0.5, yCoord + 0.75, zCoord + 0.5, (double) f, (double) f1, (double) f2);
                     }
                 }
-            } else if (timeStartToCraft > 0) {
-                timeStartToCraft--;
-                timeToCraft = 0;
-                recipe = null;
             }
         }
         worldObj.markBlockForUpdate(xCoord, yCoord, zCoord);
@@ -230,7 +160,7 @@ public class TileEntityCrystalCombiner extends TileEntity implements IInventory{
     }
 
     private boolean isInventoryEmpty() {
-        for (ItemStack stack : inventory) {
+        for (ItemStack stack : super.getInventory()) {
             if(stack != null){
                 return false;
             }
