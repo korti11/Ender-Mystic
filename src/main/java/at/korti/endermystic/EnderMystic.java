@@ -1,6 +1,5 @@
 package at.korti.endermystic;
 
-import at.korti.endermystic.api.armor.ArmorLevelHandler;
 import at.korti.endermystic.api.tools.ToolLevelHandler;
 import at.korti.endermystic.blocks.ModBlocks;
 import at.korti.endermystic.client.guis.GuiHandler;
@@ -75,7 +74,6 @@ public class EnderMystic {
         GameRegistry.registerWorldGenerator(new OreGeneration(), 1);
 
         ToolLevelHandler.getInstance().initToolLevelSystem();
-        ArmorLevelHandler.getInstance().initLevelSystem();
     }
 
     @Mod.EventHandler
