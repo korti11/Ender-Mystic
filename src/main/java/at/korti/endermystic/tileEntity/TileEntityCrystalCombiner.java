@@ -31,46 +31,47 @@ public class TileEntityCrystalCombiner extends TileEntityInventory implements IA
 
     @Override
     public void activate(Object obj) {
-        if(recipe == null) {
-            for (int i = 0; i < CraftingRegistry.getInstance().recipeCount(); i++) {
-                recipe = CraftingRegistry.getInstance().getCrystalCombinerRecipe(i);
-                checkRequirementCount = 0;
+        if(!worldObj.isRemote) {
+            if (recipe == null) {
+                for (int i = 0; i < CraftingRegistry.getInstance().recipeCount(); i++) {
+                    recipe = CraftingRegistry.getInstance().getCrystalCombinerRecipe(i);
+                    checkRequirementCount = 0;
 
-                if (recipe != null) {
-                    for (int j = 0; j < recipe.requirementsCount(); j++) {
-                        for (int l = 0; l < getSizeInventory() - 1; l++) {
-                            if (getStackInSlot(l) == null) {
-                                continue;
-                            }
+                    if (recipe != null) {
+                        for (int j = 0; j < recipe.requirementsCount(); j++) {
+                            for (int l = 0; l < getSizeInventory() - 1; l++) {
+                                if (getStackInSlot(l) == null) {
+                                    continue;
+                                }
 
-                            if (getStackInSlot(l).getItem() == recipe.getRequirement(j).getItem() && getStackInSlot(l).getItemDamage() == recipe.getRequirement(j).getItemDamage()) {
-                                checkRequirementCount++;
-                                break;
+                                if (getStackInSlot(l).getItem() == recipe.getRequirement(j).getItem() && getStackInSlot(l).getItemDamage() == recipe.getRequirement(j).getItemDamage()) {
+                                    checkRequirementCount++;
+                                    break;
+                                }
                             }
                         }
-                    }
 
-                    if (recipe.requirementsCount() == checkRequirementCount && countSlotsUsed() == recipe.requirementsCount()) {
-                        break;
+                        if (recipe.requirementsCount() == checkRequirementCount && countSlotsUsed() == recipe.requirementsCount()) {
+                            break;
+                        }
                     }
                 }
-            }
 
-            if (recipe != null && recipe.requirementsCount() == checkRequirementCount && getStackInSlot(4) == null) {
-                timeToCraft = recipe.getTimeToCraft();
-                for (int l = 0; l < 128; ++l) {
-                    float f = (worldObj.rand.nextFloat() - 0.5F) * 0.2F;
-                    float f1 = (worldObj.rand.nextFloat() - 0.5F) * 0.2F;
-                    float f2 = (worldObj.rand.nextFloat() - 0.5F) * 0.2F;
-                    this.worldObj.spawnParticle("portal", xCoord + 0.5, yCoord + 0.75, zCoord + 0.5, (double) f, (double) f1, (double) f2);
+                if (recipe != null && recipe.requirementsCount() == checkRequirementCount && getStackInSlot(4) == null) {
+                    timeToCraft = recipe.getTimeToCraft();
+                    for (int l = 0; l < 128; ++l) {
+                        float f = (worldObj.rand.nextFloat() - 0.5F) * 0.2F;
+                        float f1 = (worldObj.rand.nextFloat() - 0.5F) * 0.2F;
+                        float f2 = (worldObj.rand.nextFloat() - 0.5F) * 0.2F;
+                        this.worldObj.spawnParticle("portal", xCoord + 0.5, yCoord + 0.75, zCoord + 0.5, (double) f, (double) f1, (double) f2);
+                    }
+                } else {
+                    recipe = null;
                 }
             } else {
+                timeToCraft = 0;
                 recipe = null;
             }
-        }
-        else {
-            timeToCraft = 0;
-            recipe = null;
         }
     }
 
@@ -116,47 +117,13 @@ public class TileEntityCrystalCombiner extends TileEntityInventory implements IA
         super.writeToNBT(compound);
         compound.setShort("TimeToCraft", (short) timeToCraft);
         compound.setShort("CheckRequirementCount", (short) checkRequirementCount);
-        NBTTagList tagList = new NBTTagList();
-
-        for(int i = 0; i < getSizeInventory(); i++){
-            if(getStackInSlot(i) != null){
-                NBTTagCompound temp = new NBTTagCompound();
-                temp.setByte("Slot", (byte) i);
-                getStackInSlot(i).writeToNBT(temp);
-                tagList.appendTag(temp);
-            }
-        }
-        compound.setTag("Items", tagList);
     }
 
     @Override
     public void readFromNBT(NBTTagCompound compound) {
         super.readFromNBT(compound);
-        NBTTagList tagList = compound.getTagList("Items", 10);
-
-        for(int i = 0; i < tagList.tagCount(); i++){
-            NBTTagCompound temp = tagList.getCompoundTagAt(i);
-            byte slot = temp.getByte("Slot");
-
-            if(slot >= 0 && slot < getSizeInventory()){
-                setInventorySlotContents(slot, ItemStack.loadItemStackFromNBT(temp));
-            }
-        }
-
         timeToCraft = compound.getShort("TimeToCraft");
         checkRequirementCount = compound.getShort("CheckRequirementCount");
-    }
-
-    @Override
-    public Packet getDescriptionPacket() {
-        NBTTagCompound tag = new NBTTagCompound();
-        this.writeToNBT(tag);
-        return new S35PacketUpdateTileEntity(xCoord, yCoord, zCoord, 1, tag);
-    }
-
-    @Override
-    public void onDataPacket(NetworkManager net, S35PacketUpdateTileEntity pkt) {
-        readFromNBT(pkt.func_148857_g());
     }
 
     private boolean isInventoryEmpty() {

@@ -3,6 +3,11 @@ package at.korti.endermystic.tileEntity;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.inventory.IInventory;
 import net.minecraft.item.ItemStack;
+import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.nbt.NBTTagList;
+import net.minecraft.network.NetworkManager;
+import net.minecraft.network.Packet;
+import net.minecraft.network.play.server.S35PacketUpdateTileEntity;
 import net.minecraft.tileentity.TileEntity;
 
 /**
@@ -44,7 +49,7 @@ public class TileEntityInventory extends TileEntity implements IInventory {
         }
 
         markDirty();
-        if (syncClient && !worldObj.isRemote) {
+        if (syncClient) {
             worldObj.markBlockForUpdate(xCoord, yCoord, zCoord);
         }
         return itemStack;
@@ -104,7 +109,54 @@ public class TileEntityInventory extends TileEntity implements IInventory {
         return true;
     }
 
+    public void clearInventory() {
+        inventory = new ItemStack[getSizeInventory()];
+    }
+
     public ItemStack[] getInventory() {
         return inventory;
+    }
+
+    @Override
+    public void writeToNBT(NBTTagCompound tagCompound) {
+        super.writeToNBT(tagCompound);
+        NBTTagList itemList = new NBTTagList();
+        for (int i = 0; i < getSizeInventory(); i++) {
+            ItemStack stack = getStackInSlot(i);
+            if (stack != null) {
+                NBTTagCompound item = new NBTTagCompound();
+                stack.writeToNBT(item);
+                item.setShort("Slot", (short) i);
+                itemList.appendTag(item);
+            }
+        }
+        tagCompound.setTag("Inventory", itemList);
+    }
+
+    @Override
+    public void readFromNBT(NBTTagCompound tagCompound) {
+        super.readFromNBT(tagCompound);
+        if (worldObj.isRemote) {
+            clearInventory();
+        }
+        NBTTagList itemList = tagCompound.getTagList("Inventory", 10);
+        for (int i = 0; i < itemList.tagCount(); i++) {
+            NBTTagCompound item = itemList.getCompoundTagAt(i);
+            ItemStack stack = item.hasKey("id") ? ItemStack.loadItemStackFromNBT(item) : null;
+            int slot = item.getShort("Slot");
+            setInventorySlotContents(slot, stack);
+        }
+    }
+
+    @Override
+    public Packet getDescriptionPacket() {
+        NBTTagCompound tagCompound = new NBTTagCompound();
+        this.writeToNBT(tagCompound);
+        return new S35PacketUpdateTileEntity(xCoord, yCoord, zCoord, 1, tagCompound);
+    }
+
+    @Override
+    public void onDataPacket(NetworkManager net, S35PacketUpdateTileEntity pkt) {
+        this.readFromNBT(pkt.func_148857_g());
     }
 }
