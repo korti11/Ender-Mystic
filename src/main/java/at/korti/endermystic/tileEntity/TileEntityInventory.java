@@ -19,12 +19,14 @@ public class TileEntityInventory extends TileEntity implements IInventory {
     private String inventoryName;
     private int inventoryStackLimit;
     private boolean syncClient;
+    protected boolean isOperating;
 
     public TileEntityInventory(String inventoryName, int inventorySize, int inventoryStackLimit, boolean syncClient) {
         this.inventoryName = inventoryName;
         this.inventoryStackLimit = inventoryStackLimit;
         this.syncClient = syncClient;
         inventory = new ItemStack[inventorySize];
+        isOperating = false;
     }
 
     @Override
@@ -131,6 +133,7 @@ public class TileEntityInventory extends TileEntity implements IInventory {
             }
         }
         tagCompound.setTag("Inventory", itemList);
+        tagCompound.setBoolean("Operating", isOperating);
     }
 
     @Override
@@ -146,6 +149,7 @@ public class TileEntityInventory extends TileEntity implements IInventory {
             int slot = item.getShort("Slot");
             setInventorySlotContents(slot, stack);
         }
+        isOperating = tagCompound.getBoolean("Operating");
     }
 
     @Override

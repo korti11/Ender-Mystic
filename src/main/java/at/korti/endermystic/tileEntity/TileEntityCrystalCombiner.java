@@ -59,12 +59,6 @@ public class TileEntityCrystalCombiner extends TileEntityInventory implements IA
 
                 if (recipe != null && recipe.requirementsCount() == checkRequirementCount && getStackInSlot(4) == null) {
                     timeToCraft = recipe.getTimeToCraft();
-                    for (int l = 0; l < 128; ++l) {
-                        float f = (worldObj.rand.nextFloat() - 0.5F) * 0.2F;
-                        float f1 = (worldObj.rand.nextFloat() - 0.5F) * 0.2F;
-                        float f2 = (worldObj.rand.nextFloat() - 0.5F) * 0.2F;
-                        this.worldObj.spawnParticle("portal", xCoord + 0.5, yCoord + 0.75, zCoord + 0.5, (double) f, (double) f1, (double) f2);
-                    }
                 } else {
                     recipe = null;
                 }
@@ -77,13 +71,14 @@ public class TileEntityCrystalCombiner extends TileEntityInventory implements IA
 
     @Override
     public void updateEntity() {
-        if(isInventoryEmpty() || worldObj.isRemote){
+        if(isInventoryEmpty()){
             return;
         }
 
         IEnergyProvider provider = EnergyNetworkHandler.getProvider(worldObj, xCoord, yCoord, zCoord, range);
 
-        if(provider != null && provider.canProvideEnergy() && recipe != null) {
+        if(!worldObj.isRemote && provider != null && provider.canProvideEnergy() && recipe != null) {
+            isOperating = false;
             if (timeToCraft == 0 && checkRequirementCount == recipe.requirementsCount()) {
                 clearRequirementsSlots();
                 setInventorySlotContents(4, new ItemStack(recipe.getResult().getItem(), 1, recipe.getResult().getItemDamage()));
@@ -91,25 +86,19 @@ public class TileEntityCrystalCombiner extends TileEntityInventory implements IA
                 markDirty();
             } else if (timeToCraft > 0 && provider.hasEnoughEnergy(recipe.getEnergyUsePerTick())) {
                 timeToCraft--;
-                if (provider instanceof TileEntityEnergyDrain) {
-                    if (timeToCraft % 2 == 0) {
-                        provider.decrEnergy(recipe.getEnergyUsePerTick());
-                    }
-                }
-                else {
-                    provider.decrEnergy(recipe.getEnergyUsePerTick());
-                }
-                if (timeToCraft % 2 == 0) {
-                    for (int l = 0; l < 128; ++l) {
-                        float f = (worldObj.rand.nextFloat() - 0.5F) * 0.2F;
-                        float f1 = (worldObj.rand.nextFloat() - 0.5F) * 0.2F;
-                        float f2 = (worldObj.rand.nextFloat() - 0.5F) * 0.2F;
-                        this.worldObj.spawnParticle("portal", xCoord + 0.5, yCoord + 0.75, zCoord + 0.5, (double) f, (double) f1, (double) f2);
-                    }
-                }
+                provider.decrEnergy(recipe.getEnergyUsePerTick());
+                isOperating = true;
+            }
+            worldObj.markBlockForUpdate(xCoord, yCoord, zCoord);
+        }
+        else if (worldObj.isRemote && timeToCraft % 2 == 0 && isOperating) {
+            for (int l = 0; l < 128; ++l) {
+                float f = (worldObj.rand.nextFloat() - 0.5F) * 0.2F;
+                float f1 = (worldObj.rand.nextFloat() - 0.5F) * 0.2F;
+                float f2 = (worldObj.rand.nextFloat() - 0.5F) * 0.2F;
+                this.worldObj.spawnParticle("portal", xCoord + 0.5, yCoord + 0.75, zCoord + 0.5, (double) f, (double) f1, (double) f2);
             }
         }
-        worldObj.markBlockForUpdate(xCoord, yCoord, zCoord);
     }
 
     @Override
