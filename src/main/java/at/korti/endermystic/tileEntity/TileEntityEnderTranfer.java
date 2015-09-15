@@ -3,6 +3,9 @@ package at.korti.endermystic.tileEntity;
 import at.korti.endermystic.ModInfo;
 import at.korti.endermystic.api.mysticEnergyNetwork.EnergyNetworkHandler;
 import at.korti.endermystic.api.mysticEnergyNetwork.IEnergyProvider;
+import at.korti.endermystic.api.util.IActivation;
+import at.korti.endermystic.blocks.EnderInjector;
+import at.korti.endermystic.blocks.EnderPicker;
 import at.korti.endermystic.items.WorldStorage;
 import at.korti.endermystic.modintegration.carpentersblock.CarpentersBlockHelper;
 import at.korti.endermystic.modintegration.ee3.EquivalentExchange;
@@ -26,7 +29,7 @@ import net.minecraftforge.common.util.FakePlayer;
 /**
  * Created by Korti on 21.06.2015.
  */
-public class TileEntityEnderTranfer extends TileEntity implements IInventory{
+public class TileEntityEnderTranfer extends TileEntity implements IInventory, IActivation{
 
     private ItemStack inventory;
     private final int range = 10;
@@ -297,5 +300,15 @@ public class TileEntityEnderTranfer extends TileEntity implements IInventory{
             }
         }
         return new ItemStack(item, 1, foundMeta);
+    }
+
+    @Override
+    public void activate(Object obj) {
+        if (obj instanceof EnderPicker) {
+            copyWorld();
+        }
+        else if (obj instanceof EnderInjector) {
+            injectWorld();
+        }
     }
 }
