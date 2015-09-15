@@ -14,20 +14,14 @@ import net.minecraft.world.World;
 /**
  * Created by Korti on 13.04.2015.
  */
-public class EnergyDrain extends BlockContainer implements IItemBookCrafting {
+public class EnergyDrain extends ModelBlock implements IItemBookCrafting {
 
-
-    protected EnergyDrain() {
-        super(Material.rock);
+    public EnergyDrain() {
+        super(Material.rock, TileEntityEnergyDrain.class);
 
         setCreativeTab(EnderMystic.tab);
         setBlockName(ModInfo.MODID + ".EnergyDrain");
         setBlockBounds(0F, 0F, 0F, 1F, 1.5F, 1F);
-    }
-
-    @Override
-    public TileEntity createNewTileEntity(World p_149915_1_, int p_149915_2_) {
-        return new TileEntityEnergyDrain();
     }
 
     @Override
@@ -47,20 +41,5 @@ public class EnergyDrain extends BlockContainer implements IItemBookCrafting {
         }
 
         return super.onBlockActivated(world, x, y, z, player, side, hitX, hitY, hitZ);
-    }
-
-    @Override
-    public boolean renderAsNormalBlock() {
-        return false;
-    }
-
-    @Override
-    public boolean isOpaqueCube() {
-        return false;
-    }
-
-    @Override
-    public int getRenderType() {
-        return -1;
     }
 }

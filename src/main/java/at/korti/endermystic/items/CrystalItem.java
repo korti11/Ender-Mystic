@@ -14,7 +14,7 @@ import java.util.List;
  */
 public class CrystalItem extends ModItem {
 
-    private int crystalCount = 14;
+    private int crystalCount = 15;
 
     public CrystalItem() {
         super("Crystal");

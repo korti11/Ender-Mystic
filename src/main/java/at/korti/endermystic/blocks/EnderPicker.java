@@ -15,19 +15,14 @@ import net.minecraft.world.World;
 /**
  * Created by Korti on 21.06.2015.
  */
-public class EnderPicker extends BlockContainer implements IItemBookCrafting{
+public class EnderPicker extends ModelBlock implements IItemBookCrafting{
 
     public EnderPicker() {
-        super(Material.iron);
+        super(Material.iron, TileEntityEnderTranfer.class);
 
         this.setBlockName(ModInfo.MODID + ".EnderPicker");
         this.setCreativeTab(EnderMystic.tab);
         this.setStepSound(soundTypeMetal);
-    }
-
-    @Override
-    public TileEntity createNewTileEntity(World p_149915_1_, int p_149915_2_) {
-        return new TileEntityEnderTranfer();
     }
 
     @Override
@@ -46,20 +41,5 @@ public class EnderPicker extends BlockContainer implements IItemBookCrafting{
                 tileEnderTransfer.copyWorld();
             }
         }
-    }
-
-    @Override
-    public boolean renderAsNormalBlock() {
-        return false;
-    }
-
-    @Override
-    public boolean isOpaqueCube() {
-        return false;
-    }
-
-    @Override
-    public int getRenderType() {
-        return -1;
     }
 }

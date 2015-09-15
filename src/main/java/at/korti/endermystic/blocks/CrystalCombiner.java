@@ -14,10 +14,10 @@ import net.minecraft.world.World;
 /**
  * Created by Korti on 03.04.2015.
  */
-public class CrystalCombiner extends BlockContainer implements IItemBookCrafting{
+public class CrystalCombiner extends ModelBlock implements IItemBookCrafting{
 
     public CrystalCombiner() {
-        super(Material.rock);
+        super(Material.rock, TileEntityCrystalCombiner.class);
 
         this.setCreativeTab(EnderMystic.tab);
         this.setBlockName(ModInfo.MODID + ".CrystalCombiner");
@@ -49,26 +49,6 @@ public class CrystalCombiner extends BlockContainer implements IItemBookCrafting
 //
 //        //this.setBlockBounds(0F, 0F, 0F, 1F, 1F, 1F);
 //    }
-
-    @Override
-    public boolean renderAsNormalBlock() {
-        return false;
-    }
-
-    @Override
-    public boolean isOpaqueCube() {
-        return false;
-    }
-
-    @Override
-    public int getRenderType() {
-        return -1;
-    }
-
-    @Override
-    public TileEntity createNewTileEntity(World p_149915_1_, int p_149915_2_) {
-        return new TileEntityCrystalCombiner();
-    }
 
     @Override
     public boolean onBlockActivated(World world, int x, int y, int z, EntityPlayer player, int side, float hitX, float hitY, float hitZ) {

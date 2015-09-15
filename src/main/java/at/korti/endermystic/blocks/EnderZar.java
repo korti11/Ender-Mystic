@@ -12,34 +12,14 @@ import net.minecraft.world.World;
 /**
  * Created by Korti on 07.05.2015.
  */
-public class EnderZar extends BlockContainer implements IItemBookCrafting {
+public class EnderZar extends ModelBlock implements IItemBookCrafting {
 
     protected EnderZar() {
-        super(Material.iron);
+        super(Material.iron, TileEntityEnderZar.class);
 
         setCreativeTab(EnderMystic.tab);
         setBlockName(ModInfo.MODID + ".EnderZar");
         setBlockBounds(0.2F, 0F, 0.2F, 0.8F, 0.1F, 0.8F);
         setStepSound(soundTypeStone);
-    }
-
-    @Override
-    public TileEntity createNewTileEntity(World p_149915_1_, int p_149915_2_) {
-        return new TileEntityEnderZar();
-    }
-
-    @Override
-    public boolean renderAsNormalBlock() {
-        return false;
-    }
-
-    @Override
-    public boolean isOpaqueCube() {
-        return false;
-    }
-
-    @Override
-    public int getRenderType() {
-        return -1;
     }
 }

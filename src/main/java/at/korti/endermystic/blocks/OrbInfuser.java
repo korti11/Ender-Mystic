@@ -14,35 +14,15 @@ import net.minecraft.world.World;
 /**
  * Created by Korti on 13.05.2015.
  */
-public class OrbInfuser extends BlockContainer implements IItemBookCrafting {
+public class OrbInfuser extends ModelBlock implements IItemBookCrafting {
 
     public OrbInfuser() {
-        super(Material.rock);
+        super(Material.rock, TileEntityOrbInfuser.class);
 
         setCreativeTab(EnderMystic.tab);
         setBlockBounds(0.05F, 0.0F, 0.05F, 0.95F, 0.75F, 0.95F);
         setBlockName(ModInfo.MODID + ".OrbInfuser");
         setStepSound(soundTypeStone);
-    }
-
-    @Override
-    public TileEntity createNewTileEntity(World p_149915_1_, int p_149915_2_) {
-        return new TileEntityOrbInfuser();
-    }
-
-    @Override
-    public boolean isOpaqueCube() {
-        return false;
-    }
-
-    @Override
-    public boolean renderAsNormalBlock() {
-        return false;
-    }
-
-    @Override
-    public int getRenderType() {
-        return -1;
     }
 
     @Override

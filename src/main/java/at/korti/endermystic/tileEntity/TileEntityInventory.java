@@ -71,7 +71,7 @@ public class TileEntityInventory extends TileEntity implements IInventory {
             stack.stackSize = getInventoryStackLimit();
         }
         markDirty();
-        if (syncClient) {
+        if (syncClient && hasWorldObj()) {
             worldObj.markBlockForUpdate(xCoord, yCoord, zCoord);
         }
     }
@@ -139,7 +139,7 @@ public class TileEntityInventory extends TileEntity implements IInventory {
     @Override
     public void readFromNBT(NBTTagCompound tagCompound) {
         super.readFromNBT(tagCompound);
-        if (worldObj.isRemote) {
+        if (hasWorldObj() && worldObj.isRemote) {
             clearInventory();
         }
         NBTTagList itemList = tagCompound.getTagList("Inventory", 10);
