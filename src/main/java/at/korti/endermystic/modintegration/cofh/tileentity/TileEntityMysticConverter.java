@@ -14,11 +14,11 @@ import net.minecraftforge.common.util.ForgeDirection;
 /**
  * Created by Korti on 05.06.2015.
  */
-public class TileEntityMysticDynamo extends TileEntity implements IEnergyHandler, IEnergyInfo, IEnergyProvider {
+public class TileEntityMysticConverter extends TileEntity implements IEnergyHandler, IEnergyInfo, IEnergyProvider {
 
     private EnergyStorage energyStorage;
 
-    public TileEntityMysticDynamo() {
+    public TileEntityMysticConverter() {
         energyStorage = new EnergyStorage(10000, 100, 100);
     }
 

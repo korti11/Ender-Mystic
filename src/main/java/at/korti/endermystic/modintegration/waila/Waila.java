@@ -3,7 +3,7 @@ package at.korti.endermystic.modintegration.waila;
 import at.korti.endermystic.ModInfo;
 import at.korti.endermystic.modintegration.IIntegration;
 import at.korti.endermystic.modintegration.cofh.Cofh;
-import at.korti.endermystic.modintegration.cofh.tileentity.TileEntityMysticDynamo;
+import at.korti.endermystic.modintegration.cofh.tileentity.TileEntityMysticConverter;
 import at.korti.endermystic.tileEntity.*;
 import cpw.mods.fml.common.Loader;
 import cpw.mods.fml.common.Mod;
@@ -61,8 +61,8 @@ public class Waila implements IIntegration {
 
         //CoFH
         if (Cofh.isLoaded) {
-            registrar.registerBodyProvider(new WailaMysticDynamoHandler(), TileEntityMysticDynamo.class);
-            registrar.registerNBTProvider(new WailaMysticDynamoHandler(), TileEntityMysticDynamo.class);
+            registrar.registerBodyProvider(new WailaMysticConverterHandler(), TileEntityMysticConverter.class);
+            registrar.registerNBTProvider(new WailaMysticConverterHandler(), TileEntityMysticConverter.class);
         }
     }
 }

@@ -2,7 +2,6 @@ package at.korti.endermystic.api.tools;
 
 import at.korti.endermystic.EnderMystic;
 import at.korti.endermystic.items.tools.ToolMaterials;
-import cpw.mods.fml.common.eventhandler.Event;
 import net.minecraft.block.Block;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.item.EntityItem;

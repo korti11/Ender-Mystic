@@ -8,10 +8,10 @@ import at.korti.endermystic.client.render.blocks.TileEntityBlockRenderer;
 import at.korti.endermystic.client.render.items.TileEntityItemRenderer;
 import at.korti.endermystic.items.ModItems;
 import at.korti.endermystic.modintegration.IIntegration;
-import at.korti.endermystic.modintegration.cofh.blocks.MysticDynamo;
-import at.korti.endermystic.modintegration.cofh.client.model.MysticDynamoModel;
+import at.korti.endermystic.modintegration.cofh.blocks.MysticConverter;
+import at.korti.endermystic.modintegration.cofh.client.model.MysticConverterModel;
 import at.korti.endermystic.modintegration.cofh.tileentity.TileEntities;
-import at.korti.endermystic.modintegration.cofh.tileentity.TileEntityMysticDynamo;
+import at.korti.endermystic.modintegration.cofh.tileentity.TileEntityMysticConverter;
 import cofh.CoFHCore;
 import cofh.thermalexpansion.item.TEItems;
 import cpw.mods.fml.client.registry.ClientRegistry;
@@ -32,14 +32,14 @@ public class Cofh implements IIntegration {
     public static boolean isLoaded = false;
     public static String cofhVersion = CoFHCore.class.getAnnotation(Mod.class).version();
 
-    public static MysticDynamo mysticDynamo;
+    public static MysticConverter mysticConverter;
 
     private void initBlocks() {
-        mysticDynamo = new MysticDynamo();
+        mysticConverter = new MysticConverter();
     }
 
     private void loadBlocks() {
-        GameRegistry.registerBlock(mysticDynamo, "MysticDynamo");
+        GameRegistry.registerBlock(mysticConverter, "MysticConverter");
     }
 
     @Override
@@ -63,21 +63,21 @@ public class Cofh implements IIntegration {
 
     @Override
     public void clientInit() {
-        ClientRegistry.bindTileEntitySpecialRenderer(TileEntityMysticDynamo.class, new TileEntityBlockRenderer(new MysticDynamoModel(), "textures/model/MysticDynamo.png"));
+        ClientRegistry.bindTileEntitySpecialRenderer(TileEntityMysticConverter.class, new TileEntityBlockRenderer(new MysticConverterModel(), "textures/model/MysticDynamo.png"));
 
-        MinecraftForgeClient.registerItemRenderer(Item.getItemFromBlock(Cofh.mysticDynamo), new TileEntityItemRenderer(new TileEntityBlockRenderer(new MysticDynamoModel(), "textures/model/MysticDynamo.png"), new TileEntityMysticDynamo()));
+        MinecraftForgeClient.registerItemRenderer(Item.getItemFromBlock(Cofh.mysticConverter), new TileEntityItemRenderer(new TileEntityBlockRenderer(new MysticConverterModel(), "textures/model/MysticDynamo.png"), new TileEntityMysticConverter()));
     }
 
     @Override
     public void constructCraftingRecipes() {
         if (Loader.isModLoaded(ModInfo.THERMALEXPANSION)) {
-            GameRegistry.addShapedRecipe(new ItemStack(Cofh.mysticDynamo),
+            GameRegistry.addShapedRecipe(new ItemStack(Cofh.mysticConverter),
                     "HCH",
                     "IEI",
                     "HHH", 'H', new ItemStack(Blocks.hardened_clay), 'C', TEItems.powerCoilGold.copy(), 'I', new ItemStack(Items.iron_ingot), 'E', new ItemStack(ModItems.crystalItem, 1, 7)
             );
         } else if(Cofh.isLoaded) {
-            GameRegistry.addShapedRecipe(new ItemStack(Cofh.mysticDynamo),
+            GameRegistry.addShapedRecipe(new ItemStack(Cofh.mysticConverter),
                     "HIH",
                     "IEI",
                     "HHH", 'H', new ItemStack(Blocks.hardened_clay), 'I', new ItemStack(Items.iron_ingot), 'E', new ItemStack(ModItems.crystalItem, 1, 7)
@@ -87,7 +87,7 @@ public class Cofh implements IIntegration {
 
     public static BookEntry addBookEntrys(BookPage mainPage) {
         BookEntryItemList bookEntry = new BookEntryItemList("CoFH", mainPage);
-        bookEntry.addItem(new ItemStack(Cofh.mysticDynamo));
+        bookEntry.addItem(new ItemStack(Cofh.mysticConverter));
 
         return bookEntry;
     }

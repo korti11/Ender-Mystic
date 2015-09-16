@@ -8,7 +8,7 @@ import net.minecraft.entity.Entity;
  * MysticDynamo - Korti
  * Created using Tabula 4.1.1
  */
-public class MysticDynamoModel extends ModelBase {
+public class MysticConverterModel extends ModelBase {
     public ModelRenderer Base;
     public ModelRenderer Corner;
     public ModelRenderer Corner_1;
@@ -32,7 +32,7 @@ public class MysticDynamoModel extends ModelBase {
     public ModelRenderer IronRod_5;
     public ModelRenderer IronRod_6;
 
-    public MysticDynamoModel() {
+    public MysticConverterModel() {
         this.textureWidth = 64;
         this.textureHeight = 32;
         this.IronRod_2 = new ModelRenderer(this, 16, 17);

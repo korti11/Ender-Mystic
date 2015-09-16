@@ -1,6 +1,6 @@
 package at.korti.endermystic.modintegration.waila;
 
-import at.korti.endermystic.modintegration.cofh.tileentity.TileEntityMysticDynamo;
+import at.korti.endermystic.modintegration.cofh.tileentity.TileEntityMysticConverter;
 import mcp.mobius.waila.api.IWailaConfigHandler;
 import mcp.mobius.waila.api.IWailaDataAccessor;
 import mcp.mobius.waila.api.IWailaDataProvider;
@@ -15,7 +15,7 @@ import java.util.List;
 /**
  * Created by Korti on 05.06.2015.
  */
-public class WailaMysticDynamoHandler implements IWailaDataProvider {
+public class WailaMysticConverterHandler implements IWailaDataProvider {
     @Override
     public ItemStack getWailaStack(IWailaDataAccessor iWailaDataAccessor, IWailaConfigHandler iWailaConfigHandler) {
         return null;
@@ -41,8 +41,8 @@ public class WailaMysticDynamoHandler implements IWailaDataProvider {
 
     @Override
     public NBTTagCompound getNBTData(EntityPlayerMP entityPlayerMP, TileEntity tileEntity, NBTTagCompound nbtTagCompound, World world, int i, int i1, int i2) {
-        if (tileEntity instanceof TileEntityMysticDynamo) {
-            TileEntityMysticDynamo mysticDynamo = (TileEntityMysticDynamo) tileEntity;
+        if (tileEntity instanceof TileEntityMysticConverter) {
+            TileEntityMysticConverter mysticDynamo = (TileEntityMysticConverter) tileEntity;
             nbtTagCompound.setBoolean("CanProvide", mysticDynamo.canProvideEnergy());
             nbtTagCompound.setInteger("Energy", mysticDynamo.getEnergyToProvide());
         }

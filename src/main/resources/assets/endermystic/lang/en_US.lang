@@ -92,7 +92,7 @@ tile.endermystic.EnderPicker.name=Ender Picker
 tile.endermystic.EnderInjector.name=Ender Injector
 
 #CoFH
-tile.endermystic.MysticDynamo.name=Mystic Dynamo
+tile.endermystic.MysticConverter.name=Mystic Converter
 
 #Potion
 potion.Breathing=Breathing
