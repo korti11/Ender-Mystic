@@ -11,7 +11,7 @@ import java.util.List;
  */
 public class OrbCoreItem extends ModItem {
 
-    private final int count = 12;
+    private final int count = 13;
 
     public OrbCoreItem() {
         super("OrbCore");
@@ -46,6 +46,8 @@ public class OrbCoreItem extends ModItem {
                 return 0x000066;
             case 11:
                 return 0x00001F;
+            case 12:
+                return 0xBCFFDE;
             default:
                 return super.getColorFromItemStack(stack, p_82790_2_);
         }
@@ -90,6 +92,9 @@ public class OrbCoreItem extends ModItem {
                 break;
             case 11:
                 subName = "Universe";
+                break;
+            case 12:
+                subName = "Activation";
                 break;
             default:
                 subName = "OrbCore";

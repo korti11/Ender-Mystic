@@ -338,6 +338,16 @@ public class CraftingManager {
                 "PWP",
                 " P ", 'P', new ItemStack(Items.paper), 'W', new ItemStack(ModItems.worldStorageLevelThree)
         );
+        GameRegistry.addShapedRecipe(new ItemStack(ModItems.orbCoreItem, 1, 12),
+                " W ",
+                "FPE",
+                " A ", 'W', new ItemStack(ModItems.crystalItem, 1, 0), 'F', new ItemStack(ModItems.crystalItem, 1, 1), 'P', new ItemStack(Items.ender_pearl), 'E', new ItemStack(ModItems.crystalItem, 1, 2), 'A', new ItemStack(ModItems.crystalItem, 1, 3)
+        );
+        GameRegistry.addShapedRecipe(new ItemStack(ModItems.activationOrb),
+                " G ",
+                "GCG",
+                " G ", 'G', new ItemStack(Items.gold_ingot), 'C', new ItemStack(ModItems.orbCoreItem, 1, 12)
+        );
 
         //Blocks
         GameRegistry.addShapedRecipe(new ItemStack(ModBlocks.crystalCombiner),

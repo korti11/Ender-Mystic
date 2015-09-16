@@ -16,6 +16,7 @@ item.endermystic.EarthOrb.name=Earth Orb
 item.endermystic.AirOrb.name=Air Orb
 item.endermystic.TestOrb.name=Test Orb
 item.endermystic.EnderZarOrb.name=Ender Zar Orb
+item.endermystic.ActivationOrb.name=Activation Orb
 
 #Tools
 item.endermystic.EnderSacrifice.name=Ender Sacrifice
@@ -37,7 +38,7 @@ item.endermystic.EnderItem.EnderRod.name=Ender Rod
 
 item.endermystic.EnderSoulFillEmpty.name=Ender Soul Fill (Empty)
 item.endermystic.EnderSoulFillFilled.name=Ender Soul Fill (Filled)
-item.endermystic.Book.name=Knowledge of Ender 90th Edition
+item.endermystic.Book.name=Knowledge of Ender 91th Edition
 item.endermystic.WorldStorage.name=World Storage
 
 #Crystals
@@ -179,6 +180,8 @@ book.entry.EnderSoulArmorBook.title=Ender Soul Armor
 book.entry.EnderSoulArmorBook.text=The Ender Soul Armor is ah fancy looking and very good armor. It protect you from damage and repair his self from energy.
 
 book.entry.Util.title=Util
+
+book.entry.ActivationOrb.text=With this orb you can start the process of crafting. You need it for Crystal Combiner, Orb Infuser and Ender Picker/Injector.
 
 book.entry.BaublesItems.title=Baubles Items
 

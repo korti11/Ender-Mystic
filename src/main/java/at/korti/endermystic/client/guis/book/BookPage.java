@@ -154,6 +154,7 @@ public class BookPage extends GuiScreen implements Cloneable {
         utilEntry.addItem(new ItemStack(ModItems.worldStorageLevelTwo));
         utilEntry.addItem(new ItemStack(ModItems.worldStorageLevelThree));
         utilEntry.addItem(new ItemStack(ModItems.worldStorageLevelFour));
+        utilEntry.addItem(new ItemStack(ModItems.activationOrb));
 
         entries.add(blockList);
         entries.add(crystalCombiner);
