@@ -21,6 +21,8 @@ public class NEI implements IIntegration {
     public void init() {
         API.registerRecipeHandler(new NEICrystalCombinerHandler());
         API.registerUsageHandler(new NEICrystalCombinerHandler());
+        API.registerRecipeHandler(new NEIOrbInfuserHandler());
+        API.registerUsageHandler(new NEIOrbInfuserHandler());
     }
 
     @Override

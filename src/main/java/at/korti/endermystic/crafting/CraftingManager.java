@@ -138,6 +138,7 @@ public class CraftingManager {
                 new ItemStack(ModItems.crystalItem, 1, 8),
                 new ItemStack(ModItems.crystalItem, 1, 8),
                 new ItemStack(ModItems.crystalItem, 1, 8),
+                new ItemStack(ModItems.crystalItem, 1, 8),
                 new ItemStack(Items.ender_pearl)
         );
 

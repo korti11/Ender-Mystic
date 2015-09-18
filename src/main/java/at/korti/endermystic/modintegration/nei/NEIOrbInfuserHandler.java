@@ -4,15 +4,14 @@ import at.korti.endermystic.ModInfo;
 import at.korti.endermystic.api.crafting.CraftingRecipe;
 import at.korti.endermystic.api.crafting.CraftingRegistry;
 import at.korti.endermystic.api.crafting.CrystalCombinerRecipe;
+import at.korti.endermystic.api.crafting.OrbInfuserRecipe;
+import at.korti.endermystic.blocks.OrbInfuser;
 import codechicken.lib.gui.GuiDraw;
 import codechicken.nei.NEIServerUtils;
 import codechicken.nei.PositionedStack;
-import codechicken.nei.api.IOverlayHandler;
-import codechicken.nei.api.IRecipeOverlayRenderer;
 import codechicken.nei.recipe.TemplateRecipeHandler;
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.gui.inventory.GuiContainer;
-import net.minecraft.inventory.Container;
+import net.minecraft.init.Items;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.ResourceLocation;
 import org.lwjgl.opengl.GL11;
@@ -23,35 +22,46 @@ import java.util.List;
 /**
  * Created by Korti on 18.09.2015.
  */
-public class NEICrystalCombinerHandler extends TemplateRecipeHandler {
+public class NEIOrbInfuserHandler extends TemplateRecipeHandler {
 
-    public class CachedCrystalCombinerRecipe extends CachedRecipe {
+    public class CachedOrbInfuserRecipe extends CachedRecipe{
 
         private List<PositionedStack> input;
         private PositionedStack output;
         private int energyUse;
 
-        public CachedCrystalCombinerRecipe(CrystalCombinerRecipe recipe) {
-            this.input = new LinkedList<>();
+        public CachedOrbInfuserRecipe(OrbInfuserRecipe recipe) {
+            input = new LinkedList<>();
             for (int i = 0; i < recipe.requirementsCount(); i++) {
-                if (recipe.getRequirement(i) != null) {
-                    input.add(new PositionedStack(recipe.getRequirement(i), getXForSlot(i), getYForSlot(i), false));
+                ItemStack stack = recipe.getRequirement(i);
+                if (stack != null && stack.getItem().equals(Items.ender_pearl)) {
+                    input.add(new PositionedStack(stack, 64, 40, false));
+                } else if (stack != null) {
+                    input.add(new PositionedStack(stack, getXForSlot(i), getYForSlot(i), false));
                 }
             }
-            this.output = new PositionedStack(recipe.getResult(), 64, 40, false);
-            this.energyUse = recipe.getEnergyUsePerTick() * recipe.getTimeToCraft();
+            output = new PositionedStack(recipe.getResult(), 64, 106, false);
+            energyUse = recipe.getEnergyUsePerTick() * recipe.getTimeToCraft();
         }
 
         private int getXForSlot(int slot) {
             switch (slot) {
                 case 0:
-                    return 64;
-                case 1:
                     return 32;
-                case 2:
+                case 1:
                     return 64;
+                case 2:
+                    return 96;
                 case 3:
                     return 96;
+                case 4:
+                    return 96;
+                case 5:
+                    return 64;
+                case 6:
+                    return 32;
+                case 7:
+                    return 32;
                 default:
                     return 0;
             }
@@ -62,10 +72,18 @@ public class NEICrystalCombinerHandler extends TemplateRecipeHandler {
                 case 0:
                     return 8;
                 case 1:
-                    return 40;
+                    return 8;
                 case 2:
-                    return 72;
+                    return 8;
                 case 3:
+                    return 40;
+                case 4:
+                    return 72;
+                case 5:
+                    return 72;
+                case 6:
+                    return 72;
+                case 7:
                     return 40;
                 default:
                     return 0;
@@ -85,10 +103,10 @@ public class NEICrystalCombinerHandler extends TemplateRecipeHandler {
 
     @Override
     public void loadCraftingRecipes(ItemStack result) {
-        CrystalCombinerRecipe recipe = CraftingRegistry.getInstance().getCrystalCombinerRecipe(result);
+        OrbInfuserRecipe recipe = CraftingRegistry.getInstance().getOrbInfuserRecipe(result);
         if(recipe != null && recipe.getResult() != null) {
             if (NEIServerUtils.areStacksSameTypeCrafting(recipe.getResult(), result)) {
-                arecipes.add(new CachedCrystalCombinerRecipe(recipe));
+                arecipes.add(new CachedOrbInfuserRecipe(recipe));
             }
         }
     }
@@ -97,8 +115,8 @@ public class NEICrystalCombinerHandler extends TemplateRecipeHandler {
     public void loadUsageRecipes(ItemStack ingredient) {
         List<CraftingRecipe> recipes = CraftingRegistry.getInstance().getCraftingRecipes(ingredient);
         for (CraftingRecipe recipe : recipes) {
-            if (recipe instanceof CrystalCombinerRecipe) {
-                arecipes.add(new CachedCrystalCombinerRecipe((CrystalCombinerRecipe) recipe));
+            if (recipe instanceof OrbInfuserRecipe) {
+                arecipes.add(new CachedOrbInfuserRecipe((OrbInfuserRecipe) recipe));
             }
         }
     }
@@ -107,13 +125,13 @@ public class NEICrystalCombinerHandler extends TemplateRecipeHandler {
     public void drawBackground(int recipe) {
         GL11.glColor4f(1, 1, 1, 1);
         GuiDraw.changeTexture(getGuiTexture());
-        GuiDraw.drawTexturedModalRect(0, 0, 5, 11, 117, 117);
+        GuiDraw.drawTexturedModalRect(0, 0, 5, 11, 117, 130);
     }
 
     @Override
     public void drawExtras(int recipe) {
-        CachedCrystalCombinerRecipe combinerRecipe = (CachedCrystalCombinerRecipe) arecipes.get(recipe);
-        Minecraft.getMinecraft().fontRenderer.drawString("Energy: " + combinerRecipe.energyUse, 90, 76, 0);
+        CachedOrbInfuserRecipe combinerRecipe = (CachedOrbInfuserRecipe) arecipes.get(recipe);
+        Minecraft.getMinecraft().fontRenderer.drawString("Energy: " + combinerRecipe.energyUse, 90, 110, 0);
     }
 
     @Override
@@ -123,11 +141,11 @@ public class NEICrystalCombinerHandler extends TemplateRecipeHandler {
 
     @Override
     public String getGuiTexture() {
-        return new ResourceLocation(ModInfo.MODID, "textures/gui/nei/crystalcombiner.png").toString();
+        return new ResourceLocation(ModInfo.MODID, "textures/gui/nei/orbinfuser.png").toString();
     }
 
     @Override
     public String getRecipeName() {
-        return "Crystal Combiner";
+        return "Orb Infuser";
     }
 }
