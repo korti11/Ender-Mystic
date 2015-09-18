@@ -1,6 +1,7 @@
 package at.korti.endermystic.modintegration.nei;
 
 import at.korti.endermystic.ModInfo;
+import at.korti.endermystic.api.crafting.CraftingRecipe;
 import at.korti.endermystic.api.crafting.CraftingRegistry;
 import at.korti.endermystic.api.crafting.CrystalCombinerRecipe;
 import codechicken.lib.gui.GuiDraw;
@@ -93,6 +94,16 @@ public class NEICrystalCombinerHandler extends TemplateRecipeHandler {
     }
 
     @Override
+    public void loadUsageRecipes(ItemStack ingredient) {
+        List<CraftingRecipe> recipes = CraftingRegistry.getInstance().getCraftingRecipes(ingredient);
+        for (CraftingRecipe recipe : recipes) {
+            if (recipe instanceof CrystalCombinerRecipe) {
+                arecipes.add(new CachedCrystalCombinerRecipe((CrystalCombinerRecipe) recipe));
+            }
+        }
+    }
+
+    @Override
     public void drawBackground(int recipe) {
         GL11.glColor4f(1, 1, 1, 1);
         GuiDraw.changeTexture(getGuiTexture());
@@ -103,6 +114,11 @@ public class NEICrystalCombinerHandler extends TemplateRecipeHandler {
     public void drawExtras(int recipe) {
         CachedCrystalCombinerRecipe combinerRecipe = (CachedCrystalCombinerRecipe) arecipes.get(recipe);
         Minecraft.getMinecraft().fontRenderer.drawString("Energy: " + combinerRecipe.energyUse, 90, 76, 0);
+    }
+
+    @Override
+    public int recipiesPerPage() {
+        return 1;
     }
 
     @Override

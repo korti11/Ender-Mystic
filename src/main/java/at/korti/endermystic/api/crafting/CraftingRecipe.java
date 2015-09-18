@@ -30,6 +30,15 @@ public class CraftingRecipe {
 
     }
 
+    public boolean containsRequirement(ItemStack stack) {
+        for (ItemStack itemStack : requirements) {
+            if (itemStack != null && stack.getItem().equals(itemStack.getItem()) && stack.getItemDamage() == itemStack.getItemDamage()) {
+                return true;
+            }
+        }
+        return false;
+    }
+
     public ItemStack getResult() {
         return result;
     }

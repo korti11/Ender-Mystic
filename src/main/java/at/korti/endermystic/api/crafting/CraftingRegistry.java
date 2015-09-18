@@ -136,6 +136,21 @@ public class CraftingRegistry {
     }
 
     /**
+     * Get all recipes with the item in the requirements.
+     * @param requirement
+     * @return Recipes with the item in the requirements.
+     */
+    public List<CraftingRecipe> getCraftingRecipes(ItemStack requirement) {
+        List<CraftingRecipe> temp = new LinkedList<>();
+        for (CraftingRecipe recipe : recipes) {
+            if (recipe.containsRequirement(requirement)) {
+                temp.add(recipe);
+            }
+        }
+        return temp;
+    }
+
+    /**
      * Get the amount of all recipes.
      * @return Amount of all recipes.
      */

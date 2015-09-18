@@ -20,6 +20,7 @@ public class NEI implements IIntegration {
     @Override
     public void init() {
         API.registerRecipeHandler(new NEICrystalCombinerHandler());
+        API.registerUsageHandler(new NEICrystalCombinerHandler());
     }
 
     @Override
