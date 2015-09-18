@@ -10,11 +10,9 @@ import cpw.mods.fml.common.Loader;
  */
 public class NEI implements IIntegration {
 
-    private boolean loaded = false;
-
     @Override
     public void preInit() {
-        loaded = Loader.isModLoaded(ModInfo.NEI);
+
     }
 
     @Override

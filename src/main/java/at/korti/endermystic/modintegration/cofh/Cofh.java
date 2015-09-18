@@ -29,9 +29,6 @@ import net.minecraftforge.client.MinecraftForgeClient;
  */
 public class Cofh implements IIntegration {
 
-    public static boolean isLoaded = false;
-    public static String cofhVersion = CoFHCore.class.getAnnotation(Mod.class).version();
-
     public static MysticConverter mysticConverter;
 
     private void initBlocks() {
@@ -44,16 +41,14 @@ public class Cofh implements IIntegration {
 
     @Override
     public void preInit() {
-        isLoaded = Loader.isModLoaded(ModInfo.COFH);
+
     }
 
     @Override
     public void init() {
-        if(isLoaded) {
-            TileEntities.init();
-            initBlocks();
-            loadBlocks();
-        }
+        TileEntities.init();
+        initBlocks();
+        loadBlocks();
     }
 
     @Override
@@ -76,7 +71,7 @@ public class Cofh implements IIntegration {
                     "IEI",
                     "HHH", 'H', new ItemStack(Blocks.hardened_clay), 'C', TEItems.powerCoilGold.copy(), 'I', new ItemStack(Items.iron_ingot), 'E', new ItemStack(ModItems.crystalItem, 1, 7)
             );
-        } else if(Cofh.isLoaded) {
+        } else if(Loader.isModLoaded(ModInfo.COFH)) {
             GameRegistry.addShapedRecipe(new ItemStack(Cofh.mysticConverter),
                     "HIH",
                     "IEI",

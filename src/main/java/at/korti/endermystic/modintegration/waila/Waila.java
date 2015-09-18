@@ -15,18 +15,13 @@ import mcp.mobius.waila.api.IWailaRegistrar;
  */
 public class Waila implements IIntegration {
 
-    public static boolean isLoaded = false;
-    public static String wailaVersion = mcp.mobius.waila.Waila.class.getAnnotation(Mod.class).version();
-
     public void preInit() {
-        isLoaded = Loader.isModLoaded(ModInfo.WAILA);
+
     }
 
     @Override
     public void init() {
-        if(isLoaded) {
-            FMLInterModComms.sendMessage("Waila", "register", "at.korti.endermystic.modintegration.waila.Waila.wailaRegister");
-        }
+        FMLInterModComms.sendMessage("Waila", "register", "at.korti.endermystic.modintegration.waila.Waila.wailaRegister");
     }
 
     @Override
@@ -60,7 +55,7 @@ public class Waila implements IIntegration {
         registrar.registerNBTProvider(new WailaEnergyCrystalStorageHandler(), TileEntityEnergyCrystalStorage.class);
 
         //CoFH
-        if (Cofh.isLoaded) {
+        if (Loader.isModLoaded(ModInfo.COFH)) {
             registrar.registerBodyProvider(new WailaMysticConverterHandler(), TileEntityMysticConverter.class);
             registrar.registerNBTProvider(new WailaMysticConverterHandler(), TileEntityMysticConverter.class);
         }

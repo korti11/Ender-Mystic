@@ -20,9 +20,6 @@ import net.minecraft.item.ItemStack;
  */
 public class Baubles implements IIntegration{
 
-    public static boolean isLoaded = false;
-    public static final String baublesVersion = baubles.common.Baubles.class.getAnnotation(Mod.class).version();
-
     public static AirRing airRing;
     public static FireRing fireRing;
     public static AirBelt airBelt;
@@ -41,11 +38,8 @@ public class Baubles implements IIntegration{
 
     @Override
     public void preInit() {
-        isLoaded = Loader.isModLoaded(ModInfo.BAUBLES);
-        if (isLoaded) {
-            initItems();
-            loadItems();
-        }
+        initItems();
+        loadItems();
     }
 
     @Override
@@ -65,23 +59,21 @@ public class Baubles implements IIntegration{
 
     @Override
     public void constructCraftingRecipes() {
-        if(Baubles.isLoaded) {
-            GameRegistry.addShapedRecipe(new ItemStack(Baubles.airBelt),
-                    " L ",
-                    "L L",
-                    "OL ", 'L', new ItemStack(Items.leather), 'O', new ItemStack(ModItems.airOrb)
-            );
-            GameRegistry.addShapedRecipe(new ItemStack(Baubles.airRing),
-                    "OG ",
-                    "G G",
-                    " G ", 'G', new ItemStack(Items.gold_ingot), 'O', new ItemStack(ModItems.airOrb)
-            );
-            GameRegistry.addShapedRecipe(new ItemStack(Baubles.fireRing),
-                    "OG ",
-                    "G G",
-                    " G ", 'G', new ItemStack(Items.gold_ingot), 'O', new ItemStack(ModItems.fireOrb)
-            );
-        }
+        GameRegistry.addShapedRecipe(new ItemStack(Baubles.airBelt),
+                " L ",
+                "L L",
+                "OL ", 'L', new ItemStack(Items.leather), 'O', new ItemStack(ModItems.airOrb)
+        );
+        GameRegistry.addShapedRecipe(new ItemStack(Baubles.airRing),
+                "OG ",
+                "G G",
+                " G ", 'G', new ItemStack(Items.gold_ingot), 'O', new ItemStack(ModItems.airOrb)
+        );
+        GameRegistry.addShapedRecipe(new ItemStack(Baubles.fireRing),
+                "OG ",
+                "G G",
+                " G ", 'G', new ItemStack(Items.gold_ingot), 'O', new ItemStack(ModItems.fireOrb)
+        );
     }
 
     public static BookEntry addBookEntry(BookPage mainPage) {
