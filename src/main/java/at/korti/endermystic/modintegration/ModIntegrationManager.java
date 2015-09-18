@@ -4,6 +4,7 @@ import at.korti.endermystic.ModInfo;
 import at.korti.endermystic.modintegration.baubles.Baubles;
 import at.korti.endermystic.modintegration.cofh.Cofh;
 import at.korti.endermystic.modintegration.ee3.EquivalentExchange;
+import at.korti.endermystic.modintegration.nei.NEI;
 import at.korti.endermystic.modintegration.waila.Waila;
 import cpw.mods.fml.common.Loader;
 
@@ -26,6 +27,7 @@ public class ModIntegrationManager {
             integrationClasses.put(ModInfo.COFH, Cofh.class);
             integrationClasses.put(ModInfo.WAILA, Waila.class);
             integrationClasses.put(ModInfo.EQUIVALENTEXCHANGE, EquivalentExchange.class);
+            integrationClasses.put(ModInfo.NEI, NEI.class);
         } catch (Throwable e) {
             e.printStackTrace();
         }

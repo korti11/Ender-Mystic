@@ -17,5 +17,6 @@ public class ModInfo {
     public static final String FORGEMULTIPART = "ForgeMultipart";
     public static final String CARPENTERSBLOCKS = "CarpentersBlocks";
     public static final String EQUIVALENTEXCHANGE = "EE3";
+    public static final String NEI = "NotEnoughItems";
 
 }
