@@ -3,12 +3,11 @@ package at.korti.endermystic.blocks;
 import at.korti.endermystic.EnderMystic;
 import at.korti.endermystic.ModInfo;
 import at.korti.endermystic.api.crafting.IItemBookCrafting;
-import at.korti.endermystic.api.util.AbilityHelper;
+import at.korti.endermystic.api.helper.InventoryHelper;
+import at.korti.endermystic.api.helper.WorldHelper;
 import at.korti.endermystic.tileEntity.TileEntityCrystalCombiner;
-import net.minecraft.block.BlockContainer;
 import net.minecraft.block.material.Material;
 import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.tileentity.TileEntity;
 import net.minecraft.world.World;
 
 /**
@@ -56,23 +55,23 @@ public class CrystalCombiner extends ModelBlock implements IItemBookCrafting{
 
         TileEntityCrystalCombiner combiner = (TileEntityCrystalCombiner)world.getTileEntity(x,y,z);
 
-        if(AbilityHelper.isBetween(0.27F, 0.75F, hitZ) && side != 1){
+        if(InventoryHelper.isBetween(0.27F, 0.75F, hitZ) && side != 1){
             if(side == 4) {
-                AbilityHelper.setStackInSlot(0, player, combiner);
+                InventoryHelper.setStackInSlot(0, player, combiner);
             }
             else {
-                AbilityHelper.setStackInSlot(2, player, combiner);
+                InventoryHelper.setStackInSlot(2, player, combiner);
             }
         }
-        else if (AbilityHelper.isBetween(0.27F, 0.75F, hitX) && side != 1) {
+        else if (InventoryHelper.isBetween(0.27F, 0.75F, hitX) && side != 1) {
             if(side == 2) {
-                AbilityHelper.setStackInSlot(1, player, combiner);
+                InventoryHelper.setStackInSlot(1, player, combiner);
             }
             else {
-                AbilityHelper.setStackInSlot(3, player, combiner);
+                InventoryHelper.setStackInSlot(3, player, combiner);
             }
         }
-        else if(AbilityHelper.isBetween(0.3F, 0.7F, hitX) && AbilityHelper.isBetween(0.3F, 0.7F, hitZ)){
+        else if(InventoryHelper.isBetween(0.3F, 0.7F, hitX) && InventoryHelper.isBetween(0.3F, 0.7F, hitZ)){
             if(player.inventory.getCurrentItem() == null && combiner.getStackInSlot(4) != null){
                 player.inventory.addItemStackToInventory(combiner.getStackInSlot(4));
                 combiner.setInventorySlotContents(4, null);

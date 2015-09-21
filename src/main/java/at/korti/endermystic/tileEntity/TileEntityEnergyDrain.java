@@ -1,5 +1,6 @@
 package at.korti.endermystic.tileEntity;
 
+import at.korti.endermystic.EnderMystic;
 import at.korti.endermystic.api.mysticEnergyNetwork.EnergyNetworkHandler;
 import at.korti.endermystic.api.mysticEnergyNetwork.IEnergyProvider;
 import at.korti.endermystic.items.ModItems;
@@ -94,7 +95,8 @@ public class TileEntityEnergyDrain extends TileEntity implements IInventory, IEn
         for (int l = 0; l < 128 && getStackInSlot(0) != null; ++l)
         {
             if(worldObj.rand.nextFloat() < 0.1F)
-            this.worldObj.spawnParticle("portal", xCoord + 0.5, yCoord + 0.75, zCoord + 0.5, 0, -0.5, 0);
+                this.worldObj.spawnParticle("portal", xCoord + 0.5, yCoord + 0.75, zCoord + 0.5, 0, -0.5, 0);
+
         }
         worldObj.markBlockForUpdate(xCoord, yCoord, zCoord);
     }

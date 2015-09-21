@@ -24,9 +24,4 @@ public class CommonProxy {
     public void postInitIntegration() {
 
     }
-
-    public void initBook() {
-
-    }
-
 }

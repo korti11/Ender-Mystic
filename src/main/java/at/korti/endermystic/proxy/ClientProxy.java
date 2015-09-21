@@ -66,8 +66,4 @@ public class ClientProxy extends CommonProxy {
         ModIntegrationManager.clientInit();
     }
 
-    @Override
-    public void initBook() {
-
-    }
 }

@@ -9,6 +9,7 @@ import at.korti.endermystic.modintegration.IIntegration;
 import at.korti.endermystic.modintegration.baubles.belts.AirBelt;
 import at.korti.endermystic.modintegration.baubles.rings.AirRing;
 import at.korti.endermystic.modintegration.baubles.rings.FireRing;
+import at.korti.endermystic.modintegration.baubles.rings.WaterShieldRing;
 import cpw.mods.fml.common.Loader;
 import cpw.mods.fml.common.Mod;
 import cpw.mods.fml.common.registry.GameRegistry;
@@ -22,17 +23,20 @@ public class Baubles implements IIntegration{
 
     public static AirRing airRing;
     public static FireRing fireRing;
+    public static WaterShieldRing waterShieldRing;
     public static AirBelt airBelt;
 
     private void initItems(){
         airRing = new AirRing();
         fireRing = new FireRing();
+        waterShieldRing = new WaterShieldRing();
         airBelt = new AirBelt();
     }
 
     private void loadItems() {
         GameRegistry.registerItem(airRing, airRing.getName());
         GameRegistry.registerItem(fireRing, fireRing.getName());
+        GameRegistry.registerItem(waterShieldRing, waterShieldRing.getName());
         GameRegistry.registerItem(airBelt, airBelt.getName());
     }
 
@@ -73,6 +77,10 @@ public class Baubles implements IIntegration{
                 "OG ",
                 "G G",
                 " G ", 'G', new ItemStack(Items.gold_ingot), 'O', new ItemStack(ModItems.fireOrb)
+        );GameRegistry.addShapedRecipe(new ItemStack(Baubles.waterShieldRing),
+                "OG ",
+                "G G",
+                " G ", 'G', new ItemStack(Items.gold_ingot), 'O', new ItemStack(ModItems.waterOrb)
         );
     }
 
@@ -82,6 +90,7 @@ public class Baubles implements IIntegration{
         baublesItems.addItem(new ItemStack(Baubles.airBelt));
         baublesItems.addItem(new ItemStack(Baubles.airRing));
         baublesItems.addItem(new ItemStack(Baubles.fireRing));
+        baublesItems.addItem(new ItemStack(Baubles.waterShieldRing));
 
         return baubles;
     }

@@ -1,7 +1,7 @@
 package at.korti.endermystic.items.orbs;
 
 import at.korti.endermystic.api.mysticEnergyNetwork.EnergyNetworkHandler;
-import at.korti.endermystic.api.util.AbilityHelper;
+import at.korti.endermystic.api.helper.WorldHelper;
 import at.korti.endermystic.blocks.ModBlocks;
 import at.korti.endermystic.tileEntity.TileEntityEnderZar;
 import net.minecraft.creativetab.CreativeTabs;
@@ -29,8 +29,8 @@ public class EnderZarOrb extends Orb {
         super.onItemRightClick(stack, world, player);
 
         if (stack.getItemDamage() < 1001) {
-            AbilityHelper.setBlock(x, y, z, side, ModBlocks.enderZar, world);
-            TileEntityEnderZar enderZar = (TileEntityEnderZar) AbilityHelper.getTileEntityFromSide(x, y, z, side, world);
+            WorldHelper.setBlock(x, y, z, side, ModBlocks.enderZar, world);
+            TileEntityEnderZar enderZar = (TileEntityEnderZar) WorldHelper.getTileEntityFromSide(x, y, z, side, world);
             enderZar.setStoredEnergy((stack.getMaxDamage() - 1) - stack.getItemDamage());
             if(!world.isRemote) {
                 if (EnergyNetworkHandler.getEnergy(stack.stackTagCompound.getString("em_owner")) >= (stack.getMaxDamage() - 1) - stack.getItemDamage()) {

@@ -4,7 +4,7 @@ import at.korti.endermystic.EnderMystic;
 import at.korti.endermystic.ModInfo;
 import at.korti.endermystic.api.tools.IEnderSoulTool;
 import at.korti.endermystic.api.tools.ToolLevelHandler;
-import at.korti.endermystic.api.util.AbilityHelper;
+import at.korti.endermystic.api.helper.WorldHelper;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 import net.minecraft.block.Block;
@@ -125,9 +125,9 @@ public class EnderSoulExcavator extends ItemSpade implements IEnderSoulTool{
     @Override
     public boolean onBlockDestroyed(ItemStack stack, World world, Block block, int x, int y, int z, EntityLivingBase player) {
         if(!world.isRemote) {
-            MovingObjectPosition mop = AbilityHelper.raytraceFromEntity(world, player, false, 4.5D);
+            MovingObjectPosition mop = WorldHelper.raytraceFromEntity(world, player, false, 4.5D);
             if (mop != null) {
-                AbilityHelper.breakMultiBlocks((EntityPlayer) player, stack, world, x, y, z, mop.sideHit, 3);
+                WorldHelper.breakMultiBlocks((EntityPlayer) player, stack, world, x, y, z, mop.sideHit, 3);
             }
         }
         return super.onBlockDestroyed(stack, world, block, x, y, z, player);

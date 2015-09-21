@@ -77,6 +77,7 @@ item.endermystic.OrbCore.Universe.name=Universe Core
 item.endermystic.AirRing.name=Ring of Breathing
 item.endermystic.AirBelt.name=Swiftness Belt
 item.endermystic.FireRing.name=Ring of Fire Resistance
+item.endermystic.WaterShieldRing.name=Ring of Ender Deflection
 
 tile.endermystic.CrystalOre.Earth.name=Earth Crystal Ore
 tile.endermystic.CrystalOre.Air.name=Air Crystal Ore
@@ -189,6 +190,7 @@ book.entry.BaublesItems.title=Baubles Items
 book.entry.AirRing.text=The air ring add the potion effect breathing. With breathing you can breath under the water.
 book.entry.AirBelt.text=If equipped the air belt you get the potion effect swiftness. With this effect you can run faster.
 book.entry.FireRing.text=With the fire ring you get the effect fire resistance. With this potion effect you get no damage from fire and lava.
+book.entry.WaterShieldRing.text=The Ender Deflection ring prevent that a enderman can sneak up at you. It damages him and he gets teleported away.
 
 book.entry.CoFH.title=CoFH Integration
 book.entry.MysticDynamo.text=With the Mystic Dynamo you can convert RF power in mystic energy. This mystic machine is hard to understand how it work.

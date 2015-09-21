@@ -3,13 +3,12 @@ package at.korti.endermystic.blocks;
 import at.korti.endermystic.EnderMystic;
 import at.korti.endermystic.ModInfo;
 import at.korti.endermystic.api.crafting.IItemBookCrafting;
-import at.korti.endermystic.api.util.AbilityHelper;
+import at.korti.endermystic.api.helper.InventoryHelper;
+import at.korti.endermystic.api.helper.WorldHelper;
 import at.korti.endermystic.tileEntity.TileEntityEnderTranfer;
 import net.minecraft.block.Block;
-import net.minecraft.block.BlockContainer;
 import net.minecraft.block.material.Material;
 import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.tileentity.TileEntity;
 import net.minecraft.world.World;
 
 /**
@@ -28,7 +27,7 @@ public class EnderInjector extends ModelBlock implements IItemBookCrafting{
     @Override
     public boolean onBlockActivated(World world, int x, int y, int z, EntityPlayer player, int side, float xHit, float yHit, float zHit) {
         if(!player.isSneaking()) {
-            AbilityHelper.setStackInSlot(0, player, (TileEntityEnderTranfer)world.getTileEntity(x, y, z));
+            InventoryHelper.setStackInSlot(0, player, (TileEntityEnderTranfer) world.getTileEntity(x, y, z));
         }
         return super.onBlockActivated(world, x, y, z, player, side, xHit, yHit, zHit);
     }

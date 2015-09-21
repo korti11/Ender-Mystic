@@ -1,6 +1,7 @@
 package at.korti.endermystic.api.mysticEnergyNetwork;
 
 import at.korti.endermystic.tileEntity.TileEntityEnergyCrystalStorage;
+import net.minecraft.item.ItemStack;
 import net.minecraft.server.MinecraftServer;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.world.World;
@@ -104,6 +105,18 @@ public class EnergyNetworkHandler {
      */
     public static int getCapacity(String itemName){
         return getNetwork(itemName).mysticCapacity;
+    }
+
+    /**
+     * Get the owner of the item.
+     * @param item
+     * @return
+     */
+    public static String getOwner(ItemStack item) {
+        if (item.stackTagCompound == null) {
+            return "";
+        }
+        return item.stackTagCompound.getString("em_owner");
     }
 
     /**

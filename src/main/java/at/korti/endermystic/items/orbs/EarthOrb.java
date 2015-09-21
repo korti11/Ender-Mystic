@@ -1,6 +1,6 @@
 package at.korti.endermystic.items.orbs;
 
-import at.korti.endermystic.api.util.AbilityHelper;
+import at.korti.endermystic.api.helper.WorldHelper;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
 import net.minecraft.world.World;
@@ -60,7 +60,7 @@ public class EarthOrb extends Orb {
         if(!world.isRemote) {
 
             if (!player.isSneaking()) {
-                AbilityHelper.breakMultiBlocks(player, stack, world, x, y, z, side, stack.stackTagCompound.getInteger("em_radius"));
+                WorldHelper.breakMultiBlocks(player, stack, world, x, y, z, side, stack.stackTagCompound.getInteger("em_radius"));
             }
         }
 

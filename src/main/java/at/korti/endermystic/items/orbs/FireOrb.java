@@ -1,7 +1,7 @@
 package at.korti.endermystic.items.orbs;
 
 import at.korti.endermystic.api.mysticEnergyNetwork.EnergyNetworkHandler;
-import at.korti.endermystic.api.util.AbilityHelper;
+import at.korti.endermystic.api.helper.WorldHelper;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Blocks;
@@ -53,7 +53,7 @@ public class FireOrb extends Orb {
 
             if (!player.isSneaking()) {
                 if (EnergyNetworkHandler.decEnergy(OrbStats.usageFireOrb, stack.stackTagCompound.getString("em_owner"))) {
-                    AbilityHelper.setBlock(x, y, z, side, Blocks.lava, world);
+                    WorldHelper.setBlock(x, y, z, side, Blocks.lava, world);
                 }
             }
         }

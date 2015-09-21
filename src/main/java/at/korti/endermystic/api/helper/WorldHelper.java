@@ -1,4 +1,4 @@
-package at.korti.endermystic.api.util;
+package at.korti.endermystic.api.helper;
 
 import at.korti.endermystic.api.mysticEnergyNetwork.EnergyNetworkHandler;
 import at.korti.endermystic.api.tools.ToolLevelHandler;
@@ -27,7 +27,7 @@ import net.minecraft.world.World;
 /**
  * Created by Korti on 03.12.2014.
  */
-public class AbilityHelper {
+public class WorldHelper {
 
 
     //region Tools
@@ -244,34 +244,4 @@ public class AbilityHelper {
                 return null;
         }
     }
-
-    public static boolean isBetween(float min, float max, float current){
-        return (((float)(int)(current * 100)) / 100) >= min && (((float)(int)(current * 100)) / 100) <= max;
-    }
-
-    public static void setStackInSlot(int slot, EntityPlayer player, IInventory inventory){
-        if(inventory.getStackInSlot(slot) == null && player.inventory.getCurrentItem() != null && inventory.isItemValidForSlot(slot, player.inventory.getCurrentItem())) {
-            inventory.setInventorySlotContents(slot, player.inventory.getCurrentItem().copy());
-            player.inventory.setInventorySlotContents(player.inventory.currentItem, player.inventory.decrStackSize(player.inventory.currentItem, player.inventory.getStackInSlot(player.inventory.currentItem).stackSize - 1));
-        }
-        else if(player.inventory.getCurrentItem() == null) {
-            player.inventory.addItemStackToInventory(inventory.getStackInSlot(slot));
-            inventory.setInventorySlotContents(slot, null);
-        }
-    }
-
-    public static void addEnderHeartBleedPotion(ItemStack stack, EntityLivingBase entity) {
-        if(stack != null && stack.getItem() instanceof EnderSoulSword) {
-            if (stack.stackTagCompound == null) {
-                stack.stackTagCompound = new NBTTagCompound();
-            }
-
-            if (EnergyNetworkHandler.decEnergy(ToolStats.enderSoulSwordUsage, stack.stackTagCompound.getString("em_owner"))) {
-                if (stack.stackTagCompound.hasKey("em_owner") && stack.stackTagCompound.getBoolean("em_active")) {
-                    entity.addPotionEffect(new PotionEffect(PotionHelper.enderHeartBleed.getId(), 200));
-                }
-            }
-        }
-    }
-
 }

@@ -5,7 +5,7 @@ import at.korti.endermystic.ModInfo;
 import at.korti.endermystic.api.mysticEnergyNetwork.EnergyNetworkHandler;
 import at.korti.endermystic.api.tools.IEnderSoulTool;
 import at.korti.endermystic.api.tools.ToolLevelHandler;
-import at.korti.endermystic.api.util.AbilityHelper;
+import at.korti.endermystic.potion.PotionHelper;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 import net.minecraft.client.renderer.texture.IIconRegister;
@@ -15,6 +15,7 @@ import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.ItemSword;
 import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.potion.PotionEffect;
 import net.minecraft.util.IIcon;
 import net.minecraft.world.World;
 
@@ -76,13 +77,22 @@ public class EnderSoulSword extends ItemSword implements IEnderSoulTool{
 
     @Override
     public boolean hitEntity(ItemStack stack, EntityLivingBase entity, EntityLivingBase player) {
-        AbilityHelper.addEnderHeartBleedPotion(stack, entity);
+
+        if(stack != null && stack.getItem() instanceof EnderSoulSword) {
+            if (stack.stackTagCompound == null) {
+                stack.stackTagCompound = new NBTTagCompound();
+            }
+
+            if (EnergyNetworkHandler.decEnergy(ToolStats.enderSoulSwordUsage, stack.stackTagCompound.getString("em_owner"))) {
+                if (stack.stackTagCompound.hasKey("em_owner") && stack.stackTagCompound.getBoolean("em_active")) {
+                    entity.addPotionEffect(new PotionEffect(PotionHelper.enderHeartBleed.getId(), 200));
+                }
+            }
+        }
+
         ToolLevelHandler.getInstance().addXP(stack, 1, (EntityPlayer) player);
         ToolLevelHandler.getInstance().handleSharpnessUpgrade((EntityPlayer) player, entity);
         ToolLevelHandler.getInstance().handleFireyUpgrade((EntityPlayer) player, entity);
-//        if (entity.) {
-//            ToolLevelHandler.getInstance().handleLuckUpgrade((EntityPlayer) player, entity);
-//        }
         return super.hitEntity(stack, entity, player);
     }
 

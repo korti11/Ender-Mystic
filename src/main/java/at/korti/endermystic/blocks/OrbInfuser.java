@@ -3,12 +3,11 @@ package at.korti.endermystic.blocks;
 import at.korti.endermystic.EnderMystic;
 import at.korti.endermystic.ModInfo;
 import at.korti.endermystic.api.crafting.IItemBookCrafting;
-import at.korti.endermystic.api.util.AbilityHelper;
+import at.korti.endermystic.api.helper.InventoryHelper;
+import at.korti.endermystic.api.helper.WorldHelper;
 import at.korti.endermystic.tileEntity.TileEntityOrbInfuser;
-import net.minecraft.block.BlockContainer;
 import net.minecraft.block.material.Material;
 import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.tileentity.TileEntity;
 import net.minecraft.world.World;
 
 /**
@@ -31,37 +30,37 @@ public class OrbInfuser extends ModelBlock implements IItemBookCrafting {
 
         TileEntityOrbInfuser infuser = (TileEntityOrbInfuser) world.getTileEntity(x, y, z);
 
-        if(AbilityHelper.isBetween(0.40F, 0.60F,hitX) && AbilityHelper.isBetween(0.74F, 0.94F, hitZ)){      //Slot 1
-            AbilityHelper.setStackInSlot(0, player, infuser);
+        if(InventoryHelper.isBetween(0.40F, 0.60F, hitX) && InventoryHelper.isBetween(0.74F, 0.94F, hitZ)){      //Slot 1
+            InventoryHelper.setStackInSlot(0, player, infuser);
         }
-        else if(AbilityHelper.isBetween(0.09F, 0.29F,hitX) && AbilityHelper.isBetween(0.71F, 0.91F, hitZ)){      //Slot 2
-            AbilityHelper.setStackInSlot(1, player, infuser);
+        else if(InventoryHelper.isBetween(0.09F, 0.29F, hitX) && InventoryHelper.isBetween(0.71F, 0.91F, hitZ)){      //Slot 2
+            InventoryHelper.setStackInSlot(1, player, infuser);
         }
-        else if(AbilityHelper.isBetween(0.06F, 0.26F,hitX) && AbilityHelper.isBetween(0.40F, 0.60F, hitZ)){      //Slot 3
-            AbilityHelper.setStackInSlot(2, player, infuser);
+        else if(InventoryHelper.isBetween(0.06F, 0.26F, hitX) && InventoryHelper.isBetween(0.40F, 0.60F, hitZ)){      //Slot 3
+            InventoryHelper.setStackInSlot(2, player, infuser);
         }
-        else if(AbilityHelper.isBetween(0.09F, 0.29F,hitX) && AbilityHelper.isBetween(0.09F, 0.29F, hitZ)){      //Slot 4
-            AbilityHelper.setStackInSlot(3, player, infuser);
+        else if(InventoryHelper.isBetween(0.09F, 0.29F, hitX) && InventoryHelper.isBetween(0.09F, 0.29F, hitZ)){      //Slot 4
+            InventoryHelper.setStackInSlot(3, player, infuser);
         }
-        else if(AbilityHelper.isBetween(0.40F, 0.60F,hitX) && AbilityHelper.isBetween(0.06F, 0.26F, hitZ)){      //Slot 5
-            AbilityHelper.setStackInSlot(4, player, infuser);
+        else if(InventoryHelper.isBetween(0.40F, 0.60F, hitX) && InventoryHelper.isBetween(0.06F, 0.26F, hitZ)){      //Slot 5
+            InventoryHelper.setStackInSlot(4, player, infuser);
         }
-        else if(AbilityHelper.isBetween(0.71F, 0.91F,hitX) && AbilityHelper.isBetween(0.09F, 0.29F, hitZ)){      //Slot 6
-            AbilityHelper.setStackInSlot(5, player, infuser);
+        else if(InventoryHelper.isBetween(0.71F, 0.91F, hitX) && InventoryHelper.isBetween(0.09F, 0.29F, hitZ)){      //Slot 6
+            InventoryHelper.setStackInSlot(5, player, infuser);
         }
-        else if(AbilityHelper.isBetween(0.74F, 0.94F,hitX) && AbilityHelper.isBetween(0.40F, 0.60F, hitZ)){      //Slot 7
-            AbilityHelper.setStackInSlot(6, player, infuser);
+        else if(InventoryHelper.isBetween(0.74F, 0.94F, hitX) && InventoryHelper.isBetween(0.40F, 0.60F, hitZ)){      //Slot 7
+            InventoryHelper.setStackInSlot(6, player, infuser);
         }
-        else if(AbilityHelper.isBetween(0.71F, 0.91F,hitX) && AbilityHelper.isBetween(0.71F, 0.91F, hitZ)){      //Slot 8
-            AbilityHelper.setStackInSlot(7, player, infuser);
+        else if(InventoryHelper.isBetween(0.71F, 0.91F, hitX) && InventoryHelper.isBetween(0.71F, 0.91F, hitZ)){      //Slot 8
+            InventoryHelper.setStackInSlot(7, player, infuser);
         }
-        else if(AbilityHelper.isBetween(0.37F, 0.62F,hitX) && AbilityHelper.isBetween(0.37F, 0.62F, hitZ)){      //Slot 9
+        else if(InventoryHelper.isBetween(0.37F, 0.62F, hitX) && InventoryHelper.isBetween(0.37F, 0.62F, hitZ)){      //Slot 9
             if(player.inventory.getCurrentItem() == null && infuser.getStackInSlot(8) != null){
                 player.inventory.addItemStackToInventory(infuser.getStackInSlot(8));
                 infuser.setInventorySlotContents(8, null);
             }
             else {
-                AbilityHelper.setStackInSlot(8, player, infuser);
+                InventoryHelper.setStackInSlot(8, player, infuser);
             }
         }
 
