@@ -41,6 +41,9 @@ item.endermystic.EnderSoulFillFilled.name=Ender Soul Fill (Filled)
 item.endermystic.Book.name=Knowledge of Ender 91th Edition
 item.endermystic.WorldStorage.name=World Storage
 
+#Wands
+item.endermystic.ThunderWand.name=Mjoelnir
+
 #Crystals
 item.endermystic.Crystal.Water.name=Water Crystal
 item.endermystic.Crystal.Fire.name=Fire Crystal

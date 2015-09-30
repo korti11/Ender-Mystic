@@ -37,7 +37,7 @@ public class EnergyItem extends ModItem {
     }
 
     @Override
-    public ItemStack onItemRightClick(ItemStack stack, World p_77659_2_, EntityPlayer player) {
+    public ItemStack onItemRightClick(ItemStack stack, World world, EntityPlayer player) {
 
         if(stack.stackTagCompound == null){
             stack.stackTagCompound = new NBTTagCompound();
@@ -47,6 +47,6 @@ public class EnergyItem extends ModItem {
             stack.stackTagCompound.setString("em_owner", player.getDisplayName());
         }
 
-        return super.onItemRightClick(stack, p_77659_2_, player);
+        return super.onItemRightClick(stack, world, player);
     }
 }

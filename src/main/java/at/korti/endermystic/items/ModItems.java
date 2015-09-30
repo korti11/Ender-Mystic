@@ -2,6 +2,7 @@ package at.korti.endermystic.items;
 
 import at.korti.endermystic.ModInfo;
 import at.korti.endermystic.items.armor.EnderSoulArmor;
+import at.korti.endermystic.items.gadgets.ThunderWand;
 import at.korti.endermystic.items.orbs.*;
 import at.korti.endermystic.items.tools.*;
 import cpw.mods.fml.common.registry.GameRegistry;
@@ -34,6 +35,8 @@ public class ModItems {
     public static EnderSoulShovel enderSoulShovel;
     public static EnderSoulHammer enderSoulHammer;
     public static EnderSoulExcavator enderSoulExcavator;
+
+    public static ThunderWand thunderWand;
 
     public static EnderSoulArmor enderSoulHelmet;
     public static EnderSoulArmor enderSoulBreastplate;
@@ -74,6 +77,8 @@ public class ModItems {
         enderSoulShovel = new EnderSoulShovel();
         enderSoulHammer = new EnderSoulHammer();
         enderSoulExcavator = new EnderSoulExcavator();
+
+        thunderWand = new ThunderWand();
 
         enderSoulHelmet = new EnderSoulArmor(0);
         enderSoulBreastplate = new EnderSoulArmor(1);
@@ -118,6 +123,8 @@ public class ModItems {
         GameRegistry.registerItem(enderSoulShovel, "EnderSoulShovel", ModInfo.MODID);
         GameRegistry.registerItem(enderSoulHammer, "EnderSoulHammer", ModInfo.MODID);
         GameRegistry.registerItem(enderSoulExcavator, "EnderSoulExcavator", ModInfo.MODID);
+
+        GameRegistry.registerItem(thunderWand, thunderWand.getName(), ModInfo.MODID);
 
         GameRegistry.registerItem(enderSoulHelmet, "EnderSoulHelmet");
         GameRegistry.registerItem(enderSoulBreastplate, "EnderSoulBreastplate");

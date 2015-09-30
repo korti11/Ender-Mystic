@@ -44,6 +44,7 @@ public class ClientProxy extends CommonProxy {
 //        MinecraftForgeClient.registerItemRenderer(ModItems.enderSoulBreastplate, new ItemEnderSoulArmorRenderer());
 //        MinecraftForgeClient.registerItemRenderer(ModItems.enderSoulLegs, new ItemEnderSoulArmorRenderer());
 
+//        RenderingRegistry.registerEntityRenderingHandler(EntityEnderPorjectile.class, new ProjectileRenderer(new EnderProjectileModel(), "ender_perle"));
     }
 
     @Override

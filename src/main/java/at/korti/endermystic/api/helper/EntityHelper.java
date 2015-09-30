@@ -2,8 +2,13 @@ package at.korti.endermystic.api.helper;
 
 import net.minecraft.block.Block;
 import net.minecraft.entity.Entity;
+import net.minecraft.entity.EntityLivingBase;
+import net.minecraft.init.Blocks;
+import net.minecraft.util.AxisAlignedBB;
 import net.minecraft.util.MathHelper;
+import net.minecraft.world.World;
 
+import java.util.List;
 import java.util.Random;
 
 /**
@@ -24,6 +29,10 @@ public class EntityHelper {
      * @param spawnParticle
      */
     public static void teleportEntity(Entity entity, double posX, double posY, double posZ, boolean spawnParticle) {
+        if (entity == null) {
+            return;
+        }
+
         double d3 = entity.posX;
         double d4 = entity.posY;
         double d5 = entity.posZ;
@@ -35,55 +44,44 @@ public class EntityHelper {
         int j = MathHelper.floor_double(entity.posY);
         int k = MathHelper.floor_double(entity.posZ);
 
-        if (entity.worldObj.blockExists(i, j, k))
-        {
+        if (entity.worldObj.blockExists(i, j, k)) {
             boolean flag1 = false;
 
-            while (!flag1 && j > 0)
-            {
+            while (!flag1 && j > 0) {
                 Block block = entity.worldObj.getBlock(i, j - 1, k);
 
-                if (block.getMaterial().blocksMovement())
-                {
+                if (block.getMaterial().blocksMovement()) {
                     flag1 = true;
-                }
-                else
-                {
+                } else {
                     --entity.posY;
                     --j;
                 }
             }
 
-            if (flag1)
-            {
+            if (flag1) {
                 entity.setPosition(entity.posX, entity.posY, entity.posZ);
 
-                if (entity.worldObj.getCollidingBoundingBoxes(entity, entity.boundingBox).isEmpty() && !entity.worldObj.isAnyLiquid(entity.boundingBox))
-                {
+                if (entity.worldObj.getCollidingBoundingBoxes(entity, entity.boundingBox).isEmpty() && !entity.worldObj.isAnyLiquid(entity.boundingBox)) {
                     flag = true;
                 }
             }
         }
 
-        if (!flag)
-        {
+        if (!flag) {
             entity.setPosition(d3, d4, d5);
             return;
-        }
-        else if(spawnParticle)
-        {
+        } else if (spawnParticle) {
             short short1 = 128;
 
-            for (int l = 0; l < short1; ++l)
-            {
-                double d6 = (double)l / ((double)short1 - 1.0D);
+            for (int l = 0; l < short1; ++l) {
+                double d6 = (double) l / ((double) short1 - 1.0D);
                 float f = (rand.nextFloat() - 0.5F) * 0.2F;
                 float f1 = (rand.nextFloat() - 0.5F) * 0.2F;
                 float f2 = (rand.nextFloat() - 0.5F) * 0.2F;
-                double d7 = d3 + (entity.posX - d3) * d6 + (rand.nextDouble() - 0.5D) * (double)entity.width * 2.0D;
-                double d8 = d4 + (entity.posY - d4) * d6 + rand.nextDouble() * (double)entity.height;
-                double d9 = d5 + (entity.posZ - d5) * d6 + (rand.nextDouble() - 0.5D) * (double)entity.width * 2.0D;
-                entity.worldObj.spawnParticle("portal", d7, d8, d9, (double)f, (double)f1, (double)f2);
+                double d7 = d3 + (entity.posX - d3) * d6 + (rand.nextDouble() - 0.5D) * (double) entity.width * 2.0D;
+                double d8 = d4 + (entity.posY - d4) * d6 + rand.nextDouble() * (double) entity.height;
+                double d9 = d5 + (entity.posZ - d5) * d6 + (rand.nextDouble() - 0.5D) * (double) entity.width * 2.0D;
+                entity.worldObj.spawnParticle("portal", d7, d8, d9, (double) f, (double) f1, (double) f2);
             }
 
             return;
@@ -96,10 +94,42 @@ public class EntityHelper {
      * @param spawnParticle
      */
     public static void randomTeleport(Entity entity, boolean spawnParticle) {
-        double d0 = entity.posX + (rand.nextDouble() - 0.5D) * 64.0D;
-        double d1 = entity.posY + (double)(rand.nextInt(64) - 32);
-        double d2 = entity.posZ + (rand.nextDouble() - 0.5D) * 64.0D;
-        teleportEntity(entity, d0, d1, d2, spawnParticle);
+        if(entity != null) {
+            double d0 = entity.posX + (rand.nextDouble() - 0.5D) * 64.0D;
+            double d1 = entity.posY + (double) (rand.nextInt(64) - 32);
+            double d2 = entity.posZ + (rand.nextDouble() - 0.5D) * 64.0D;
+            teleportEntity(entity, d0, d1, d2, spawnParticle);
+        }
+    }
+
+    public static boolean canEntitySeeSky(Entity entity, World world) {
+        int posX = (int) entity.posX;
+        int posY = (int) entity.posY;
+        int posZ = (int) entity.posZ;
+
+        for (int y = posY; y < 150; y++) {
+            Block block = world.getBlock(posX, y, posZ);
+            if (block != Blocks.air) {
+                return false;
+            }
+        }
+        return true;
+    }
+
+    public static Entity getRandomEntityInRange(World world, double posX, double posY, double posZ, double range) {
+        List<EntityLivingBase> entities = world.getEntitiesWithinAABB(EntityLivingBase.class, AxisAlignedBB.getBoundingBox(posX - range, posY - range, posZ - range, posX + range, posY + range, posZ + range));
+
+        while(entities.size() > 0) {
+            Entity e = entities.get(world.rand.nextInt(entities.size()));
+            if (!(e instanceof EntityLivingBase)) {
+                entities.remove(e);
+                continue;
+            }
+
+            return e;
+        }
+
+        return null;
     }
 
 }
