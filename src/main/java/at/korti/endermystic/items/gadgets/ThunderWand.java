@@ -19,7 +19,7 @@ import java.util.List;
  */
 public class ThunderWand extends EnergyItem{
 
-    private final int randge = 12;
+    private final int range = 12;
 
     public ThunderWand() {
         super("ThunderWand");
@@ -31,7 +31,7 @@ public class ThunderWand extends EnergyItem{
         String owner = EnergyNetworkHandler.getOwner(stack);
 
         if(!owner.isEmpty()) {
-            List mobs = world.getEntitiesWithinAABB(IMob.class, AxisAlignedBB.getBoundingBox(player.posX - randge, player.posY - randge, player.posZ - randge, player.posX + randge, player.posY + randge, player.posZ + randge));
+            List mobs = world.getEntitiesWithinAABB(IMob.class, AxisAlignedBB.getBoundingBox(player.posX - range, player.posY - range, player.posZ - range, player.posX + range, player.posY + range, player.posZ + range));
 
             while (mobs.size() > 0) {
                 Entity e = (Entity) mobs.get(world.rand.nextInt(mobs.size()));

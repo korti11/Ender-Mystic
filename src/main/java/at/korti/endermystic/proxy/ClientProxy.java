@@ -5,21 +5,44 @@ import at.korti.endermystic.client.keybinding.KeyHandler;
 import at.korti.endermystic.client.model.blocks.EnderZarModel;
 import at.korti.endermystic.client.model.blocks.EnergyCrystalStorageModel;
 import at.korti.endermystic.client.model.blocks.EnergyRelayModel;
+import at.korti.endermystic.client.model.items.TeleportWandModel;
+import at.korti.endermystic.client.model.items.ThunderWand;
 import at.korti.endermystic.client.render.RenderConfig;
 import at.korti.endermystic.client.render.blocks.*;
+import at.korti.endermystic.client.render.items.ItemRenderer;
 import at.korti.endermystic.client.render.items.TileEntityItemRenderer;
+import at.korti.endermystic.items.ModItems;
 import at.korti.endermystic.modintegration.ModIntegrationManager;
 import at.korti.endermystic.tileEntity.*;
 import cpw.mods.fml.client.registry.ClientRegistry;
 import cpw.mods.fml.client.registry.ISimpleBlockRenderingHandler;
 import cpw.mods.fml.client.registry.RenderingRegistry;
+import net.minecraft.block.Block;
+import net.minecraft.client.model.ModelBase;
 import net.minecraft.item.Item;
+import net.minecraft.tileentity.TileEntity;
 import net.minecraftforge.client.MinecraftForgeClient;
 
 /**
  * Created by Korti on 15.10.2014.
  */
 public class ClientProxy extends CommonProxy {
+
+    public static void registerTileEntityRenderer(Block block, Class<? extends TileEntity> tileEntityClass, ModelBase model, String texture){
+        registerTileEntityRenderer(Item.getItemFromBlock(block), tileEntityClass, model, texture);
+    }
+
+    private static void registerTileEntityRenderer(Item item, Class<? extends TileEntity> tileEntityClass, ModelBase model, String texture) {
+        try {
+            TileEntityBlockRenderer renderer = new TileEntityBlockRenderer(model, texture);
+            ClientRegistry.bindTileEntitySpecialRenderer(tileEntityClass, renderer);
+            MinecraftForgeClient.registerItemRenderer(item, new TileEntityItemRenderer(renderer, tileEntityClass.newInstance()));
+        } catch (InstantiationException e) {
+            e.printStackTrace();
+        } catch (IllegalAccessException e) {
+            e.printStackTrace();
+        }
+    }
 
     @Override
     public void initRenderes() {
@@ -40,11 +63,9 @@ public class ClientProxy extends CommonProxy {
         MinecraftForgeClient.registerItemRenderer(Item.getItemFromBlock(ModBlocks.energyCrystalStorage), new TileEntityItemRenderer(new TileEntityBlockRenderer(new EnergyCrystalStorageModel(), "textures/model/EnergyCrystalStorage.png"), new TileEntityEnergyCrystalStorage()));
         MinecraftForgeClient.registerItemRenderer(Item.getItemFromBlock(ModBlocks.enderPicker), new TileEntityItemRenderer(new EnderTransferRenderer(), new TileEntityEnderTranfer()));
         MinecraftForgeClient.registerItemRenderer(Item.getItemFromBlock(ModBlocks.enderInjector), new TileEntityItemRenderer(new EnderTransferRenderer(), new TileEntityEnderTranfer()));
-//        MinecraftForgeClient.registerItemRenderer(ModItems.enderSoulHelmet, new ItemEnderSoulArmorRenderer());
-//        MinecraftForgeClient.registerItemRenderer(ModItems.enderSoulBreastplate, new ItemEnderSoulArmorRenderer());
-//        MinecraftForgeClient.registerItemRenderer(ModItems.enderSoulLegs, new ItemEnderSoulArmorRenderer());
 
-//        RenderingRegistry.registerEntityRenderingHandler(EntityEnderPorjectile.class, new ProjectileRenderer(new EnderProjectileModel(), "ender_perle"));
+        MinecraftForgeClient.registerItemRenderer(ModItems.teleportWand, new ItemRenderer(new TeleportWandModel(), "textures/model/TeleportWand.png"));
+        MinecraftForgeClient.registerItemRenderer(ModItems.thunderWand, new ItemRenderer(new ThunderWand(), "textures/model/Mjoelnir.png"));
     }
 
     @Override

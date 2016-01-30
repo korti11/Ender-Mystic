@@ -349,6 +349,16 @@ public class CraftingManager {
                 "GCG",
                 " G ", 'G', new ItemStack(Items.gold_ingot), 'C', new ItemStack(ModItems.orbCoreItem, 1, 12)
         );
+        GameRegistry.addShapedRecipe(new ItemStack(ModItems.thunderWand),
+                "IEI",
+                "IEI",
+                " S ", 'I', new ItemStack(ModItems.enderItem, 0, 1), 'E', new ItemStack(ModItems.crystalItem, 1, 7), 'S', new ItemStack(ModItems.enderItem, 1, 2)
+        );
+        GameRegistry.addShapedRecipe(new ItemStack(ModItems.teleportWand),
+                "ESE",
+                " R ",
+                " R ", 'E', new ItemStack(Items.ender_pearl), 'S', new ItemStack(ModItems.crystalItem, 1, 7), 'R', new ItemStack(ModItems.enderItem, 1, 2)
+        );
 
         //Blocks
         GameRegistry.addShapedRecipe(new ItemStack(ModBlocks.crystalCombiner),

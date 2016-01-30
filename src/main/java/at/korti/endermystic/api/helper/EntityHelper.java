@@ -3,10 +3,15 @@ package at.korti.endermystic.api.helper;
 import net.minecraft.block.Block;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
+import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.init.Blocks;
 import net.minecraft.util.AxisAlignedBB;
+import net.minecraft.util.DamageSource;
 import net.minecraft.util.MathHelper;
 import net.minecraft.world.World;
+import net.minecraftforge.common.MinecraftForge;
+import net.minecraftforge.event.entity.living.EnderTeleportEvent;
 
 import java.util.List;
 import java.util.Random;
@@ -70,7 +75,7 @@ public class EntityHelper {
         if (!flag) {
             entity.setPosition(d3, d4, d5);
             return;
-        } else if (spawnParticle) {
+        } else if (spawnParticle && entity.worldObj.isRemote) {
             short short1 = 128;
 
             for (int l = 0; l < short1; ++l) {
@@ -85,6 +90,41 @@ public class EntityHelper {
             }
 
             return;
+        }
+    }
+
+    public static void teleportPlayer(EntityPlayer player, double posX, double posY, double posZ, int side, boolean spawnParticle) {
+        if (player.worldObj.isRemote && spawnParticle) {
+            player.worldObj.spawnParticle("portal", player.posX, player.posY + rand.nextGaussian() * 2.0D, player.posZ, rand.nextGaussian(), 0.0D, rand.nextGaussian());
+        } else {
+            if (player instanceof EntityPlayerMP) {
+                EntityPlayerMP entityPlayerMP = (EntityPlayerMP) player;
+
+                if (entityPlayerMP.playerNetServerHandler.func_147362_b().isChannelOpen()) {
+
+                    boolean above = side == 1 ? WorldHelper.isAirBlock((int) posX, (int) posY, (int) posZ, 1, entityPlayerMP.worldObj) : false;
+                    if (above || WorldHelper.isAirBlock((int) posX, (int) posY, (int) posX, side, entityPlayerMP.worldObj)) {
+                        entityPlayerMP.posX = posX;
+                        entityPlayerMP.posY = posY;
+                        entityPlayerMP.posZ = posZ;
+                        if (!above) {
+                            moveEntityOneBlockOfSide(entityPlayerMP, side);
+                        } else {
+                            entityPlayerMP.posY++;
+                        }
+
+                        EnderTeleportEvent event = new EnderTeleportEvent(entityPlayerMP, entityPlayerMP.posX, entityPlayerMP.posY, entityPlayerMP.posZ, 5.0F);
+                        if (!MinecraftForge.EVENT_BUS.post(event)) {
+                            if (player.isRiding()) {
+                                player.mountEntity(null);
+                            }
+                            player.setPositionAndUpdate(event.targetX, event.targetY, event.targetZ);
+                            entityPlayerMP.fallDistance = 0.0F;
+                            player.attackEntityFrom(DamageSource.fall, event.attackDamage);
+                        }
+                    }
+                }
+            }
         }
     }
 
@@ -130,6 +170,31 @@ public class EntityHelper {
         }
 
         return null;
+    }
+
+    public static void moveEntityOneBlockOfSide(Entity entity, int side) {
+        switch (side){
+            case 0:
+                entity.posY--;
+                break;
+            case 1:
+                entity.posY++;
+                break;
+            case 2:
+                entity.posZ--;
+                break;
+            case 3:
+                entity.posZ++;
+                break;
+            case 4:
+                entity.posX--;
+                break;
+            case 5:
+                entity.posX++;
+                break;
+            default:
+                break;
+        }
     }
 
 }

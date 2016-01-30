@@ -38,11 +38,12 @@ item.endermystic.EnderItem.EnderRod.name=Ender Rod
 
 item.endermystic.EnderSoulFillEmpty.name=Ender Soul Fill (Empty)
 item.endermystic.EnderSoulFillFilled.name=Ender Soul Fill (Filled)
-item.endermystic.Book.name=Knowledge of Ender 91th Edition
+item.endermystic.Book.name=Knowledge of Ender 92th Edition
 item.endermystic.WorldStorage.name=World Storage
 
 #Wands
 item.endermystic.ThunderWand.name=Mjoelnir
+item.endermystic.TeleportWand.name=Wand of Dislocation
 
 #Crystals
 item.endermystic.Crystal.Water.name=Water Crystal
@@ -187,6 +188,11 @@ book.entry.EnderSoulArmorBook.text=The Ender Soul Armor is ah fancy looking and 
 book.entry.Util.title=Util
 
 book.entry.ActivationOrb.text=With this orb you can start the process of crafting. You need it for Crystal Combiner, Orb Infuser and Ender Picker/Injector.
+
+book.entry.DarkSecretsBook.title=Dark Secrets
+book.entry.DarkSecretsBook.text=This section of the book is a secret and only ender masters can see it. So you have mastered the endermans and get there strongest items they have ever created.
+book.entry.ThunderWand.text=Mjoelnir is a strong weapon that can control the thunderbolts and zap nearby mobs to the death.
+book.entry.TeleportWand.text=With the Wand of Dislocation you can travel fast over a short distance and with a little time you also can travel over lager distance.
 
 book.entry.BaublesItems.title=Baubles Items
 

@@ -13,6 +13,8 @@ import at.korti.endermystic.modintegration.baubles.rings.WaterShieldRing;
 import cpw.mods.fml.common.Loader;
 import cpw.mods.fml.common.Mod;
 import cpw.mods.fml.common.registry.GameRegistry;
+import cpw.mods.fml.relauncher.Side;
+import cpw.mods.fml.relauncher.SideOnly;
 import net.minecraft.init.Items;
 import net.minecraft.item.ItemStack;
 
@@ -82,16 +84,5 @@ public class Baubles implements IIntegration{
                 "G G",
                 " G ", 'G', new ItemStack(Items.gold_ingot), 'O', new ItemStack(ModItems.waterOrb)
         );
-    }
-
-    public static BookEntry addBookEntry(BookPage mainPage) {
-        BookEntry baubles = new BookEntry("Baubles", mainPage);
-        BookEntryItemList baublesItems = new BookEntryItemList("BaublesItems", baubles);
-        baublesItems.addItem(new ItemStack(Baubles.airBelt));
-        baublesItems.addItem(new ItemStack(Baubles.airRing));
-        baublesItems.addItem(new ItemStack(Baubles.fireRing));
-        baublesItems.addItem(new ItemStack(Baubles.waterShieldRing));
-
-        return baubles;
     }
 }

@@ -4,20 +4,14 @@ import at.korti.endermystic.api.mysticEnergyNetwork.EnergyNetworkHandler;
 import at.korti.endermystic.api.tools.ToolLevelHandler;
 import at.korti.endermystic.items.orbs.EarthOrb;
 import at.korti.endermystic.items.orbs.OrbStats;
-import at.korti.endermystic.items.tools.EnderSoulSword;
 import at.korti.endermystic.items.tools.ToolStats;
-import at.korti.endermystic.potion.PotionHelper;
 import net.minecraft.block.Block;
 import net.minecraft.entity.Entity;
-import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.init.Blocks;
-import net.minecraft.inventory.IInventory;
 import net.minecraft.item.ItemPickaxe;
 import net.minecraft.item.ItemStack;
-import net.minecraft.nbt.NBTTagCompound;
-import net.minecraft.potion.PotionEffect;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.MathHelper;
 import net.minecraft.util.MovingObjectPosition;
@@ -132,12 +126,16 @@ public class WorldHelper {
         float f7 = f4 * f5;
         float f8 = f3 * f5;
         double d3 = range;
-        if (player instanceof EntityPlayerMP)
-        {
-            d3 = ((EntityPlayerMP) player).theItemInWorldManager.getBlockReachDistance();
-        }
         Vec3 vec31 = vec3.addVector((double) f7 * d3, (double) f6 * d3, (double) f8 * d3);
         return world.func_147447_a(vec3, vec31, par3, !par3, par3);
+    }
+
+    public static MovingObjectPosition raytraceFromEntity(World world, Entity player, boolean par3){
+        double d = 4.5D;
+        if(player instanceof  EntityPlayerMP){
+            d = ((EntityPlayerMP) player).theItemInWorldManager.getBlockReachDistance();
+        }
+        return raytraceFromEntity(world, player, par3, d);
     }
     //endregion
 
@@ -145,27 +143,27 @@ public class WorldHelper {
 
         switch (side){
             case 1:
-                if (canSetBlock(x, y, z, side, world)) {
+                if (isAirBlock(x, y, z, side, world)) {
                     world.setBlock(x, y + 1, z, block);
                 }
                 break;
             case 2:
-                if (canSetBlock(x, y, z, side, world)) {
+                if (isAirBlock(x, y, z, side, world)) {
                     world.setBlock(x, y, z - 1, block);
                 }
                 break;
             case 3:
-                if (canSetBlock(x, y, z, side, world)) {
+                if (isAirBlock(x, y, z, side, world)) {
                     world.setBlock(x, y, z + 1, block);
                 }
                 break;
             case 4:
-                if (canSetBlock(x, y, z, side, world)) {
+                if (isAirBlock(x, y, z, side, world)) {
                     world.setBlock(x - 1, y, z, block);
                 }
                 break;
             case 5:
-                if (canSetBlock(x, y, z, side, world)) {
+                if (isAirBlock(x, y, z, side, world)) {
                     world.setBlock(x + 1, y, z, block);
                 }
                 break;
@@ -178,27 +176,27 @@ public class WorldHelper {
     public static void createTileEntity(int x, int y, int z, int side, TileEntity tileEntity, World world) {
         switch (side) {
             case 1:
-                if (canSetBlock(x, y, z, side, world)) {
+                if (isAirBlock(x, y, z, side, world)) {
                     world.setTileEntity(x, y + 1, z, tileEntity);
                 }
                 break;
             case 2:
-                if (canSetBlock(x, y, z, side, world)) {
+                if (isAirBlock(x, y, z, side, world)) {
                     world.setTileEntity(x, y, z - 1, tileEntity);
                 }
                 break;
             case 3:
-                if (canSetBlock(x, y, z, side, world)) {
+                if (isAirBlock(x, y, z, side, world)) {
                     world.setTileEntity(x, y, z, tileEntity);
                 }
                 break;
             case 4:
-                if (canSetBlock(x, y, z, side, world)) {
+                if (isAirBlock(x, y, z, side, world)) {
                     world.setTileEntity(x, y, z, tileEntity);
                 }
                 break;
             case 5:
-                if (canSetBlock(x, y, z, side, world)) {
+                if (isAirBlock(x, y, z, side, world)) {
                     world.setTileEntity(x, y, z, tileEntity);
                 }
                 break;
@@ -207,7 +205,7 @@ public class WorldHelper {
         }
     }
 
-    private static boolean canSetBlock(int x, int y, int z, int side, World world){
+    public static boolean isAirBlock(int x, int y, int z, int side, World world){
         switch (side){
             case 0:
                 return world.isAirBlock(x, y - 1, z);

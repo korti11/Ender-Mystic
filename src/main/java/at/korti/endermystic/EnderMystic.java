@@ -22,6 +22,7 @@ import cpw.mods.fml.common.event.FMLPostInitializationEvent;
 import cpw.mods.fml.common.event.FMLPreInitializationEvent;
 import cpw.mods.fml.common.event.FMLServerStartingEvent;
 import cpw.mods.fml.common.registry.GameRegistry;
+import cpw.mods.fml.relauncher.Side;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.init.Items;
 import net.minecraft.item.Item;
@@ -55,7 +56,9 @@ public class EnderMystic {
         config = new Configuration(event.getSuggestedConfigurationFile());
         config.load();
 
-        UpdateChecker.getInstance().checkForUpdate();
+        if(event.getSide() == Side.CLIENT) {
+            UpdateChecker.getInstance().checkForUpdate();
+        }
         ModIntegrationManager.initManager();
 
         ModBlocks.init();

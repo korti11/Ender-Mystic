@@ -124,7 +124,7 @@ public class EnderSoulHammer extends ItemPickaxe implements IEnderSoulTool{
     @Override
     public boolean onBlockDestroyed(ItemStack stack, World world, Block block, int x, int y, int z, EntityLivingBase player) {
         if(!world.isRemote) {
-            MovingObjectPosition mop = WorldHelper.raytraceFromEntity(world, player, false, 4.5D);
+            MovingObjectPosition mop = WorldHelper.raytraceFromEntity(world, player, false);
             if (mop != null) {
                 WorldHelper.breakMultiBlocks((EntityPlayer) player, stack, world, x, y, z, mop.sideHit, 3);
             }

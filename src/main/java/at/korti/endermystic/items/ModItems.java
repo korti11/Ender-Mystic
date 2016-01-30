@@ -2,6 +2,7 @@ package at.korti.endermystic.items;
 
 import at.korti.endermystic.ModInfo;
 import at.korti.endermystic.items.armor.EnderSoulArmor;
+import at.korti.endermystic.items.gadgets.TeleportWand;
 import at.korti.endermystic.items.gadgets.ThunderWand;
 import at.korti.endermystic.items.orbs.*;
 import at.korti.endermystic.items.tools.*;
@@ -37,6 +38,7 @@ public class ModItems {
     public static EnderSoulExcavator enderSoulExcavator;
 
     public static ThunderWand thunderWand;
+    public static TeleportWand teleportWand;
 
     public static EnderSoulArmor enderSoulHelmet;
     public static EnderSoulArmor enderSoulBreastplate;
@@ -79,6 +81,7 @@ public class ModItems {
         enderSoulExcavator = new EnderSoulExcavator();
 
         thunderWand = new ThunderWand();
+        teleportWand = new TeleportWand();
 
         enderSoulHelmet = new EnderSoulArmor(0);
         enderSoulBreastplate = new EnderSoulArmor(1);
@@ -125,6 +128,7 @@ public class ModItems {
         GameRegistry.registerItem(enderSoulExcavator, "EnderSoulExcavator", ModInfo.MODID);
 
         GameRegistry.registerItem(thunderWand, thunderWand.getName(), ModInfo.MODID);
+        GameRegistry.registerItem(teleportWand, teleportWand.getName(), ModInfo.MODID);
 
         GameRegistry.registerItem(enderSoulHelmet, "EnderSoulHelmet");
         GameRegistry.registerItem(enderSoulBreastplate, "EnderSoulBreastplate");

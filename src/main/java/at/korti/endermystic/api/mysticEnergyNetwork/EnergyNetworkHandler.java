@@ -1,6 +1,7 @@
 package at.korti.endermystic.api.mysticEnergyNetwork;
 
 import at.korti.endermystic.tileEntity.TileEntityEnergyCrystalStorage;
+import cpw.mods.fml.common.FMLCommonHandler;
 import net.minecraft.item.ItemStack;
 import net.minecraft.server.MinecraftServer;
 import net.minecraft.tileentity.TileEntity;
@@ -21,7 +22,7 @@ public class EnergyNetworkHandler {
         World world = getWorld();
         EnergyNetwork network = getNetwork(playerName);
 
-        if(network == null){
+        if(network == null && world != null){
             network = new EnergyNetwork("em_" + playerName);
             network.mysticEnergy = 0;
             network.mysticCapacity = capacity;
@@ -29,7 +30,7 @@ public class EnergyNetworkHandler {
             world.setItemData("em_" + playerName, network);
             return true;
         }
-        else{
+        else if(world != null){
             if(network.mysticCapacity < capacity){
                 network.mysticCapacity = capacity;
                 network.markDirty();
@@ -94,8 +95,12 @@ public class EnergyNetworkHandler {
      * @param playerName
      * @return Energy amount.
      */
-    public static int getEnergy(String playerName){
-        return getNetwork(playerName).mysticEnergy;
+    public static int getEnergy(String playerName) {
+        EnergyNetwork energyNetwork = getNetwork(playerName);
+        if(energyNetwork != null) {
+            return energyNetwork.mysticEnergy;
+        }
+        return 0;
     }
 
     /**
@@ -103,8 +108,12 @@ public class EnergyNetworkHandler {
      * @param itemName
      * @return Capacity amount.
      */
-    public static int getCapacity(String itemName){
-        return getNetwork(itemName).mysticCapacity;
+    public static int getCapacity(String itemName) {
+        EnergyNetwork energyNetwork = getNetwork(itemName);
+        if(energyNetwork != null) {
+            return energyNetwork.mysticCapacity;
+        }
+        return 0;
     }
 
     /**
@@ -188,12 +197,18 @@ public class EnergyNetworkHandler {
         return getProvider(worldObj, xCoord, zCoord, yCoord, range, 1);
     }
 
-    private static World getWorld(){
-        return MinecraftServer.getServer().worldServers[0];
+    private static World getWorld() {
+        if(MinecraftServer.getServer() != null) {
+            return MinecraftServer.getServer().worldServers[0];
+        }
+        return null;
     }
 
     private static EnergyNetwork getNetwork(String playerName){
         World world = getWorld();
-        return (EnergyNetwork)world.loadItemData(EnergyNetwork.class, "em_" + playerName);
+        if(world != null) {
+            return (EnergyNetwork) world.loadItemData(EnergyNetwork.class, "em_" + playerName);
+        }
+        return null;
     }
 }

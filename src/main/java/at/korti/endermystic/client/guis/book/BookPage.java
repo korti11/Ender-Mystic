@@ -156,6 +156,12 @@ public class BookPage extends GuiScreen implements Cloneable {
         utilEntry.addItem(new ItemStack(ModItems.worldStorageLevelFour));
         utilEntry.addItem(new ItemStack(ModItems.activationOrb));
 
+        //Dark secrets
+        BookEntry darkSecrets = new BookEntry("DarkSecretsBook", this);
+        BookEntryItemList darkSecretsItemList = new BookEntryItemList("DarkSecretsBook", darkSecrets);
+        darkSecretsItemList.addItem(new ItemStack(ModItems.thunderWand));
+        darkSecretsItemList.addItem(new ItemStack(ModItems.teleportWand));
+
         entries.add(blockList);
         entries.add(crystalCombiner);
         entries.add(orbInfuser);
@@ -164,13 +170,22 @@ public class BookPage extends GuiScreen implements Cloneable {
         entries.add(orbEntry);
         entries.add(toolList);
         entries.add(enderSoulArmorEntry);
+        entries.add(darkSecrets);
         entries.add(utilEntry);
 
         if (Loader.isModLoaded(ModInfo.BAUBLES)) {
-            entries.add(Baubles.addBookEntry(this));
+            BookEntry baubles = new BookEntry("Baubles", this);
+            BookEntryItemList baublesItems = new BookEntryItemList("BaublesItems", baubles);
+            baublesItems.addItem(new ItemStack(Baubles.airBelt));
+            baublesItems.addItem(new ItemStack(Baubles.airRing));
+            baublesItems.addItem(new ItemStack(Baubles.fireRing));
+            baublesItems.addItem(new ItemStack(Baubles.waterShieldRing));
+            entries.add(baubles);
         }
         if (Loader.isModLoaded(ModInfo.COFH)) {
-            entries.add(Cofh.addBookEntrys(this));
+            BookEntryItemList cofh = new BookEntryItemList("CoFH", this);
+            cofh.addItem(new ItemStack(Cofh.mysticConverter));
+            entries.add(cofh);
         }
     }
 
