@@ -147,10 +147,12 @@ public class EnderSoulSword extends ItemSword implements IEnderSoulTool{
 
     @Override
     public IIcon getIcon(ItemStack stack, int pass) {
-        if(stack.stackTagCompound.getBoolean("em_active")){
-            return active;
+        if (stack.stackTagCompound == null) {
+            stack.stackTagCompound = new NBTTagCompound();
         }
-        else {
+        if (stack.stackTagCompound.getBoolean("em_active")) {
+            return active;
+        } else {
             return deactive;
         }
     }
