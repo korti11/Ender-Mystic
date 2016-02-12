@@ -1,10 +1,9 @@
 package at.korti.endermystic.util;
 
+import at.korti.endermystic.EnderMystic;
 import at.korti.endermystic.ModInfo;
 
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.io.InputStream;
+import java.io.*;
 import java.net.URL;
 import java.net.URLConnection;
 import java.nio.file.Files;
@@ -19,6 +18,7 @@ public class UpdateChecker {
     public enum UpdateStatus {
         ISUPTODATE,
         ISNOTUPTODATE,
+        DISABLED,
         NOSTATUS
     }
 
@@ -78,13 +78,16 @@ public class UpdateChecker {
         }
 
         if (Files.exists(Paths.get(filePath))) {
-            try {
-                List<String> lines = Files.readAllLines(Paths.get(filePath));
+            try (BufferedReader reader = new BufferedReader(new FileReader(filePath))) {
+                String line = reader.readLine();
+                boolean checkForUpdate = EnderMystic.config.getBoolean("Update Checker", "Util", true, "Set it to false if you don't want to the check there is an update.");
 
-                if (lines.get(0).equals(ModInfo.VERSION)) {
+                if (line.equals(ModInfo.VERSION) && checkForUpdate) {
                     status = UpdateStatus.ISUPTODATE;
-                } else {
+                } else if (checkForUpdate) {
                     status = UpdateStatus.ISNOTUPTODATE;
+                } else {
+                    status = UpdateStatus.DISABLED;
                 }
             } catch (IOException e) {
                 e.printStackTrace();

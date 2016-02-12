@@ -45,17 +45,14 @@ public class EventManager {
                 EntityPlayer player = (EntityPlayer) event.entity;
                 if(UpdateChecker.getInstance().getStatus() == UpdateChecker.UpdateStatus.ISNOTUPTODATE) {
                     player.addChatMessage(new ChatComponentText("There is a newer version then " + EnumChatFormatting.GOLD.toString() + ModInfo.VERSION + EnumChatFormatting.RESET.toString() + " of " + EnumChatFormatting.DARK_GREEN.toString() + ModInfo.NAME + EnumChatFormatting.RESET.toString() + "!"));
-                }
-                else if (UpdateChecker.getInstance().getStatus() == UpdateChecker.UpdateStatus.ISUPTODATE) {
+                } else if (UpdateChecker.getInstance().getStatus() == UpdateChecker.UpdateStatus.ISUPTODATE) {
                     player.addChatMessage(new ChatComponentText(EnumChatFormatting.DARK_GREEN.toString() + ModInfo.NAME + EnumChatFormatting.RESET.toString() + " is up to date!"));
+                } else if (UpdateChecker.getInstance().getStatus() == UpdateChecker.UpdateStatus.DISABLED) {
+                    player.addChatMessage(new ChatComponentText("The update checker for " + EnumChatFormatting.DARK_GREEN.toString() + ModInfo.NAME + EnumChatFormatting.RESET.toString() + " is disabled!"));
                 } else {
                     player.addChatMessage(new ChatComponentText("There is no status about the version of " + EnumChatFormatting.DARK_GREEN.toString() + ModInfo.NAME + EnumChatFormatting.RESET.toString() + "!"));
                 }
             }
         }
-    }
-
-    public void onPlayerDamage(LivingHurtEvent event) {
-
     }
 }
